@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	
+	<!-- properties 사용을 위한 설정 -->
+   <bean id="propertyConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+      <property name="locations">
+         <list>
+            <value>classpath:props/*.properties</value>
+         </list>
+      </property>
+   </bean>
+   
+   <!-- @Value 라는 어노테이션으로 properties 내의 값을 부를 수 있다. -->
+   <util:properties id="config" location="classpath:props/globals.properties"></util:properties>
+		
+	<!-- DB 관련 설정 -->
+	<!-- datasource 작성 여긴 log4jdbc를 사용하고있구나...... -->
+	<bean name="datasource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${Globals.DriverClassName}"/>
+		<property name="url" value="${Globals.Url}"/>
+		<property name="username" value="${Globals.UserName}"/>
+		<property name="password" value="${Globals.Password}"/>
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="datasource"/>
+		<property name="mapperLocations" value="classpath:kr/co/goodee/dao/*.xml"/>
+		<property name="environment" value="classpath:/config/pool-config.xml"/>
+		<property name="configLocation" value="classpath:/config/alias-config.xml"/> <!-- 풀네임 줄여주는 설정 -->
+	</bean>
+	
+	<mybatis-spring:scan base-package="kr.co.goodee"/>
+	
+	<!-- TX 관련 설정 -->
+	<!-- tx 매니저 설정 : DB 연결 정보 필요 (DataSource) -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="datasource"></property>
+	</bean>
+	
+	<!-- @Transactional 이라는 어노테이션을 사용하기 위한 설정 -->
+	<tx:annotation-driven proxy-target-class="false"/>
+	
+	<!-- FileUpload 관련 설정 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="maxUploadSize" value="10000000"/>
+		<property name="maxInMemorySize" value="10000000"/>
+	</bean>
+		
+</beans>
