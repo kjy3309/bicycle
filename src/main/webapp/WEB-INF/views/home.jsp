@@ -32,7 +32,7 @@
                         <nav class="nav">                            
                             <ul class="clearfix">
                                 <li><a href="#">Notice</a></li>
-                                <li><a href="#">Login</a></li>
+                                <li><button>Login</button></li>
                             </ul>
                         </nav>    
                     </div>

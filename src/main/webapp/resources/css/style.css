@@ -63,6 +63,14 @@
   color: #444;
 }
 
+.header .nav ul li button {
+  padding: 19px 10px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #444;
+  background-color: white;
+}
+
 /* 슬라이드 */
 .slider img {
   width: 100%;
