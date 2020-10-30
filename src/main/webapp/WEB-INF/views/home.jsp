@@ -31,7 +31,7 @@
                         </h1>
                         <nav class="nav">                            
                             <ul class="clearfix">
-                                <li><a href="#">Notice</a></li>
+                                <li><a href="FreeBoardlist">Notice</a></li>
                                 <li><button>Login</button></li>
                             </ul>
                         </nav>    
