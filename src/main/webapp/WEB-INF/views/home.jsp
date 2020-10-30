@@ -10,9 +10,9 @@
         <title>따릉따릉</title>
     
         <!-- css -->
-        <link rel="stylesheet" href="./resources/css/reset.css">
-        <link rel="stylesheet" href="./resources/css/style.css">
-        <link rel="stylesheet" href="./resources/css/swiper.css">
+        <link rel="stylesheet" href="resources/css/reset.css">
+        <link rel="stylesheet" href="resources/css/style.css">
+        <link rel="stylesheet" href="resources/css/swiper.css">
 
         <!-- 웹 폰트 -->
         <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&subset=korean" rel="stylesheet">
@@ -106,9 +106,9 @@
         </footer>
         <!-- //footer -->
         <!-- 자바스크립트 라이브러리 -->
-        <script src="../views/resources/js/jquery.min_1.12.4.js"></script>
-        <script src="../views/resources/js/modernizr-custom.js"></script>
-        <script src="../views/resources/js/swiper.min.js"></script>
+        <script src="resources/js/jquery.min_1.12.4.js"></script>
+        <script src="resources/js/modernizr-custom.js"></script>
+        <script src="resources/js/swiper.min.js"></script>
         <script>
             var swiper = new Swiper('.swiper-container',{
             pagination: {
