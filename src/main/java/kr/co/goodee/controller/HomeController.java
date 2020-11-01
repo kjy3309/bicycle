@@ -17,20 +17,21 @@ public class HomeController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Model model) {
 		
 		return "home";
 	}
 	
 	@RequestMapping(value = "/relocation", method = RequestMethod.GET)
-	public String relocation(Locale locale, Model model) {
+	public String relocation(Model model) {
 		
 		return "relocation";
 	}
 	
 	@RequestMapping(value = "/rts", method = RequestMethod.GET)
-	public String rts(Locale locale, Model model) {
-		
+
+	public String rts(Model model) {
+				
 		return "rts";
 	}
 	
