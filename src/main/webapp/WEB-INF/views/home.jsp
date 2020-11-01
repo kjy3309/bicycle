@@ -16,6 +16,9 @@
 
         <!-- 웹 폰트 -->
         <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&subset=korean" rel="stylesheet">
+
+        <!-- J-Query -->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         
     </head>
     <body>
@@ -32,7 +35,7 @@
                         <nav class="nav">                            
                             <ul class="clearfix">
                                 <li><a href="FreeBoardlist">Notice</a></li>
-                                <li><button>Login</button></li>
+                                <li><button onclick="openModal(1)">Login</button></li>
                             </ul>
                         </nav>    
                     </div>
@@ -40,8 +43,57 @@
             </div>
         </header>
         <!-- //header -->
+
+        <div id="id01" class="modal">
+            <form name="loginForm" class="modal-content animate" action="login" method="post">            
+                <div class="modal-container">
+                    <label for="id"><b>아이디</b></label>
+                    <input type="text" placeholder="아이디를 입력해주세요." name="id" required>
+                    <label for="pw"><b>패스워드</b></label>
+                    <input type="password" placeholder="패스워드를 입력해주세요." name="pw" required>                
+                    <button class="modal-button">로그인</button>
+                </div>
+
+                <div class="modal-container">
+                    <button  type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">취소</button>
+                    <p class = "p33">회원이 아니시라면  <span style="text-decoration: underline; cursor: pointer;" onclick="openModal(2)">회원가입</span> 하세요. <p>
+                </div>
+
+            </form>
+        </div>
+
+        <div id="id02" class="modal">
+            <form name="joinForm" class="modal-content animate" action="join" method="post">
+                <div class="modal-container">
+                    <label for="id"><b>아이디</b></label>
+                    <input type="text" placeholder="아이디를 입력해주세요." id="newId" name="id" onblur="checkedID()" required>
+                    <input type="hidden" name="checked" value="" />
+                    <label for="pw"><b>패스워드</b></label>
+                    <input type="password" placeholder="패스워드를 입력해주세요." name="pw" required>
+                    
+                    <label for="name"><b>이름</b></label>
+                    <input type="text" placeholder="이름을 입력해주세요." name="name" required>
+                    
+                    <label for="age"><b>나이</b></label>
+                    <input type="text" placeholder="나이를 입력해주세요." name="age" required>
+                    
+                    <label for="gender"><b>성별</b></label>
+                    <input type="text" placeholder="성별을입력해주세요." name="gender" required>
+                    
+                    <label for="email"><b>이메일</b></label>
+                    <input type="text" placeholder="이메일을 입력해주세요." name="email" required>
+                    
+                    <button class="modal-button">회원가입</button>
+                </div>
+
+                <div class="modal-container">
+                    <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">취소</button>
+                </div>
+            </form>
+        </div>
+
         
-        <div class="slider">
+        <div class="slider">            
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide ss1">
@@ -113,17 +165,35 @@
         <script src="resources/js/swiper.min.js"></script>
         <script>
             var swiper = new Swiper('.swiper-container',{
-            pagination: {
-                el: '.swiper-pagination',
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            autoplay: {
-                delay: 5000,
-            },
-        });
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                autoplay: {
+                    delay: 5000,
+                },
+            });
+
+            $(".hover").mouseleave(
+            function () {
+                $(this).removeClass("hover");
+                }
+            );
+            
+            var modal = document.getElementById('id01');
+            var modal1 = document.getElementById('id02');
+
+
+            function openModal(type){
+                if(type === 1){
+                    modal.style.display = "block";
+                }else {
+                    modal1.style.display = "block";
+                }
+            }
         </script>
     </body>
 </html>

@@ -89,6 +89,7 @@ fieldset {
 /* 버튼 초기화 */
 button {
   border: 0;
+  cursor: pointer;
 }
 
 /* 반응형 */
