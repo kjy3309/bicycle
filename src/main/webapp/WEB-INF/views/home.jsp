@@ -57,6 +57,7 @@
                             <div class="row">
                                 <h3>공공자전거 실시간 현황</h3>
                                 <p>실시간 현황 및 자전거 대수 예측 서비스</p>
+                                <li class="total"><a href="#">더 알아보기</a></li>
                             </div>
                         </div>
                     </div>
@@ -65,6 +66,7 @@
                             <div class="row">
                                 <h3>공공자전거 재배치 분석</h3>
                                 <p>빅데이터 기반 효율적 자전거 재배치 분석 제안 </p>
+                                <li class="total"><a href="#">더 알아보기</a></li>
                             </div>
                         </div>
                     </div>

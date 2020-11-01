@@ -28,4 +28,10 @@ public class HomeController {
 		return "relocation";
 	}
 	
+	@RequestMapping(value = "/rts", method = RequestMethod.GET)
+	public String rts(Locale locale, Model model) {
+		
+		return "rts";
+	}
+	
 }
