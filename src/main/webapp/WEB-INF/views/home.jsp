@@ -20,6 +20,19 @@
         <!-- J-Query -->
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         
+        <style>
+        	/* Full-width input fields */
+        	input[type="text"],
+			input[type="password"] {
+			  width: 100%;
+			  padding: 12px 20px;
+			  margin: 8px 0;
+			  display: inline-block;
+			  border: 1px solid #ccc;
+			  box-sizing: border-box;
+			}
+        </style>
+        
     </head>
     <body>
         
@@ -28,8 +41,8 @@
                 <div class="row">
                     <div class="header clearfix">
                         <h1>
-                            <a href="#">
-                                <h2><strong>이미지하나..필요</strong></h2>
+                            <a href="./">
+                                <em><img src="resources/image/logo2.png" alt="logo"></em>
                             </a>    
                         </h1>
                         <nav class="nav">                            
@@ -109,7 +122,7 @@
                             <div class="row">
                                 <h3>공공자전거 실시간 현황</h3>
                                 <p>실시간 현황 및 자전거 대수 예측 서비스</p>
-                                <li class="total"><a href="#">더 알아보기</a></li>
+                                <li class="total"><a href="rts">더 알아보기</a></li>
                             </div>
                         </div>
                     </div>
@@ -118,7 +131,7 @@
                             <div class="row">
                                 <h3>공공자전거 재배치 분석</h3>
                                 <p>빅데이터 기반 효율적 자전거 재배치 분석 제안 </p>
-                                <li class="total"><a href="#">더 알아보기</a></li>
+                                <li class="total"><a href="relocation">더 알아보기</a></li>
                             </div>
                         </div>
                     </div>

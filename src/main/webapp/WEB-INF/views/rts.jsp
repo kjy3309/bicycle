@@ -5,9 +5,83 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
+    
     <!-- css -->
     <link rel="stylesheet" href="resources/css/reset.css">
     <link rel="stylesheet" href="resources/css/style.css">
+    
+    <style>
+    	/* 실시간 현황 */
+		.new {padding: 100px 0; position: relative;}
+		.new h2 {font-size: 30px; font-weight: 500; margin-bottom: 20px;}
+		.new .new_left {position: relative; margin-right: 423px; height: 500px; background-size: cover;}
+		.new .new_right {position: absolute; right: 0; top: 165px; width: 400px; height: 500px; padding: 34px; box-sizing: border-box; background: #f0f0f0;}
+		.new .new_right .title {font-size: 28px; color: #000;}
+		.new .new_right .release {font-size: 12px; color: #333;}
+		.new .new_right .star {padding: 13px 0;}
+		.new .new_right .star strong {font-size: 15px; padding-left: 5px;}
+		.new .new_right .star span {display: inline-block; width: 20px; height: 20px; vertical-align: -3px;}
+		.new .new_right .star .star1 {background-position: -393px 0;}
+		.new .new_right .star .star2 {background-position: -412px 0;}
+		.new .new_right .star .star0 {background-position: -374px 0;}
+		
+		.new .new_right .summary {font-size: 14px;}
+		.new .new_right .genre {padding-bottom: 3px;}
+		.new .new_right .age {padding-bottom: 10px;}
+		.new .new_right .desc {margin-bottom: 20px; height: 108px; overflow: hidden;}
+		
+		.new .new_right .select {overflow: hidden;}
+		.new .new_right .select .s1 {float: left; width: 49%; background: #000; margin-right: 2%;}
+		.new .new_right .select .s2 {float: left; width: 49%; background: #000;}
+		.new .new_right .select .s3 {float: left; width: 100%; margin-top: 2%;}
+		.new .new_right .btn {overflow: hidden; margin-top: 2%; text-align: center;}
+		.new .new_right .btn a {float: left; width: 49%; box-sizing: border-box; display: block; padding: 10px 30px 12px 30px;}
+		.new .new_right .btn a.white {background-color: #fff; margin-right: 2%; color: #3a0e6a; border: 1px solid #3a0e6a;}
+		.new .new_right .btn a.purple {background-color: #3a0e6a; color: #fff; border: 1px solid #6e40c4;}
+		
+		/* input style */
+		input {background-image: none;}
+		input[type=button],
+		input[type=reset],
+		input[type=text],
+		input[type=password],
+		input[type=submit],
+		input[type=search],
+		input[type=tel],
+		input[type=email] {
+		    -webkit-appearance: none;
+		    border-radius: 0
+		}
+		input[type=search]::-webkit-search-cancel-button,
+		input[type=search]::-webkit-search-decoration {
+		    -webkit-appearance: none
+		}
+		input:checked[type=checkbox] {
+		    background-color: #666;
+		    -webkit-appearance: checkbox
+		}
+
+		/* 셀렉트 메뉴 메인 스타일 */
+		.ui_select2 {
+		    width: 100%; box-sizing: border-box;
+		    background: #2c2f34; color: #fff;
+		    display: inline-block; height: 36px;
+		    border: 0 none; padding: 0 10px; margin: 0;
+		    font-family: inherit; font-size: inherit;
+		    vertical-align: middle; text-align: left;
+		    white-space: nowrap;
+		    background: #2c2f34 url(resources/image/down.svg) no-repeat right 10px center;
+		    background-size: 10px;
+		    -webkit-appearance: none;
+		    -moz-appearance: none;
+		    appearance: none;
+		}
+		
+		/* 메인 텍스트 박스 스타일1 */
+		.ui_input3 {
+		    background: #2c2f34; color: #fff; border: 0; width: 100%; height: 36px; padding: 0 10px; cursor: pointer;
+		}
+    </style>
     
     <!-- 웹 폰트 -->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&subset=korean" rel="stylesheet">
@@ -18,8 +92,8 @@
             <div class="row">
                 <div class="header clearfix">
                     <h1>
-                        <a href="#">
-                            <h2><strong>이미지하나..필요</strong></h2>
+                        <a href="./">
+                            <em><img src="resources/image/logo2.png" alt="logo"></em>
                         </a>    
                     </h1>
                     <nav class="nav">                            
@@ -33,7 +107,93 @@
         </div>
     </header>
     <!-- //header -->
-    <div id="map" style="width:500px;height:400px;"></div>
+	
+	<div class="container">
+		<div class="row">
+			<div class="new">
+				<h2>실시간 현황</h2>
+				<div class="new_left">
+					<div id="map" style="width:-webkit-fill-available;height:-webkit-fill-available;"></div>
+				</div>
+				<div class="new_right">
+					<h3 class="title">대여소 이름</h3>
+					<span>현재 대여 가능한 따릉이 : xx 대</span>
+					
+					<div class="select">
+						<li class="ts-comment"><span>빌릴 수 있는 따릉이의 갯수를 예측해서 알려드려요. 시간대를 선택하세요. </span></li>
+						<div class="s1">
+							<select id="hour" name="hour" class="ui_select2">
+								<option value="오전 6:00">오전 6:00</option>
+								<option value="오전 7:00">오전 7:00</option>
+								<option value="오전 8:00">오전 8:00</option>
+								<option value="오전 9:00">오전 9:00</option>
+								<option value="오전 10:00">오전 10:00</option>
+								<option value="오전 11:00">오전 11:00</option>
+								<option value="오전 12:00">오전 12:00</option>
+								<option value="오후 1:00">오후 1:00</option>
+								<option value="오후 2:00">오후 2:00</option>
+								<option value="오후 3:00">오후 3:00</option>
+								<option value="오후 4:00">오후 4:00</option>
+								<option value="오후 5:00">오후 5:00</option>
+								<option value="오후 6:00">오후 6:00</option>
+								<option value="오후 7:00">오후 7:00</option>
+								<option value="오후 8:00">오후 8:00</option>
+								<option value="오후 9:00">오후 9:00</option>
+							</select>
+						</div>
+						<div class="s2">
+							<select id="min" name="min" class="ui_select2">
+								<option value="0">0분</option>
+								<option value="10">10분</option>
+								<option value="20">20분</option>
+								<option value="30">30분</option>
+								<option value="40">40분</option>
+								<option value="50">50분</option>
+							</select>
+						</div>
+						<div class="s3">
+							<input type="button" id="utext" name="utext" class="ui_input3" value="검색하기">
+						</div>
+					</div>
+					
+					<ul class="summary">
+						<li class="desc">잔여량 추이 영역</li>
+					</ul>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<footer id="footer">
+            <div id="footer_sns">
+                <div class="container">
+
+                </div>
+            </div>
+            <div id="footer_infor">
+                <div class="container">
+                    <div class="row">
+                        <div class="footer_infor">
+                            <h2><img src=""></h2>
+                            <ul>
+                                <li><a href="#">회사소개</a></li>                                
+                                <li><a href="#">제휴/광고/부대사업 문의</a></li>
+                                <li><a href="#">이용약관</a></li>
+                                <li><a href="#">개인정보처리방침</a></li>
+                                <li><a href="#">고객센터</a></li>
+                                <li><a href="#">윤리경영</a></li>
+                            </ul>
+                            <address>
+                                <p>서울특별시 금천구 가산대로 156, 8층 구디아카데미 (가산동, 대륭테크노타운)<br><span class="bar2">대표자명 정현승</span> 개인정보보호 책임자 경영지원실 실장 유가희<br><span class="bar2">사업자등록번호 111-11-1111111</span> 통신판매업신고번호 제 111호</p>
+                                <p>Copyright 2014 by MegaboxJoongAng Inc. All right reserved</p>
+                            </address>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
 
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6ab62b1cf209eb782fab63d74ff76590"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=LIBRARY"></script>
