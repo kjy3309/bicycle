@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="kr.co.goodee.dao.replyDAO">
+  
+  
+  	<!--댓글 작성  -->
+  <insert id="reply" parameterType="hashmap">
+  	INSERT INTO T3_REPLY(r_idx,id,b_idx,r_comment) 
+  	VALUES(seq_reply.NEXTVAL,#{id},#{b_idx},#{content})
+  
+  </insert>
+  
+  <!--r_idx기준으로 그안에 r_comment를 가져오는거지 그러니까 댓글의 원래 내용  -->
+  <select id="replyUpdateForm" parameterType="String" resultType="String">
+  	SELECT r_comment FROM T3_REPLY WHERE b_idx=#{param1}
+  </select>
+  
+  <!-- r의 idx번호를 기준으로 T3_REPLY 테이블에 있는 r_comment내용을 새로가져온 값으로 바꾼다. -->
+  <update id="replyUpdate" parameterType="String">
+  	UPDATE T3_REPLY SET r_comment =#{r_comment} WHERE r_idx=#{r_idx}
+  
+  </update>
+  
+  <delete id="comDelete">
+  	DELETE FROM T3_REPLY WHERE r_idx=#{r_idx}
+  
+  </delete>
+ 
+  	
+  	
+  	
+</mapper>
