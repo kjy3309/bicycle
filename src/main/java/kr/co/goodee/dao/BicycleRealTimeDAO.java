@@ -8,4 +8,6 @@ public interface BicycleRealTimeDAO {
 
 	ArrayList<BicycleRentDTO> bicycleRental();
 
+	String findBrName(int id);
+
 }

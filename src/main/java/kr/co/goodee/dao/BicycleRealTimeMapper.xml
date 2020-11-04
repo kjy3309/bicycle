@@ -6,5 +6,9 @@
 	<select id="bicycleRental" resultType = "kr.co.goodee.dto.BicycleRentDTO">
 		SELECT * FROM T3_bicycle_rent
 	</select>
+	
+	<select id="findBrName" resultType="String">
+		SELECT br_name FROM T3_bicycle_rent WHERE br_idx = #{param1}
+	</select>
 
 </mapper>

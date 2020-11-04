@@ -16,14 +16,9 @@
 		.new h2 {font-size: 30px; font-weight: 500; margin-bottom: 20px;}
 		.new .new_left {position: relative; margin-right: 423px; height: 500px; background-size: cover;}
 		.new .new_right {position: absolute; right: 0; top: 165px; width: 400px; height: 500px; padding: 34px; box-sizing: border-box; background: #f0f0f0;}
-		.new .new_right .title {font-size: 28px; color: #000;}
-		.new .new_right .release {font-size: 12px; color: #333;}
-		.new .new_right .star {padding: 13px 0;}
-		.new .new_right .star strong {font-size: 15px; padding-left: 5px;}
-		.new .new_right .star span {display: inline-block; width: 20px; height: 20px; vertical-align: -3px;}
-		.new .new_right .star .star1 {background-position: -393px 0;}
-		.new .new_right .star .star2 {background-position: -412px 0;}
-		.new .new_right .star .star0 {background-position: -374px 0;}
+		.new .new_right .br_name {font-size: 28px; color: #000;}
+		.new .new_right .available {font-size: 12px; color: #333;}
+		.new .new_right .parkingBikeTotCnt {font-size: 14px; color: deeppink; text-decoration: underline; text-shadow: #2c2f34;}
 		
 		.new .new_right .summary {font-size: 14px;}
 		.new .new_right .genre {padding-bottom: 3px;}
@@ -116,29 +111,30 @@
 					<div id="map" style="width:-webkit-fill-available;height:-webkit-fill-available;"></div>
 				</div>
 				<div class="new_right">
-					<h3 class="title">대여소 이름</h3>
-					<span>현재 대여 가능한 따릉이 : xx 대</span>
+					<h3 class="br_name">대여소 이름</h3>
+					<li class="available">현재 대여 가능한 따릉이 : <span class="parkingBikeTotCnt"></span> 대</li>
 					
 					<div class="select">
-						<li class="ts-comment"><span>빌릴 수 있는 따릉이의 갯수를 예측해서 알려드려요. 시간대를 선택하세요. </span></li>
+						<li class="ts-comment">빌릴 수 있는 따릉이의 갯수를 예측해서 알려드려요. </li>
+						<li>시간대를 선택하세요.</li>
 						<div class="s1">
 							<select id="hour" name="hour" class="ui_select2">
-								<option value="오전 6:00">오전 6:00</option>
-								<option value="오전 7:00">오전 7:00</option>
-								<option value="오전 8:00">오전 8:00</option>
-								<option value="오전 9:00">오전 9:00</option>
-								<option value="오전 10:00">오전 10:00</option>
-								<option value="오전 11:00">오전 11:00</option>
-								<option value="오전 12:00">오전 12:00</option>
-								<option value="오후 1:00">오후 1:00</option>
-								<option value="오후 2:00">오후 2:00</option>
-								<option value="오후 3:00">오후 3:00</option>
-								<option value="오후 4:00">오후 4:00</option>
-								<option value="오후 5:00">오후 5:00</option>
-								<option value="오후 6:00">오후 6:00</option>
-								<option value="오후 7:00">오후 7:00</option>
-								<option value="오후 8:00">오후 8:00</option>
-								<option value="오후 9:00">오후 9:00</option>
+								<option value="6">오전 6시</option>
+								<option value="7">오전 7시</option>
+								<option value="8">오전 8시</option>
+								<option value="9">오전 9시</option>
+								<option value="10">오전 10시</option>
+								<option value="11">오전 11시</option>
+								<option value="12">오전 12시</option>
+								<option value="13">오후 1시</option>
+								<option value="14">오후 2시</option>
+								<option value="15">오후 3시</option>
+								<option value="16">오후 4시</option>
+								<option value="17">오후 5시</option>
+								<option value="18">오후 6시</option>
+								<option value="19">오후 7시</option>
+								<option value="20">오후 8시</option>
+								<option value="21">오후 9시</option>
 							</select>
 						</div>
 						<div class="s2">
@@ -196,7 +192,7 @@
 
 
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6ab62b1cf209eb782fab63d74ff76590"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=LIBRARY"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6ab62b1cf209eb782fab63d74ff76590&libraries=LIBRARY"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
 		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -221,8 +217,30 @@
 		    };
 		}
 		
-		function bicycleRentalInfo(marker) {
-			
+		// 대여소정보를 그리는 함수....
+		function makeRentalBikeStatus() {
+		 	return function() {
+		 		var id = this.id; // 대여소 idx 값 변수에 저장
+		 		realTimeBicycleStatus(id); // 대여소 명, 실시간 자전거 개수를 표시해주는 함수..
+		 		
+		    };
+		}
+		
+		function realTimeBicycleStatus(id) {
+			$.ajax({
+				url:'realTimeBicycleStatus',
+				type:'GET',
+				dataType:'JSON',
+				data:{"id":id},
+				success:function(d){
+					console.log(d);
+					$('.br_name').html(d.br_name);
+					$('.parkingBikeTotCnt').html(d.parkingBikeTotCnt);
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
 		}
 		
 		function bicycleRental(){
@@ -235,12 +253,14 @@
 					    // 마커를 생성합니다
 					    var marker = new kakao.maps.Marker({
 					        map: map, // 마커를 표시할 지도
-					        position: new kakao.maps.LatLng(rentalData[i].letitude, rentalData[i].longitude) // 마커의 위치
+					        position: new kakao.maps.LatLng(rentalData[i].letitude, rentalData[i].longitude), // 마커의 위치
 					    });
-
+						
+					    marker.id = rentalData[i].br_idx // 대여소의 idx 값 저장...
+					    
 					    // 마커에 표시할 인포윈도우를 생성합니다 
 					    var infowindow = new kakao.maps.InfoWindow({
-					        content: rentalData[i].br_name+rentalData[i].br_idx // 인포윈도우에 표시할 내용
+					        content: rentalData[i].br_name // 인포윈도우에 표시할 내용
 					    });
 					    
 					    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
@@ -248,9 +268,7 @@
 					    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
 					    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
 					    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-					    kakao.maps.event.addListener(marker, 'click', function(){
-					    	infowindow.open(map, marker);
-					    });
+					    kakao.maps.event.addListener(marker, 'click', makeRentalBikeStatus());
 					}
 				}
 				,error:function(e){
