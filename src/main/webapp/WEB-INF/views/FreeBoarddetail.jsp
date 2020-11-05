@@ -21,7 +21,7 @@
 	</head>
 <body>
 	<table>
-		<tr><th>번호</th><td>${info.b_idx}</td></tr>
+		<input type="hidden" name="b_idx" value="${info.b_idx}"/>
 		<tr><th>조회수</th><td>${info.bHit}</td></tr>
 		<tr><th>작성자</th><td>${info.id}</td></tr>
 		<tr><th>제목</th><td>${info.subject}</td></tr>
@@ -29,6 +29,7 @@
 	</table>
 	<a href = "FreeBoardlist">목록보기</a>
 	<a href="FreeBoarddelete?idx=${info.b_idx}">삭제</a>
+
 	
 	<table>
 		<tr>
@@ -75,6 +76,8 @@
 		</c:forEach>
 	</table>
 	
+	<a href="FreeBoardupdateForm?idx=${info.b_idx}">수정</a>
+
 </body>
 <script>
 	

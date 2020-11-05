@@ -21,4 +21,8 @@ public interface FreeBoardDAO {
 
 	void FreeBoardbHit(String idx);
 
+	int FreeBoardupdate(FreeBoardDTO been);
+
+	void FreeBoarddeleteFile(int b_idx, String delKey);
+
 }

@@ -3,60 +3,40 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>따릉따릉</title>
-    
-        <!-- css -->
-        <link rel="stylesheet" href="resources/css/reset.css">
-        <link rel="stylesheet" href="resources/css/style.css">
-        <link rel="stylesheet" href="resources/css/swiper.css">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10,user-scalable=yes">
 
-        <!-- 웹 폰트 -->
-        <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&subset=korean" rel="stylesheet">
+    <title>따릉이를 부탁해</title>
+    <link rel="stylesheet" href="resources/css/default.css">
+    <link rel="stylesheet" href="resources/css/style.css">
 
-        <!-- J-Query -->
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        
-        <style>
-        	/* Full-width input fields */
-        	input[type="text"],
-			input[type="password"] {
-			  width: 100%;
-			  padding: 12px 20px;
-			  margin: 8px 0;
-			  display: inline-block;
-			  border: 1px solid #ccc;
-			  box-sizing: border-box;
-			}
-        </style>
-        
-    </head>
-    <body>
-        
-        <header id="header">
-            <div class="container">
-                <div class="row">
-                    <div class="header clearfix">
-                        <h1>
-                            <a href="./">
-                                <em><img src="resources/image/logo2.png" alt="logo"></em>
-                            </a>    
-                        </h1>
-                        <nav class="nav">                            
-                            <ul class="clearfix">
-                                <li><a href="FreeBoardlist">Notice</a></li>
-                                <li><button onclick="openModal(1)">Login</button></li>
-                            </ul>
-                        </nav>    
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- //header -->
-
+    <script src="resources/js/jquery-1.8.3.min.js"></script>
+    <script src="resources/js/jquery.menu.js"></script>
+    <script src="resources/js/common.js"></script>
+    <script src="resources/js/wrest.js"></script>
+    <script src="resources/js/visualShow.js"></script>
+    <script src="resources/js/main.js"></script>
+    <script src="resources/js/hamMenu.js"></script>
+    <script src="resources/js/responsive.js"></script>
+    <script src="resources/js/scrollAction.js"></script>
+    <script src="resources/js/jquery.rotate.js"></script>
+    <script src="resources/js/swiper.js"></script>
+    <script src="resources/js/swiper.min.js"></script>
+    <script src="resources/js/jquery.easing.1.3.js"></script>
+    <link rel="stylesheet" href="resources/css/main.css">
+    <link rel="stylesheet" href="resources/css/swiper.css">
+    <link rel="stylesheet" href="resources/css/swiper.min.css">
+    <link rel="stylesheet" href="resources/css/font-awesome.min.css">
+</head>
+<body>
+    <div id="Header" style="background-color: rgba(1, 1, 1, 0); height: 110px;">
+        <div class="logoWrap">
+            <a href="/index.php"><img src="resources/image/logo.png" alt="로고" title=""></a>
+        </div>
+        <div class="login">
+            <button onclick="openModal(1)">Login</button>
+        </div>
         <div id="id01" class="modal">
             <form name="loginForm" class="modal-content animate" action="login" method="post">            
                 <div class="modal-container">
@@ -91,7 +71,7 @@
                     <input type="text" placeholder="나이를 입력해주세요." name="age" required>
                     
                     <label for="gender"><b>성별</b></label>
-                    <input type="text" placeholder="성별을입력해주세요." name="gender" required>
+                    <input type="text" placeholder="성별을 입력해주세요." name="gender" required>
                     
                     <label for="email"><b>이메일</b></label>
                     <input type="text" placeholder="이메일을 입력해주세요." name="email" required>
@@ -104,109 +84,163 @@
                 </div>
             </form>
         </div>
+        <div class="hamWrap2">
+            <div id="ham" class="ham ham2">
+                <span style="top: 0px;"></span>
+                <span style="overflow: hidden; width: 24px; left: 0px;"></span>
+                <span style="top: 20px;"></span>
+            </div>	
+        </div>
+        <div class="hamNavibar" style="right: -1903px;">
+            <div class="inner-box">
+                <div class="menu-wr">
+                    <ul class="Mmain_menu">
+                        <li class="item-has-children" style="top: 50px; opacity: 0;">
+                            <a href="#">NOTICE</a>
+                        </li>
+                        <li class="item-has-children" style="top: 50px; opacity: 0;">
+                            <a href="#">Real-time Status</a>
+                        </li>
+                        <li class="item-has-children" style="top: 50px; opacity: 0;">
+                            <a href="#">Relocation Analysis</a>
+                        </li>
+                    </ul>
+                    
+	                <div class="hamNavi-bottom-wr">
+	                    <a href="#" class="hammenu-brochure">
+	                        빅데이터 플랫폼(Java, Spring)
+	                    </a>
+	                    <div class="HamBottom">
+	                        <p>kjy3309@gmail.com</p>
+	                        <p>010-9263-3309</p>
+	                    </div>
+	                </div>
 
-        
-        <div class="slider">            
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide ss1">
-                        <div class="container">
-                            <div class="row">
-                                <h3>세상을 놀라게 하는 따릉이</h3>
-                                <p>'저탄소 녹색 성장' 국가 주도 산업 실현 </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide ss2">
-                        <div class="container">
-                            <div class="row">
-                                <h3>공공자전거 실시간 현황</h3>
-                                <p>실시간 현황 및 자전거 대수 예측 서비스</p>
-                                <li class="total"><a href="rts">더 알아보기</a></li>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide ss3">
-                        <div class="container">
-                            <div class="row">
-                                <h3>공공자전거 재배치 분석</h3>
-                                <p>빅데이터 기반 효율적 자전거 재배치 분석 제안 </p>
-                                <li class="total"><a href="relocation">더 알아보기</a></li>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
             </div>
         </div>
+        <!-- 뭐하는건지 잘 모르겠음.. -->
+        <!-- <span id="Logo" style="display:none;">
+            <a href="/index.php"><img src="/images/logo.png" alt="로고"></a>
+        </span>
+        <div class="hamWrap2" style="display:none;">
+            <div id="ham" class="ham ham2">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div> -->
+    </div>
+
+    <!-- 메인페이지 -->
+    <!-- 메인콘텐츠 시작 { -->
         
+    <div id="Wrap">
+        <div class="container_wr">
+            <div id="Visual" class="swiper-container-mainvisual lt_bn swiper-container-initialized swiper-container-horizontal">
+                <div class="inner-box swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(-3806px, 0px, 0px);">
+                        <div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="2" style="width: 1903px;"></div>
+                        <!-- <div class="img-wr" id="img-wr04" style="opacity: 1;"></div>                                                          -->
 
-        <footer id="footer">
-            <div id="footer_sns">
-                <div class="container">
-
-                </div>
-            </div>
-            <div id="footer_infor">
-                <div class="container">
-                    <div class="row">
-                        <div class="footer_infor">
-                            <h2><img src=""></h2>
-                            <ul>
-                                <li><a href="#">회사소개</a></li>                                
-                                <li><a href="#">제휴/광고/부대사업 문의</a></li>
-                                <li><a href="#">이용약관</a></li>
-                                <li><a href="#">개인정보처리방침</a></li>
-                                <li><a href="#">고객센터</a></li>
-                                <li><a href="#">윤리경영</a></li>
-                            </ul>
-                            <address>
-                                <p>서울특별시 금천구 가산대로 156, 8층 구디아카데미 (가산동, 대륭테크노타운)<br><span class="bar2">대표자명 정현승</span> 개인정보보호 책임자 경영지원실 실장 유가희<br><span class="bar2">사업자등록번호 111-11-1111111</span> 통신판매업신고번호 제 111호</p>
-                                <p>Copyright 2014 by MegaboxJoongAng Inc. All right reserved</p>
-                            </address>
+                        <div class="swiper-slide swiper-slide-prev" data-swiper-slide-index="0" style="width: 1903px;">
+                            <div class="img-wr" style="background: url(&quot;resources/image/main2.jpg&quot;) center center / cover no-repeat; opacity: 0.7;"></div>
+                            <div class="text-wr">
+                                <p class="stit" style="opacity: 1; top: 0px;"># 따릉이 # 공공 자전거</p>
+                                <p class="tit" style="opacity: 1; left: 0px;">자전거와 함께<br>발전하는 녹색도시</p>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- //footer -->
-        <!-- 자바스크립트 라이브러리 -->
-        <script src="resources/js/jquery.min_1.12.4.js"></script>
-        <script src="resources/js/modernizr-custom.js"></script>
-        <script src="resources/js/swiper.min.js"></script>
-        <script>
-            var swiper = new Swiper('.swiper-container',{
-                pagination: {
-                    el: '.swiper-pagination',
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                autoplay: {
-                    delay: 5000,
-                },
-            });
 
-            $(".hover").mouseleave(
-            function () {
-                $(this).removeClass("hover");
+                        <div class="swiper-slide swiper-slide-active" data-swiper-slide-index="1" style="width: 1903px;">
+                            <div class="img-wr" id="img-wr01" style="background: url(&quot;resources/image/main1.jpg&quot;) center center / cover no-repeat;"></div>
+                            <div class="text-wr">
+                                <p class="stit" style="opacity: 1; top: 0px;"># 실시간현황 # 대여예측</p>
+                                <p class="tit" style="opacity: 1; left: 0px;">빅데이터 기반<br>공공자전거 대여 예측 서비스</p>
+                                <a href="/bbs/board.php?bo_table=work" class="gomore" style="opacity: 1; margin-top: -30px;">
+                                    더 알아보기
+                                    <span class="line"><span class="arrow"></span></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide swiper-slide-next" data-swiper-slide-index="2" style="width: 1903px;">
+                            <div class="img-wr" id="img-wr02" style="background: url(&quot;resources/image/main3.jpg&quot;) center center / cover no-repeat;"></div>
+                            <div class="text-wr">
+                                <p class="stit" style="opacity: 1; top: 0px;"># 재배치분석</p>
+                                <p class="tit" style="opacity: 1; left: 0px;">공공데이터 기반<br>공공자전거 재배치분석 제안</p>
+                                <a href="/bbs/board.php?bo_table=work" class="gomore" style="opacity: 1; margin-top: -30px;">
+                                    더 알아보기
+                                    <span class="line"><span class="arrow"></span></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-prev" data-swiper-slide-index="0" style="width: 1903px;">
+                            <div class="img-wr" style="background: url(&quot;/images/posco.jpg&quot;) center center / cover no-repeat; opacity: 1;"></div>
+
+                            </div>
+                        </div>
+                
+                    <div class="swiper-button-next vs-swiper-button-next swiper-button-white hidden770" tabindex="0" role="button" aria-label="Next slide"></div>
+                    <div class="swiper-button-prev vs-swiper-button-prev swiper-button-white hidden770" tabindex="0" role="button" aria-label="Previous slide"></div>
+                    
+            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+            <script>
+                var swiper = new Swiper('.swiper-container-mainvisual', {
+                    
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: '.vs-swiper-button-next',
+                        prevEl: '.vs-swiper-button-prev',
+                    },
+                    on: {
+                        slideChangeTransitionStart: function(){
+                        $('.stit').css({opacity:0, top:'-30px'});
+                        $('.tit').css({opacity:0, left:'-30px'});
+                        $('.gomore').css({opacity:0, marginTop:'-0px'});
+                        },
+                        slideChangeTransitionEnd: function(){
+                        $('.img-wr').delay(300).animate({opacity:1},500);
+                        $('.stit').stop()
+                        $('.tit').stop()
+                        $('.gomore').stop()
+                        $('.stit').delay(300).animate({opacity:1, top:0},500);
+                        $('.tit').delay(650).animate({opacity:1, left:0},500);
+                        $('.gomore').delay(1000).animate({opacity:1, marginTop:'-30px'},500);
+
+                        },
+                    },
+
+                    speed : 1500,
+                    loop: true
+                });
+
+                var modal = document.getElementById('id01');
+                var modal1 = document.getElementById('id02');
+
+
+                function openModal(type){
+                    if(type === 1){
+                        modal.style.display = "block";
+                    }else {
+                        modal1.style.display = "block";
+                    }
                 }
-            );
-            
-            var modal = document.getElementById('id01');
-            var modal1 = document.getElementById('id02');
+            </script>
+                    
+        </div>
+    </div>
+
+    <div id="Footer">
+        <ul class="Ft-list">
+            <li><a href="#">Notice</a><span style="margin-left:20px; cursor:default;">·</span></li>
+            <li><a href="#">Message</a></li>
+        </ul>
+        <p>서울특별시 금천구 가산디지털2로 , 구디아카데미<br>대표이사 : 정현승&nbsp;&nbsp;&nbsp;사업자등록번호 : 111-11-11111&nbsp;&nbsp;&nbsp;개인정보보호책임자 : 유가희<br>E-mail : kjy3309@gmail.com&nbsp;&nbsp;&nbsp;Tel : 010-1111-2222<br>Copyright ⓒ 2019 따릉이. All rights reserved</p>
+    </div>
 
 
-            function openModal(type){
-                if(type === 1){
-                    modal.style.display = "block";
-                }else {
-                    modal1.style.display = "block";
-                }
-            }
-        </script>
-    </body>
+</body>
 </html>

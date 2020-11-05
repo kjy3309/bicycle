@@ -37,4 +37,22 @@
 	<update id = "FreeBoardbHit" parameterType = "String">
 		UPDATE T3_bbs SET bHit = bHit+1 WHERE b_idx = #{b_idx}
 	</update>
+	
+	<update       
+      parameterType="board"
+      id ="FreeBoardupdate">
+      UPDATE T3_bbs
+      <set>
+         <if test="!subject.equals('')">subject=#{subject},</if>
+         <if test="!content.equals('')">content=#{content}</if>
+      </set>
+      WHERE b_idx = #{b_idx}
+   </update>
+   
+   <delete id="FreeBoarddeleteFile">
+      delete from T3_photo where b_idx = #{param1} and  NEWFILENAME = #{param2}
+   </delete>
+   
+   
+	
 </mapper>
