@@ -96,7 +96,7 @@
                 <div class="menu-wr">
                     <ul class="Mmain_menu">
                         <li class="item-has-children" style="top: 50px; opacity: 0;">
-                            <a href="#">NOTICE</a>
+                            <a href="FreeBoardlist?category=1">NOTICE</a>
                         </li>
                         <li class="item-has-children" style="top: 50px; opacity: 0;">
                             <a href="#">Real-time Status</a>
