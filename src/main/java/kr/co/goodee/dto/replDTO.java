@@ -2,6 +2,9 @@ package kr.co.goodee.dto;
 
 import java.sql.Date;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("repl")
 public class replDTO {
 	
 	private int r_idx;

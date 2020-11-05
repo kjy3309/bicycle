@@ -11,23 +11,57 @@
   
   </insert>
   
+  <!--글 list값 뿌려주려고 가져올때  -->
   <!--r_idx기준으로 그안에 r_comment를 가져오는거지 그러니까 댓글의 원래 내용  -->
-  <select id="replyUpdateForm" parameterType="String" resultType="String">
-  	SELECT r_comment FROM T3_REPLY WHERE b_idx=#{param1}
+  <select id="replyList" resultType="repl">
+  	SELECT * FROM T3_REPLY WHERE b_idx=#{param1} ORDER BY r_reg_date DESC
   </select>
   
-  <!-- r의 idx번호를 기준으로 T3_REPLY 테이블에 있는 r_comment내용을 새로가져온 값으로 바꾼다. -->
-  <update id="replyUpdate" parameterType="String">
-  	UPDATE T3_REPLY SET r_comment =#{r_comment} WHERE r_idx=#{r_idx}
+  <!--수정시 원래 내용 보여주게  -->
+  <!-- 글의 idx번호와 r_idx기준으로 그안에 r_comment를 가져오는거지 그러니까 댓글의 원래 내용  -->
+  <select id="replyUpdateForm" parameterType="hashmap" resultType="String">
+  	SELECT r_comment FROM T3_REPLY WHERE b_idx=#{b_idx} AND  r_idx=#{r_idx} 
+  </select>
+  
+  <!-- 수정완료--><!-- sql문 다시 수정해야할듯. -->
+  <!-- 글의 idx번호와 r의 idx번호를 기준으로 T3_REPLY 테이블에 있는 r_comment내용을 새로가져온 값으로 바꾼다. -->
+  <update id="replyUpdateSuccess" parameterType="hashmap">
+  	UPDATE T3_REPLY SET r_comment =#{r_comment} WHERE b_idx=#{b_idx} AND  r_idx=#{r_idx}
+ 
   
   </update>
   
-  <delete id="comDelete">
-  	DELETE FROM T3_REPLY WHERE r_idx=#{r_idx}
+  
+  <!-- 댓글 삭제  글번호와 댓글 번호를 기준으로-->
+  <delete id="comDelete" parameterType="hashmap">
+  	DELETE FROM T3_REPLY WHERE r_idx=#{r_idx} AND b_idx=#{b_idx}
   
   </delete>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <!-- 가져온것 -->
  
+ 	<!-- 글 상세보기 글과 파일 두개의 값을 가져와야하기때문에 쿼리문을 두개 씀-->
+	<select id="FreeBoarddetail" resultType = "board">
+		SELECT * FROM T3_bbs WHERE b_idx = #{param1}
+	</select>
+	
+	<select id ="FreeBoardfileList" resultType = "files">
+		SELECT * FROM T3_photo WHERE f_idx = #{param1}
+	</select>
   	
+  	
+  	<update id = "FreeBoardbHit" parameterType = "String">
+		UPDATE T3_bbs SET bHit = bHit+1 WHERE b_idx = #{b_idx}
+	</update>
   	
   	
 </mapper>
