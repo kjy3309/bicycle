@@ -184,6 +184,95 @@ public class FreeBoardService {
 		
 	}
 
+	public ModelAndView FreeBoardupdateForm(String idx, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		FreeBoardDTO dto = dao.FreeBoarddetail(idx);
+		mav.addObject("info",dto);
+		mav.setViewName("FreeBoardupdateForm");
+		return mav;
+	}
+
+	public HashMap<String, Object> FreeBoardupdateFileDelete(String fileName, HttpSession session) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		int success = 0;
+		
+		//1. Session 에서 delFileList 가져오기
+		HashMap<String, String> delFileList = (HashMap<String, String>) session.getAttribute("delFileList");
+		
+		//2. 실제 파일 삭제하기
+		String delFileName = root+"FreeBoard/"+fileName;
+		logger.info("지울 파일 경로는 ? : "+delFileName);
+		File file = new File(delFileName);
+		if(file.exists()) { // 파일이 존재 할 경우
+			logger.info("존재하니?");
+			if(file.delete()) { // 삭제 처리 후 성공하면
+				success = 1;
+				logger.info("엥?");
+			}else {
+				logger.info("이미 삭제된 상황");
+				success = 1;
+			}			
+		}
+		
+		//3. fileList 에서 삭제한 파일명 넣기
+		delFileList.put(fileName, fileName);
+		logger.info(delFileList.get(fileName));
+		logger.info("업로드 한 파일 개수 : "+delFileList.size());
+		
+		//4. session에 fileList 넣기
+		session.setAttribute("delFileList", delFileList);
+		
+		result.put("success", success);
+		logger.info("WLR?");
+		return result;
+	}
+ 
+	@Transactional
+	public ModelAndView FreeBoardupdate(HashMap<String, String> params, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		String page = "redirect:/FreeBoardlist";
+		FreeBoardDTO been = new FreeBoardDTO(); // 빈 사용 필수
+		been.setSubject(params.get("subject"));
+		been.setContent(params.get("content"));
+		been.setId(params.get("id"));
+		been.setB_idx(Integer.parseInt(params.get("b_idx")));
+		HashMap<String, Object> fileList = (HashMap<String, Object>) session.getAttribute("fileList");
+	    HashMap<String, Object> delFileList = (HashMap<String, Object>) session.getAttribute("delFileList");
+	      
+	    if(dao.FreeBoardupdate(been)==1) {
+	    	int size = fileList.size();
+	    	logger.info("저장할 파일 수 : "+size);
+	    	int delSize = delFileList.size();
+	    	logger.info("삭제할 파일 수 : "+delSize);
+	    	int b_idx = been.getB_idx();
+	    	logger.info("게시글 번호 : "+b_idx);
+	    	if(size>0) {
+	    		logger.info(b_idx+" 번 게시물");
+	    		for(String key : fileList.keySet()) {
+	    			dao.FreeBoardwriteFile(b_idx, (String) fileList.get(key),key);
+	    		}
+	    	}
+	    	if(delSize>0) {
+	    		for(String delKey : delFileList.keySet()) {
+	    			dao.FreeBoarddeleteFile(b_idx,delKey);
+	    			logger.info("성공 : "+delKey);
+	    		}
+	    	}
+	    	page = "redirect:/FreeBoardlist";
+	    }else {
+	    	for(String fileName : fileList.keySet()) {
+	    		File file = new File(root+"FreeBoard/"+fileName);
+	    		boolean success = file.delete();
+	    		logger.info(fileName+"삭제 결과"+success);
+	    	}
+	    }
+	    session.removeAttribute("fileList");
+	    
+	    mav.setViewName(page);
+	
+	    return mav;
+	}
+
 
 
 

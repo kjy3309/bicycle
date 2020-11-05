@@ -103,4 +103,27 @@ public class FreeBoardController {
 		
 		return "redirect:/FreeBoardlist";
 	}
+	
+	@RequestMapping(value = "/FreeBoardupdateForm", method = RequestMethod.GET)
+	public ModelAndView FreeBoardupdateForm(@RequestParam String idx, HttpSession Session) {
+		logger.info("수정 할 idx : "+idx);
+		HashMap<String, String> fileList = new HashMap<String,String>();
+		HashMap<String, String> delFileList = new HashMap<String,String>();
+		Session.setAttribute("fileList", fileList);
+		Session.setAttribute("delFileList", delFileList);
+		return service.FreeBoardupdateForm(idx,Session);
+	}
+	
+	@RequestMapping(value = "/FreeBoardupdateFileDelete", method = RequestMethod.GET)
+	 public @ResponseBody HashMap<String, Object> updateFileDelete(@RequestParam String fileName , HttpSession session) {
+	      logger.info("업데이트 파일삭제  요청"+fileName);   
+	      return service.FreeBoardupdateFileDelete(fileName,session);
+	}
+	
+	@RequestMapping(value = "/FreeBoardupdate", method = RequestMethod.POST)
+	 public ModelAndView FreeBoardupdate(@RequestParam HashMap<String, String> params, HttpSession Session) {
+	      logger.info("수정 글 번호는? "+params.get("b_idx"));
+	      logger.info("params : "+params);
+	      return service.FreeBoardupdate(params,Session);
+	}
 }
