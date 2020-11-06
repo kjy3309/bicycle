@@ -29,7 +29,7 @@
 	</table>
 	<a href = "FreeBoardlist">목록보기</a>
 	<a href="FreeBoarddelete?idx=${info.b_idx}">삭제</a>
-
+	<a href="FreeBoardupdateForm?idx=${info.b_idx}">수정</a>
 	
 	<table>
 		<tr>
@@ -37,13 +37,10 @@
 				<input type="hidden" id="id" name="id" value="test"/>
 				<!--  <input type="hidden" id="id" name="id" value="${session.getid}"/><!-- 로그인할때 세션에 저장된 아이디 가져와서 넣는다.-->
 				댓글<input type="text" name="content" id="content" placeholder="댓글을 작성해주세요."/>
-				
 				<input type="button" id="re_btn" value="작성"/>
-				
 			</td>
 		</tr>
 	</table>
-			
 			
 			
 	<table>
@@ -76,7 +73,7 @@
 		</c:forEach>
 	</table>
 	
-	<a href="FreeBoardupdateForm?idx=${info.b_idx}">수정</a>
+	
 
 </body>
 <script>
