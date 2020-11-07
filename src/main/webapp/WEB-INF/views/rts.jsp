@@ -3,36 +3,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10,user-scalable=yes">
     
-    <!-- css -->
-    <link rel="stylesheet" href="resources/css/reset.css">
+    <title>따릉이를 부탁해</title>
+    <link rel="stylesheet" href="resources/css/default.css">
     <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="resources/css/formmail.css">
+
+    <script src="resources/js/jquery-1.8.3.min.js"></script>
+    <script src="resources/js/jquery.menu.js"></script>
+    <script src="resources/js/jquery.easing.1.3.js"></script>
+    <script src="resources/js/common.js"></script>
+    <script src="resources/js/wrest.js"></script>
+    <script src="resources/js/visualShow.js"></script>
+    <script src="resources/js/main.js"></script>
+    <script src="resources/js/hamMenu.js"></script>
+    <script src="resources/js/responsive.js"></script>
+    <script src="resources/js/scrollAction.js"></script>
+    <script src="resources/js/jquery.rotate.js"></script>
+    <script src="resources/js/swiper.js"></script>
+    <script src="resources/js/swiper.min.js"></script>
+    <link rel="stylesheet" href="resources/css/main.css">
+    <link rel="stylesheet" href="resources/css/swiper.css">
+    <link rel="stylesheet" href="resources/css/swiper.min.css">
+    <link rel="stylesheet" href="resources/css/font-awesome.min.css">
     
     <style>
     	/* 실시간 현황 */
-		.new {padding: 100px 0; position: relative;}
-		.new h2 {font-size: 30px; font-weight: 500; margin-bottom: 20px;}
-		.new .new_left {position: relative; margin-right: 423px; height: 500px; background-size: cover;}
-		.new .new_right {position: absolute; right: 0; top: 165px; width: 400px; height: 500px; padding: 34px; box-sizing: border-box; background: #f0f0f0;}
-		.new .new_right .br_name {font-size: 28px; color: #000;}
-		.new .new_right .available {font-size: 12px; color: #333;}
-		.new .new_right .parkingBikeTotCnt {font-size: 14px; color: deeppink; text-decoration: underline; text-shadow: #2c2f34;}
+		.new {padding-bottom: 30px; position: relative;}
+		.new .new_top {position: relative; height: 800px; background-size: cover; margin-bottom: 30px;}
+		.new .new_bottom {display: none; position: relative;  height: 100%; padding-top: 150px;}
+		.new .new_bottom .br_name {font-size: 40px;}
+		.new .new_bottom .parkingBikeTotCnt {font-size: 40px;}
 		
-		.new .new_right .summary {font-size: 14px;}
-		.new .new_right .genre {padding-bottom: 3px;}
-		.new .new_right .age {padding-bottom: 10px;}
-		.new .new_right .desc {margin-bottom: 20px; height: 108px; overflow: hidden;}
-		
-		.new .new_right .select {overflow: hidden;}
-		.new .new_right .select .s1 {float: left; width: 49%; background: #000; margin-right: 2%;}
-		.new .new_right .select .s2 {float: left; width: 49%; background: #000;}
-		.new .new_right .select .s3 {float: left; width: 100%; margin-top: 2%;}
-		.new .new_right .btn {overflow: hidden; margin-top: 2%; text-align: center;}
-		.new .new_right .btn a {float: left; width: 49%; box-sizing: border-box; display: block; padding: 10px 30px 12px 30px;}
-		.new .new_right .btn a.white {background-color: #fff; margin-right: 2%; color: #3a0e6a; border: 1px solid #3a0e6a;}
-		.new .new_right .btn a.purple {background-color: #3a0e6a; color: #fff; border: 1px solid #6e40c4;}
 		
 		/* input style */
 		input {background-image: none;}
@@ -58,12 +62,19 @@
 
 		/* 셀렉트 메뉴 메인 스타일 */
 		.ui_select2 {
-		    width: 100%; box-sizing: border-box;
-		    background: #2c2f34; color: #fff;
-		    display: inline-block; height: 36px;
-		    border: 0 none; padding: 0 10px; margin: 0;
-		    font-family: inherit; font-size: inherit;
-		    vertical-align: middle; text-align: left;
+		    width: 150px;
+		    height: 55px;
+		    box-sizing: border-box;
+		    padding: 10px 15px;
+		    background: transparent;
+		    color: #fff;
+		    display: inline-block;
+		    border-radius: 4px;
+		    margin-left: 10px;
+		    font-family: inherit;
+		    font-size: inherit;
+		    vertical-align: middle;
+		    text-align: left;
 		    white-space: nowrap;
 		    background: #2c2f34 url(resources/image/down.svg) no-repeat right 10px center;
 		    background-size: 10px;
@@ -72,129 +83,208 @@
 		    appearance: none;
 		}
 		
-		/* 메인 텍스트 박스 스타일1 */
-		.ui_input3 {
-		    background: #2c2f34; color: #fff; border: 0; width: 100%; height: 36px; padding: 0 10px; cursor: pointer;
-		}
     </style>
     
     <!-- 웹 폰트 -->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&subset=korean" rel="stylesheet">
 </head>
 <body>
-    <header id="header">
-        <div class="container">
-            <div class="row">
-                <div class="header clearfix">
-                    <h1>
-                        <a href="./">
-                            <em><img src="resources/image/logo2.png" alt="logo"></em>
-                        </a>    
-                    </h1>
-                    <nav class="nav">                            
-                        <ul class="clearfix">
-                            <li><a href="#">Notice</a></li>
-                            <li><button>Login</button></li>
-                        </ul>
-                    </nav>    
+    <div id="Header" style="background-color: rgba(1, 1, 1, 0); height: 110px;">
+        <div class="logoWrap">
+            <a href="./"><img src="resources/image/logo.png" alt="로고" title=""></a>
+        </div>
+        <div class="login">
+            <button onclick="openModal(1)">Login</button>
+        </div>
+        <div id="id01" class="modal">
+            <form name="loginForm" class="modal-content animate" action="login" method="post">            
+                <div class="modal-container">
+                    <label for="id"><b>아이디</b></label>
+                    <input type="text" placeholder="아이디를 입력해주세요." name="id" required>
+                    <label for="pw"><b>패스워드</b></label>
+                    <input type="password" placeholder="패스워드를 입력해주세요." name="pw" required>                
+                    <button class="modal-button">로그인</button>
+                </div>
+
+                <div class="modal-container">
+                    <button  type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">취소</button>
+                    <p class = "p33">회원이 아니시라면  <span style="text-decoration: underline; cursor: pointer;" onclick="openModal(2)">회원가입</span> 하세요. <p>
+                </div>
+
+            </form>
+        </div>
+
+        <div id="id02" class="modal">
+            <form name="joinForm" class="modal-content animate" action="join" method="post">
+                <div class="modal-container">
+                    <label for="id"><b>아이디</b></label>
+                    <input type="text" placeholder="아이디를 입력해주세요." id="newId" name="id" onblur="checkedID()" required>
+                    <input type="hidden" name="checked" value="" />
+                    <label for="pw"><b>패스워드</b></label>
+                    <input type="password" placeholder="패스워드를 입력해주세요." name="pw" required>
+                    
+                    <label for="name"><b>이름</b></label>
+                    <input type="text" placeholder="이름을 입력해주세요." name="name" required>
+                    
+                    <label for="age"><b>나이</b></label>
+                    <input type="text" placeholder="나이를 입력해주세요." name="age" required>
+                    
+                    <label for="gender"><b>성별</b></label>
+                    <input type="text" placeholder="성별을 입력해주세요." name="gender" required>
+                    
+                    <label for="email"><b>이메일</b></label>
+                    <input type="text" placeholder="이메일을 입력해주세요." name="email" required>
+                    
+                    <button class="modal-button">회원가입</button>
+                </div>
+
+                <div class="modal-container">
+                    <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">취소</button>
+                </div>
+            </form>
+        </div>
+        <div class="hamWrap2">
+            <div id="ham" class="ham ham2">
+                <span style="top: 0px;"></span>
+                <span style="overflow: hidden; width: 24px; left: 0px;"></span>
+                <span style="top: 20px;"></span>
+            </div>	
+        </div>
+        <div class="hamNavibar" style="right: -1903px;">
+            <div class="inner-box">
+                <div class="menu-wr">
+                    <ul class="Mmain_menu">
+                        <li class="item-has-children" style="top: 50px; opacity: 0;">
+                            <a href="FreeBoardlist?category=1">공지사항</a>
+                        </li>
+                        <li class="item-has-children" style="top: 50px; opacity: 0;">
+                            <a href="rts">실시간 현황</a>
+                        </li>
+                        <li class="item-has-children" style="top: 50px; opacity: 0;">
+                            <a href="relocation">재배치 분석</a>
+                        </li>
+                    </ul>
+                    
+	                <div class="hamNavi-bottom-wr">
+	                    <a href="#" class="hammenu-brochure">
+	                        빅데이터 플랫폼(Java, Spring)
+	                    </a>
+	                    <div class="HamBottom">
+	                        <p>kjy3309@gmail.com</p>
+	                        <p>010-9263-3309</p>
+	                    </div>
+	                </div>
+
                 </div>
             </div>
         </div>
-    </header>
+    </div>
     <!-- //header -->
-	
-	<div class="container">
-		<div class="row">
-			<div class="new">
-				<h2>실시간 현황</h2>
-				<div class="new_left">
-					<div id="map" style="width:-webkit-fill-available;height:-webkit-fill-available;"></div>
+    
+	<div id="sub-Wrap">
+		<div class="container_wr" style="display:block; top:0;left:0; width:100%; height:100%; background: url(&quot;resources/image/bg01.png&quot;) no-repeat top/100% auto; z-index:-1;">
+			<div id="sub-Visual" class="sub-visual" style="height: 250px;">
+				<div class="inner-box cen1400">
+					<div class="subtitle-box">
+						<h3 id="contents-tit">
+							<span class="line"></span>
+							<span title="CONTACT">Real-time Status</span>
+						</h3>
+						<p id="contents-stit">
+							공공자전거 실시간 현황 & 대여 예측 분석
+						</p>
+					</div>
 				</div>
-				<div class="new_right">
-					<h3 class="br_name">대여소 이름</h3>
-					<li class="available">현재 대여 가능한 따릉이 : <span class="parkingBikeTotCnt"></span> 대</li>
-					
-					<div class="select">
-						<li class="ts-comment">빌릴 수 있는 따릉이의 갯수를 예측해서 알려드려요. </li>
-						<li>시간대를 선택하세요.</li>
-						<div class="s1">
-							<select id="hour" name="hour" class="ui_select2">
-								<option value="6">오전 6시</option>
-								<option value="7">오전 7시</option>
-								<option value="8">오전 8시</option>
-								<option value="9">오전 9시</option>
-								<option value="10">오전 10시</option>
-								<option value="11">오전 11시</option>
-								<option value="12">오전 12시</option>
-								<option value="13">오후 1시</option>
-								<option value="14">오후 2시</option>
-								<option value="15">오후 3시</option>
-								<option value="16">오후 4시</option>
-								<option value="17">오후 5시</option>
-								<option value="18">오후 6시</option>
-								<option value="19">오후 7시</option>
-								<option value="20">오후 8시</option>
-								<option value="21">오후 9시</option>
-							</select>
-						</div>
-						<div class="s2">
-							<select id="min" name="min" class="ui_select2">
-								<option value="0">0분</option>
-								<option value="10">10분</option>
-								<option value="20">20분</option>
-								<option value="30">30분</option>
-								<option value="40">40분</option>
-								<option value="50">50분</option>
-							</select>
-						</div>
-						<div class="s3">
-							<input type="button" id="utext" name="utext" class="ui_input3" value="검색하기">
-						</div>
+			</div>
+			
+			<div class="cen1400" style="position:relative;">
+				<!-- <!-- <p class="contact-text" style="text-align: right;"><span class="main-color">대여소</span>를 선택해주세요.</p> --> -->
+				<div class="new">
+				
+					<div class="new_top">
+						<div id="map" style="width:1400px;height:-webkit-fill-available; border: 5px solid #ebc166;"></div>
 					</div>
 					
-					<ul class="summary">
-						<li class="desc">잔여량 추이 영역</li>
-					</ul>
-					
+					<div class="new_bottom">
+						<div class="search1">
+							<p id="contents-stit" style="font-size:35px; text-align:center; margin-bottom: 100px;">
+								선택하신 <span class="main-color br_name"></span> 대여소에는 현재 <span class="main-color parkingBikeTotCnt"></span> 대의 따릉이가 대여 가능하네요!
+							</p>
+							
+							<p class="contact-text" style="text-align: center;">
+								대여소에 도착했을 때 따릉이가 없어 빌리지 못했던 적이 있으신가요? <br><br>
+								따릉이를 부탁해는 최근 2주 반납 및 대여 데이터를 분석하여 시간별 대여소의 잔여 따릉이 갯수를 예측해드립니다. <br><br>
+								원하는 시간대를 선택해주세요. (10분 간격 선택 가능)
+							</p>
+							<div class="form-group col-xs-12" style="text-align: center; margin-top: 100px;">
+								<select id="hour" name="hour" class="ui_select2">
+									<option value="6">오전 6시</option>
+									<option value="7">오전 7시</option>
+									<option value="8">오전 8시</option>
+									<option value="9">오전 9시</option>
+									<option value="10">오전 10시</option>
+									<option value="11">오전 11시</option>
+									<option value="12">오전 12시</option>
+									<option value="13">오후 1시</option>
+									<option value="14">오후 2시</option>
+									<option value="15">오후 3시</option>
+									<option value="16">오후 4시</option>
+									<option value="17">오후 5시</option>
+									<option value="18">오후 6시</option>
+									<option value="19">오후 7시</option>
+									<option value="20">오후 8시</option>
+									<option value="21">오후 9시</option>
+								</select>
+
+								<select id="min" name="min" class="ui_select2">
+									<option value="0">0분</option>
+									<option value="10">10분</option>
+									<option value="20">20분</option>
+									<option value="30">30분</option>
+									<option value="40">40분</option>
+									<option value="50">50분</option>
+								</select>
+							</div>
+								
+								
+							<div class="sendBtn" style="text-align:center;">
+								<div class="form-group col-xs-12">
+									<button type="submit" class="btn btn-success btn-lg btn-lg-custom">검색하기</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<footer id="footer">
-            <div id="footer_sns">
-                <div class="container">
 
-                </div>
-            </div>
-            <div id="footer_infor">
-                <div class="container">
-                    <div class="row">
-                        <div class="footer_infor">
-                            <h2><img src=""></h2>
-                            <ul>
-                                <li><a href="#">회사소개</a></li>                                
-                                <li><a href="#">제휴/광고/부대사업 문의</a></li>
-                                <li><a href="#">이용약관</a></li>
-                                <li><a href="#">개인정보처리방침</a></li>
-                                <li><a href="#">고객센터</a></li>
-                                <li><a href="#">윤리경영</a></li>
-                            </ul>
-                            <address>
-                                <p>서울특별시 금천구 가산대로 156, 8층 구디아카데미 (가산동, 대륭테크노타운)<br><span class="bar2">대표자명 정현승</span> 개인정보보호 책임자 경영지원실 실장 유가희<br><span class="bar2">사업자등록번호 111-11-1111111</span> 통신판매업신고번호 제 111호</p>
-                                <p>Copyright 2014 by MegaboxJoongAng Inc. All right reserved</p>
-                            </address>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+
+
+	<div id="Footer">
+        <ul class="Ft-list">
+            <li><a href="#">Notice</a><span style="margin-left:20px; cursor:default;">·</span></li>
+            <li><a href="#">Message</a></li>
+        </ul>
+        <p>서울특별시 금천구 가산디지털2로 , 구디아카데미<br>대표이사 : 정현승&nbsp;&nbsp;&nbsp;사업자등록번호 : 111-11-11111&nbsp;&nbsp;&nbsp;개인정보보호책임자 : 유가희<br>E-mail : kjy3309@gmail.com&nbsp;&nbsp;&nbsp;Tel : 010-1111-2222<br>Copyright ⓒ 2019 따릉이. All rights reserved</p>
+        <button type="button" id="top_btn">
+    		<img src="resources/image/icon_sctbtn.png" alt="상단버튼">
+	    </button>
+	    <script>
+	    $(function() {
+	        $("#top_btn").on("click", function() {
+	            $("html, body").animate({scrollTop:0}, '500');
+	            return false;
+	        });
+	    });
+	    </script>
+    </div>
 
 
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6ab62b1cf209eb782fab63d74ff76590"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6ab62b1cf209eb782fab63d74ff76590&libraries=LIBRARY"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
+	    var cont = $(".new_bottom");
 		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 		var options = { //지도를 생성할 때 필요한 기본 옵션
 		   center: new kakao.maps.LatLng(37.477923, 126.879088), //지도의 중심좌표.
@@ -233,7 +323,11 @@
 				dataType:'JSON',
 				data:{"id":id},
 				success:function(d){
-					console.log(d);
+					var target = $(this);
+			        var index = target.index();
+			        var section = cont.eq(index);
+			        var offset = section.offset().top;
+			        $("html,body").animate({ scrollTop:offset },1000,"easeInOutExpo");
 					$('.br_name').html(d.br_name);
 					$('.parkingBikeTotCnt').html(d.parkingBikeTotCnt);
 				},
@@ -241,6 +335,9 @@
 					console.log(e);
 				}
 			});
+			
+	        
+	        $('.new_bottom').fadeIn(4000);
 		}
 		
 		function bicycleRental(){
@@ -278,6 +375,23 @@
 		}
 		
 		bicycleRental();
+
+        var modal = document.getElementById('id01');
+        var modal1 = document.getElementById('id02');
+
+
+        function openModal(type){
+            if(type === 1){
+                modal.style.display = "block";
+            }else {
+                modal1.style.display = "block";
+            }
+		}
+		
+
+		$('.btn').click(function(){
+			$('.search1').fadeOut(500); // search1 결
+		});
     </script>
 </body>
 
