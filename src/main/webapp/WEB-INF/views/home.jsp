@@ -32,7 +32,7 @@
 <body>
     <div id="Header" style="background-color: rgba(1, 1, 1, 0); height: 110px;">
         <div class="logoWrap">
-            <a href="/index.php"><img src="resources/image/logo.png" alt="로고" title=""></a>
+            <a href="./"><img src="resources/image/logo.png" alt="로고" title=""></a>
         </div>
         <div class="login">
             <button onclick="openModal(1)">Login</button>
@@ -96,13 +96,13 @@
                 <div class="menu-wr">
                     <ul class="Mmain_menu">
                         <li class="item-has-children" style="top: 50px; opacity: 0;">
-                            <a href="#">NOTICE</a>
+                            <a href="FreeBoardlist?category=1">공지사항</a>
                         </li>
                         <li class="item-has-children" style="top: 50px; opacity: 0;">
-                            <a href="#">Real-time Status</a>
+                            <a href="rts">실시간 현황</a>
                         </li>
                         <li class="item-has-children" style="top: 50px; opacity: 0;">
-                            <a href="#">Relocation Analysis</a>
+                            <a href="relocation">재배치 분석</a>
                         </li>
                     </ul>
                     
@@ -155,7 +155,7 @@
                             <div class="text-wr">
                                 <p class="stit" style="opacity: 1; top: 0px;"># 실시간현황 # 대여예측</p>
                                 <p class="tit" style="opacity: 1; left: 0px;">빅데이터 기반<br>공공자전거 대여 예측 서비스</p>
-                                <a href="/bbs/board.php?bo_table=work" class="gomore" style="opacity: 1; margin-top: -30px;">
+                                <a href="rts" class="gomore" style="opacity: 1; margin-top: -30px;">
                                     더 알아보기
                                     <span class="line"><span class="arrow"></span></span>
                                 </a>
@@ -163,11 +163,11 @@
                         </div>
 
                         <div class="swiper-slide swiper-slide-next" data-swiper-slide-index="2" style="width: 1903px;">
-                            <div class="img-wr" id="img-wr02" style="background: url(&quot;resources/image/main3.jpg&quot;) center center / cover no-repeat;"></div>
+                            <div class="img-wr" id="img-wr02" style="background: url(&quot;resources/image/main4.jpg&quot;) center center / cover no-repeat;"></div>
                             <div class="text-wr">
                                 <p class="stit" style="opacity: 1; top: 0px;"># 재배치분석</p>
                                 <p class="tit" style="opacity: 1; left: 0px;">공공데이터 기반<br>공공자전거 재배치분석 제안</p>
-                                <a href="/bbs/board.php?bo_table=work" class="gomore" style="opacity: 1; margin-top: -30px;">
+                                <a href="relocation" class="gomore" style="opacity: 1; margin-top: -30px;">
                                     더 알아보기
                                     <span class="line"><span class="arrow"></span></span>
                                 </a>

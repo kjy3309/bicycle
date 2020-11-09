@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,11 +30,11 @@ public class FreeBoardController {
 	
 	//리스트
 	@RequestMapping(value = "/FreeBoardlist", method = RequestMethod.GET)
-	public String FreeBoardlist(Model model) {
+	public String FreeBoardlist(Model model, @RequestParam int category) {
 		
-		logger.info("리스트 요청!!");
+		logger.info("리스트 요청!!"+category);
 		
-		service.FreeBoardlist(model);
+		model.addAttribute("boardList", service.FreeBoardlist(category));
 		
 		return "FreeBoardlist";
 	}
@@ -100,9 +101,12 @@ public class FreeBoardController {
 	public String FreeBoarddelete(@RequestParam String idx) {
 		
 		logger.info("삭제 요청 : "+idx);
-		service.FreeBoarddelete(idx);
-		
-		return "redirect:/FreeBoardlist";
+		String page ="redirect:/FreeBoarddetail";
+		int success = service.FreeBoarddelete(idx);
+		if(success>0) {
+			page="redirect:/FreeBoardlist";
+		}
+		return page;
 	}
 	
 	@RequestMapping(value = "/FreeBoardupdateForm", method = RequestMethod.GET)
@@ -127,4 +131,8 @@ public class FreeBoardController {
 	      logger.info("params : "+params);
 	      return service.FreeBoardupdate(params,Session);
 	}
+	
+	
+	
+	
 }

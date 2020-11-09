@@ -36,15 +36,11 @@ public class FreeBoardService {
 	
 	private String fullpath = null; 
 	
-	public void FreeBoardlist(Model model) {
+	public ArrayList<FreeBoardDTO> FreeBoardlist(int category) {
 		
 		logger.info("자유게시판 리스트 서비스");
 		
-		ArrayList<FreeBoardDTO> FreeBoardlist= dao.FreeBoardlist();
-		
-		logger.info("파일 크기"+FreeBoardlist.size());
-		
-		model.addAttribute("FreeBoardlist",FreeBoardlist);
+		return dao.FreeBoardlist(category);
 		
 	}
 	
@@ -177,11 +173,11 @@ public class FreeBoardService {
 		return mav;
 	}
 
-	public void FreeBoarddelete(String idx) {
+	public int FreeBoarddelete(String idx) {
+		logger.info("서비스 왔나?"+ idx);
 		int success = dao.FreeBoarddelete(idx);
-		
-		logger.info("success 값은 ? :"+success);
-		
+		logger.info("success : " + success);
+		return success;
 	}
 
 	public ModelAndView FreeBoardupdateForm(String idx, HttpSession session) {
@@ -272,6 +268,7 @@ public class FreeBoardService {
 	
 	    return mav;
 	}
+
 
 
 
