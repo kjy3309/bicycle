@@ -36,11 +36,13 @@ public class FreeBoardService {
 	
 	private String fullpath = null; 
 	
-	public ArrayList<FreeBoardDTO> FreeBoardlist(int category) {
+	public ArrayList<FreeBoardDTO> FreeBoardlist(int category, int pages) {
 		
 		logger.info("자유게시판 리스트 서비스");
-		
-		return dao.FreeBoardlist(category);
+		int pagePerCnt = 17; // 페이지 당 보여줄 게시물 수
+		int end = pages * pagePerCnt;
+		int start = (end-pagePerCnt)+1;
+		return dao.FreeBoardlist(category,start,end);
 		
 	}
 	
@@ -268,6 +270,11 @@ public class FreeBoardService {
 	
 	    return mav;
 	}
+
+	public int pcfbList() {
+		return dao.pcfbList();
+	}
+
 
 
 

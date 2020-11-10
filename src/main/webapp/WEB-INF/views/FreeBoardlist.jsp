@@ -77,25 +77,29 @@
 	    </li>
 	  </ul>
 	</nav> -->
-	<div class="list-paging">  
-    	<c:if test="${page.curPage ne 1}">
-            <button onClick="fn_paging('${page.prevPage }')">prev</button> 
-        </c:if>             
-         <c:forEach var="pageNum" begin="${page.startPage }" end="${page.endPage }">
-          <c:choose>
-              <c:when test="${pageNum eq  page.curPage}">
-                  <button class="on" onClick="fn_paging('${pageNum }')">${pageNum }</button> 
-              </c:when>
-              <c:otherwise>
-                  <button onClick="fn_paging('${pageNum }')">${pageNum }</button> 
-              </c:otherwise>
-         </c:choose>
-     </c:forEach>
-     <c:if test="${page.curPage ne page.pageCnt && page.pageCnt > 0}">
-            	<button onClick="fn_paging('${page.nextPage }')">next</button> 
-        </c:if>
-    </div>    
-
+	
+	<div class="text-center">
+                <ul class="pagination">
+                   <li class="page-item">
+                      <a class="page-link" href="./FreeBoardlist?category=1&&page=1"><span>처음</span></a>
+                      <a id="prevPage" class="page-link" href="./FreeBoardlist?category=1&&page=${currPage-1}" aria-label="Previous">
+                         <span aria-hidden="true">&laquo;</span>
+                             <span class="sr-only">Previous</span>
+                      </a>
+                   </li>
+                   <li>
+                      <a>${currPage}</a>
+                   </li>
+                   <li class="page-item">
+                      <a id="nextPage" class="page-link" href="./FreeBoardlist?category=1&&page=${currPage+1}" aria-label="Next">
+                         <span aria-hidden="true">&raquo;</span>
+                             <span class="sr-only">Next</span>
+                      </a>
+                      <a class="page-link" href="./FreeBoardlist?category=1&&page=${endPage }"><span>끝</span></a>
+                   </li>
+                </ul>
+             </div>
+	
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
@@ -106,5 +110,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     -->
   </body>
-
+  <script>
+  var currPage = ${currPage};
+  var endPage = ${endPage};
+  
+  if(currPage==1){
+     document.getElementById("prevPage").style.display="none";
+  }
+  if(currPage >1 && currPage < endPage){
+     document.getElementById("prevPage").style.display="inline";
+     document.getElementById("nextPage").style.display="inline";
+  }
+  
+  if(currPage == endPage){
+     document.getElementById("nextPage").style.display="none";
+  }    
+  </script>
 </html>

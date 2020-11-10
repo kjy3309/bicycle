@@ -7,7 +7,7 @@ import kr.co.goodee.dto.FreeBoardDTO;
 
 public interface FreeBoardDAO {
 
-	ArrayList<FreeBoardDTO> FreeBoardlist(int category);
+	ArrayList<FreeBoardDTO> FreeBoardlist(int category, int start, int end);
 	
 	int FreeBoardwrite(FreeBoardDTO been);
 
@@ -24,5 +24,9 @@ public interface FreeBoardDAO {
 	int FreeBoardupdate(FreeBoardDTO been);
 
 	void FreeBoarddeleteFile(int b_idx, String delKey);
+
+	int pcfbList();
+
+	
 
 }

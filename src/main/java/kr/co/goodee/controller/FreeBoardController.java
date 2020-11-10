@@ -30,11 +30,31 @@ public class FreeBoardController {
 	
 	//리스트
 	@RequestMapping(value = "/FreeBoardlist", method = RequestMethod.GET)
-	public String FreeBoardlist(Model model, @RequestParam int category) {
+	public String FreeBoardlist(Model model, @RequestParam int category, @RequestParam String page) {
 		
-		logger.info("리스트 요청!!"+category);
+		// 페이지를 보내줬음
+		String pageParam = page; // pageParam 으로 받음
+        int pages =1;
+		if(pageParam != null) {
+           pages = Integer.parseInt(pageParam);
+        }
+        logger.info("pages : " +pageParam);
+        int totCount = service.pcfbList(); // 전체 게시물 수
+        int listCount =17;
+        int totPage = totCount/listCount;
+        
+        if(totCount % listCount > 0 ) {
+           totPage ++;
+        }
+        
+        if(totPage ==0) {
+           totPage=1;
+        }
 		
-		model.addAttribute("boardList", service.FreeBoardlist(category));
+		logger.info("리스트 요청!! 카테고리 : "+category);
+		model.addAttribute("currPage", pages);
+		model.addAttribute("endPage", totPage);
+		model.addAttribute("boardList", service.FreeBoardlist(category,pages));
 		
 		return "FreeBoardlist";
 	}
