@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10,user-scalable=yes">
-
+    <!-- 수정-->
     <title>따릉이를 부탁해</title>
     <link rel="stylesheet" href="resources/css/default.css">
     <link rel="stylesheet" href="resources/css/style.css">
@@ -75,7 +75,7 @@
 	                    <button class="modal-button login_button">로그인</button>
 	                </dd>               
                 </div>
-
+                
                 <div class="modal-container">
                     <button  type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">취소</button>
                     <p class = "p33">회원이 아니시라면  <span style="text-decoration: underline; cursor: pointer;" onclick="openModal(2)">회원가입</span> 하세요. <p>
