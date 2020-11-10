@@ -24,65 +24,133 @@
     <script src="resources/js/swiper.js"></script>
     <script src="resources/js/swiper.min.js"></script>
     <script src="resources/js/jquery.easing.1.3.js"></script>
+    <script src="resources/js/passcheck.js"></script>
     <link rel="stylesheet" href="resources/css/main.css">
     <link rel="stylesheet" href="resources/css/swiper.css">
     <link rel="stylesheet" href="resources/css/swiper.min.css">
     <link rel="stylesheet" href="resources/css/font-awesome.min.css">
+    
+    <style>
+    	.modal-container .msg{
+    		margin-bottom: 12px;
+		    font-size: 11px;
+		    line-height: 14px;
+		    color: #666;
+		    letter-spacing: -.17px;
+    	}
+    	lable {
+    		font-size: 13px;
+    	}
+    	.msg.dont {
+		    color: #ff1515;
+		}
+    </style>
 </head>
 <body>
     <div id="Header" style="background-color: rgba(1, 1, 1, 0); height: 110px;">
         <div class="logoWrap">
             <a href="./"><img src="resources/image/logo.png" alt="로고" title=""></a>
         </div>
-        <div class="login">
-            <button onclick="openModal(1)">Login</button>
-        </div>
+        <c:if test="${empty sessionScope.loginId }">
+        	<div class="login">
+           		<button onclick="openModal(1)">Login</button>
+	        </div>
+        </c:if>
+        
+        <c:if test="${not empty sessionScope.loginId }">
+        	<div class="login">
+           		<button onclick="">${sessionScope.loginId} 님</button>
+	        </div>
+        </c:if>
+        
         <div id="id01" class="modal">
-            <form name="loginForm" class="modal-content animate" action="login" method="post">            
+            <div name="loginForm" class="modal-content animate" >            
                 <div class="modal-container">
-                    <label for="id"><b>아이디</b></label>
-                    <input type="text" placeholder="아이디를 입력해주세요." name="id" required>
-                    <label for="pw"><b>패스워드</b></label>
-                    <input type="password" placeholder="패스워드를 입력해주세요." name="pw" required>                
-                    <button class="modal-button">로그인</button>
+                	<dd>
+	                    <label for="id"><b>아이디</b></label>
+	                    <input type="text" placeholder="아이디를 입력해 주세요." id="loginId" name="id" required>
+	                    <label for="pw"><b>패스워드</b></label>
+	                    <input type="password" placeholder="패스워드를 입력해 주세요." id="loginPw" name="pw" required>
+	                    <p class="msg dont"></p>
+	                    <button class="modal-button login_button">로그인</button>
+	                </dd>               
                 </div>
 
                 <div class="modal-container">
                     <button  type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">취소</button>
                     <p class = "p33">회원이 아니시라면  <span style="text-decoration: underline; cursor: pointer;" onclick="openModal(2)">회원가입</span> 하세요. <p>
                 </div>
-
-            </form>
+            </div>
         </div>
 
         <div id="id02" class="modal">
-            <form name="joinForm" class="modal-content animate" action="join" method="post">
+            <div name="joinForm" class="modal-content animate">
                 <div class="modal-container">
                     <label for="id"><b>아이디</b></label>
-                    <input type="text" placeholder="아이디를 입력해주세요." id="newId" name="id" onblur="checkedID()" required>
-                    <input type="hidden" name="checked" value="" />
-                    <label for="pw"><b>패스워드</b></label>
-                    <input type="password" placeholder="패스워드를 입력해주세요." name="pw" required>
+                    <dd>
+	                    <input type="text" placeholder="아이디를 입력해 주세요." id="newId" name="id" required>
+	                    <p class="msg">영문/숫자 4자 이상을 입력해 주세요.</p>
+					</dd>
+					
+                    <label for="pw"><b>비밀번호</b></label>
+                    <dd>
+	                    <input type="password" placeholder="비밀번호를 입력해 주세요." id="newPw" name="pw" required>
+	                    <p class="msg">8 ~ 20자의 영문 대/소문자, 숫자, 특수문자를 사용하세요.</p>
+                    </dd>
+                    
+                    <label for="pwConfirm"><b>비밀번호 재확인</b></label>
+                    <dd>
+	                    <input type="password" placeholder="비밀번호를 다시한번 입력해 주세요." id="newPwConfirm" name="pw" required>
+	                    <p class="msg"></p>
+                    </dd>
                     
                     <label for="name"><b>이름</b></label>
-                    <input type="text" placeholder="이름을 입력해주세요." name="name" required>
+                    <dd>
+                    	<input type="text" placeholder="이름을 입력해 주세요." id="newName" name="name" required>
+                    	<p class="msg">이름을 입력해주세요.</p>
+                    </dd>
                     
-                    <label for="age"><b>나이</b></label>
-                    <input type="text" placeholder="나이를 입력해주세요." name="age" required>
+                    <label for="birth"><b>생년월일</b></label>
+                    <dd class="date">
+                 		<select name="year" id="year" style="width:39.3%">
+                 		</select>
+                 		<select name="month" id="month" style="width:30%">
+                 		</select>
+                 		<select name="day" id="day" style="width:30%">
+                 		</select>
+                 		<p class="msg"></p>
+                    </dd>
                     
                     <label for="gender"><b>성별</b></label>
-                    <input type="text" placeholder="성별을 입력해주세요." name="gender" required>
+				    <dd class="two_selector">
+				        <label class="selector"><input type="radio" name="gender" value="M"><span>남자</span></label>
+				        <label class="selector"><input type="radio" name="gender" value="F"><span>여자</span></label>
+				        <p class="msg"></p>
+				    </dd>
+				    
                     
                     <label for="email"><b>이메일</b></label>
-                    <input type="text" placeholder="이메일을 입력해주세요." name="email" required>
+                    <dd>
+	                    <input type="text" placeholder="이메일을 입력해 주세요." name="email" id="email" required>
+	                    <p class="msg">이메일을 입력해주세요.</p>
+	                    <button class="btn_send_mail" style="display: none;">인증메일 전송하기</button>
+	                    <div class="auth_mail_box" style="display: none">
+				            <div class="input">
+				                <input id="certCode" type="text" class="number" maxlength="6" oninput="maxLengthCheck(this)" placeholder="인증번호">
+				            </div>
+				            <input type="button" class="btn_mail_auth" value="확인"> 
+				        </div>
+				        <p class="msg "></p>
+                    </dd>
                     
-                    <button class="modal-button">회원가입</button>
+                    <button class="regist_button modal-button">회원가입</button>
+                    <form name="complete" action="./" method="get" target="_self"></form>
                 </div>
 
                 <div class="modal-container">
                     <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">취소</button>
                 </div>
-            </form>
+            </div>
         </div>
         <div class="hamWrap2">
             <div id="ham" class="ham ham2">
@@ -119,17 +187,6 @@
                 </div>
             </div>
         </div>
-        <!-- 뭐하는건지 잘 모르겠음.. -->
-        <!-- <span id="Logo" style="display:none;">
-            <a href="/index.php"><img src="/images/logo.png" alt="로고"></a>
-        </span>
-        <div class="hamWrap2" style="display:none;">
-            <div id="ham" class="ham ham2">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div> -->
     </div>
 
     <!-- 메인페이지 -->
@@ -184,51 +241,6 @@
                     <div class="swiper-button-prev vs-swiper-button-prev swiper-button-white hidden770" tabindex="0" role="button" aria-label="Previous slide"></div>
                     
             <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
-            <script>
-                var swiper = new Swiper('.swiper-container-mainvisual', {
-                    
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable: true,
-                    },
-                    navigation: {
-                        nextEl: '.vs-swiper-button-next',
-                        prevEl: '.vs-swiper-button-prev',
-                    },
-                    on: {
-                        slideChangeTransitionStart: function(){
-                        $('.stit').css({opacity:0, top:'-30px'});
-                        $('.tit').css({opacity:0, left:'-30px'});
-                        $('.gomore').css({opacity:0, marginTop:'-0px'});
-                        },
-                        slideChangeTransitionEnd: function(){
-                        $('.img-wr').delay(300).animate({opacity:1},500);
-                        $('.stit').stop()
-                        $('.tit').stop()
-                        $('.gomore').stop()
-                        $('.stit').delay(300).animate({opacity:1, top:0},500);
-                        $('.tit').delay(650).animate({opacity:1, left:0},500);
-                        $('.gomore').delay(1000).animate({opacity:1, marginTop:'-30px'},500);
-
-                        },
-                    },
-
-                    speed : 1500,
-                    loop: true
-                });
-
-                var modal = document.getElementById('id01');
-                var modal1 = document.getElementById('id02');
-
-
-                function openModal(type){
-                    if(type === 1){
-                        modal.style.display = "block";
-                    }else {
-                        modal1.style.display = "block";
-                    }
-                }
-            </script>
                     
         </div>
     </div>
@@ -240,7 +252,74 @@
         </ul>
         <p>서울특별시 금천구 가산디지털2로 , 구디아카데미<br>대표이사 : 정현승&nbsp;&nbsp;&nbsp;사업자등록번호 : 111-11-11111&nbsp;&nbsp;&nbsp;개인정보보호책임자 : 유가희<br>E-mail : kjy3309@gmail.com&nbsp;&nbsp;&nbsp;Tel : 010-1111-2222<br>Copyright ⓒ 2019 따릉이. All rights reserved</p>
     </div>
+	
+    <script>
+        var swiper = new Swiper('.swiper-container-mainvisual', {
+            
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.vs-swiper-button-next',
+                prevEl: '.vs-swiper-button-prev',
+            },
+            on: {
+                slideChangeTransitionStart: function(){
+                $('.stit').css({opacity:0, top:'-30px'});
+                $('.tit').css({opacity:0, left:'-30px'});
+                $('.gomore').css({opacity:0, marginTop:'-0px'});
+                },
+                slideChangeTransitionEnd: function(){
+                $('.img-wr').delay(300).animate({opacity:1},500);
+                $('.stit').stop()
+                $('.tit').stop()
+                $('.gomore').stop()
+                $('.stit').delay(300).animate({opacity:1, top:0},500);
+                $('.tit').delay(650).animate({opacity:1, left:0},500);
+                $('.gomore').delay(1000).animate({opacity:1, marginTop:'-30px'},500);
+
+                },
+            },
+
+            speed : 1500,
+            loop: true
+        });
+
+       var modal = document.getElementById('id01');
+       var modal1 = document.getElementById('id02');
 
 
+        function openModal(type){
+            if(type === 1){
+                modal.style.display = "block";
+            }else {
+                modal1.style.display = "block";
+            }
+        }
+        
+        var today = new Date();
+        var toyear = parseInt(today.getFullYear ());
+        var start = toyear;
+        var end = toyear - 60;
+
+        $('#year').append("<option selected>년도</option>");
+        for (i=start;i>=end;i--) $('#year').append("<option value="+i+">"+i+"</option>");
+
+        $('#month').append("<option selected>월</option>");
+        for (i=1;i<=12;i++) $('#month').append("<option value="+i+">"+i+"</option>");
+
+        $('#day').append("<option selected>일</option>");
+        for (i=1;i<=31;i++) $('#day').append("<option value="+i+">"+i+"</option>");
+        
+        function maxLengthCheck(object){
+	        if (object.value.length > object.maxLength){
+	          //object.maxLength : 매게변수 오브젝트의 maxlength 속성 값입니다.
+	          object.value = object.value.slice(0, object.maxLength);
+	        }    
+        }
+    
+    </script>
+    <script src="resources/js/join.js"></script>
 </body>
 </html>
