@@ -21,26 +21,31 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.co.goodee.dao.FreeBoardDAO;
+import kr.co.goodee.dao.BoardDAO;
 import kr.co.goodee.dto.FileDTO;
-import kr.co.goodee.dto.FreeBoardDTO;
+import kr.co.goodee.dto.BoardDTO;
 
 @Service
-public class FreeBoardService {
+public class BoardService {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@Autowired FreeBoardDAO dao;
+	@Autowired BoardDAO dao;
 	
 	@Value("#{config['Globals.root']}") String root;
 	
 	private String fullpath = null; 
 	
-	public ArrayList<FreeBoardDTO> FreeBoardlist(int category) {
+
+	public ArrayList<BoardDTO> boardList(int category, int pages) {
 		
 		logger.info("자유게시판 리스트 서비스");
+		int pagePerCnt = 17; // 페이지 당 보여줄 게시물 수
+		int end = pages * pagePerCnt;
+		int start = (end-pagePerCnt)+1;
 		
-		return dao.FreeBoardlist(category);
+		return dao.boardList(category,start,end);
+
 		
 	}
 	
@@ -122,11 +127,12 @@ public class FreeBoardService {
 	public ModelAndView FreeBoardwrite(HashMap<String, String> params, HttpSession Session) {
 		ModelAndView mav = new ModelAndView();
 		String page = "redirect:/FreeBoardlist";
-		FreeBoardDTO been = new FreeBoardDTO(); // 빈 사용 필수
+		logger.info("왜 안되냐구 카테고리!"+params);
+		BoardDTO been = new BoardDTO(); // 빈 사용 필수
 		been.setSubject(params.get("subject"));
 		been.setContent(params.get("content"));
 		been.setId(params.get("id"));
-		
+		been.setCategory(Integer.parseInt(params.get("category")));
 		HashMap<String, Object> fileList = (HashMap<String, Object>) Session.getAttribute("FreeBoardfileList");
 		
 		if(dao.FreeBoardwrite(been) == 1) { // 글 등록 성공
@@ -158,7 +164,7 @@ public class FreeBoardService {
 		
 		dao.FreeBoardbHit(idx);
 		
-		FreeBoardDTO dto = dao.FreeBoarddetail(idx);
+		BoardDTO dto = dao.FreeBoarddetail(idx);
 		//파일을 만들때 하나 더 추가
 		ArrayList<FileDTO> fileList = dao.FreeBoardfileList(idx);
 		// 파일 크기 확인
@@ -182,7 +188,7 @@ public class FreeBoardService {
 
 	public ModelAndView FreeBoardupdateForm(String idx, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		FreeBoardDTO dto = dao.FreeBoarddetail(idx);
+		BoardDTO dto = dao.FreeBoarddetail(idx);
 		mav.addObject("info",dto);
 		mav.setViewName("FreeBoardupdateForm");
 		return mav;
@@ -227,7 +233,7 @@ public class FreeBoardService {
 	public ModelAndView FreeBoardupdate(HashMap<String, String> params, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		String page = "redirect:/FreeBoardlist";
-		FreeBoardDTO been = new FreeBoardDTO(); // 빈 사용 필수
+		BoardDTO been = new BoardDTO(); // 빈 사용 필수
 		been.setSubject(params.get("subject"));
 		been.setContent(params.get("content"));
 		been.setId(params.get("id"));
@@ -268,6 +274,11 @@ public class FreeBoardService {
 	
 	    return mav;
 	}
+
+	public int pcfbList() {
+		return dao.pcfbList();
+	}
+
 
 
 

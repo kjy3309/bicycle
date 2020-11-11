@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.goodee.dao.FreeBoardDAO">
-	<select id="FreeBoardlist" resultType = "board">
-		SELECT * FROM T3_bbs WHERE category=#{param1} ORDER BY b_idx DESC
+<mapper namespace="kr.co.goodee.dao.BoardDAO">
+	<select id="boardList" resultType = "board">
+		select rnum, b_idx, id, subject, content, reg_date, bHit FROM(SELECT ROW_NUMBER()OVER(ORDER BY b_idx DESC) AS rnum,
+		 b_idx, id, subject, content, reg_date, bHit FROM T3_bbs WHERE category=#{param1}) 
+		 WHERE rnum BETWEEN #{param2} AND #{param3}
 	</select>
 	
+	<!-- 나중에 id자리 test들어간 곳에 session뽑아서 넣어야한다.-->
 	<insert
 		parameterType = "board"
 		useGeneratedKeys = "true"
 		keyProperty="b_idx"
 		keyColumn = "b_idx"
 		id = "FreeBoardwrite">
-		INSERT INTO T3_bbs(b_idx,id,subject,content,bHit)
-			VALUES(seq_bbs.NEXTVAL,#{id},#{subject},#{content},0)
+		INSERT INTO T3_bbs(b_idx,id,subject,content,bHit,category)
+			VALUES(seq_bbs.NEXTVAL,'test',#{subject},#{content},0,#{category})
 	</insert>
 	
 	<insert id ="FreeBoardwriteFile">
@@ -22,6 +25,7 @@
 	</insert>
 	
 	<!-- 글 상세보기 글과 파일 두개의 값을 가져와야하기때문에 쿼리문을 두개 씀-->
+	
 	<select id="FreeBoarddetail" resultType = "board">
 		SELECT * FROM T3_bbs WHERE b_idx = #{param1}
 	</select>
@@ -52,5 +56,9 @@
    <delete id="FreeBoarddeleteFile">
       delete from T3_photo where b_idx = #{param1} and  NEWFILENAME = #{param2}
    </delete>
+   
+   <select resultType="int" id="pcfbList">
+		select COUNT(*) from t3_bbs where category=1
+	</select>
    
 </mapper>

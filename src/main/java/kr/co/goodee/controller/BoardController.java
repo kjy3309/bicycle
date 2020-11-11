@@ -18,25 +18,46 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.co.goodee.service.FreeBoardService;
+import kr.co.goodee.service.BoardService;
 
 @Controller
-public class FreeBoardController {
+public class BoardController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@Autowired FreeBoardService service;
+	@Autowired BoardService service;
 	
 	
 	//리스트
-	@RequestMapping(value = "/FreeBoardlist", method = RequestMethod.GET)
-	public String FreeBoardlist(Model model, @RequestParam int category) {
+	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
+	public String boardList(Model model, @RequestParam int category, @RequestParam String page) {
 		
-		logger.info("리스트 요청!!"+category);
+		// 페이지를 보내줬음
+		String pageParam = page; // pageParam 으로 받음
+        int pages =1;
+		if(pageParam != null) {
+           pages = Integer.parseInt(pageParam);
+        }
+        logger.info("pages : " +pageParam);
+        int totCount = service.pcfbList(); // 전체 게시물 수
+        int listCount =17;
+        int totPage = totCount/listCount;
+        
+        if(totCount % listCount > 0 ) {
+           totPage ++;
+        }
+        
+        if(totPage ==0) {
+           totPage=1;
+        }
 		
-		model.addAttribute("boardList", service.FreeBoardlist(category));
+		logger.info("리스트 요청!! 카테고리 : "+category);
+		model.addAttribute("category", category);
+		model.addAttribute("currPage", pages);
+		model.addAttribute("endPage", totPage);
+		model.addAttribute("boardList", service.boardList(category,pages));
 		
-		return "FreeBoardlist";
+		return "boardList";
 	}
 	
 	//글쓰기 페이지 이동
@@ -47,7 +68,7 @@ public class FreeBoardController {
 		//FreeBoardfileList 를 Session에 담아준다.
 		HashMap<String, String> FreeBoardfileList = new HashMap<String, String>();
 		Session.setAttribute("FreeBoardfileList", FreeBoardfileList);
-		
+		//model.addAttribute("category", category);
 		return "FreeBoardwriteForm";
 	}
 	
@@ -83,7 +104,15 @@ public class FreeBoardController {
 
 		logger.info("글쓰기 요청");
 		logger.info("params : "+params); //글쓰기 폼으로에서 haspmap 씀
-		
+		String session = (String) Session.getAttribute("userId");//세션가져와서
+		if(session.equals("admin")) {
+			
+			params.put("category", "0");
+			
+		}else {
+			
+			params.put("category", "1");
+		}
 		
 		return service.FreeBoardwrite(params,Session); //service에 그대로 전달
 	}
