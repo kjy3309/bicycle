@@ -88,7 +88,8 @@ public class FreeBoardController {
 		return service.FreeBoardwrite(params,Session); //service에 그대로 전달
 	}
 	
-	@RequestMapping(value = "/FreeBoarddetail", method = RequestMethod.GET)
+	// 여기 코드 수정 충돌 방지 위해 value 값 임의로 바꿈 나중에 다시 수정
+	@RequestMapping(value = "/0123", method = RequestMethod.GET)
 	public ModelAndView FreeBoarddetail(@RequestParam String idx) {
 		
 		logger.info("상세보기 요청"+idx);

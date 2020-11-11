@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.goodee.dao.MemberDAO">
+
+	<select id="idCheck" resultType = "int">
+		SELECT COUNT(id) FROM t3_member WHERE id = #{param1}
+	</select>
+	
+	<select id="emailCheck" resultType="String">
+		SELECT id FROM t3_member WHERE email = #{param1}
+	</select>
+	
+	<insert id="regist" parameterType="hashMap">
+		INSERT INTO t3_member
+			VALUES(#{id}, #{password},#{email},#{name},#{birth},#{gender})
+	</insert>
+	
+	<select id="login" resultType="String">
+		SELECT pw FROM t3_member WHERE id=#{param1} AND pw=#{param2}
+	</select>
+
+</mapper>
