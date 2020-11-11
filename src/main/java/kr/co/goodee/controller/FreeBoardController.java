@@ -30,11 +30,11 @@ public class FreeBoardController {
 	
 	//리스트
 	@RequestMapping(value = "/FreeBoardlist", method = RequestMethod.GET)
-	public String FreeBoardlist(Model model, @RequestParam int category) {
+	public String FreeBoardlist(Model model) {
 		
-		logger.info("리스트 요청!!"+category);
+		logger.info("리스트 요청!!");
 		
-		model.addAttribute("boardList", service.FreeBoardlist(category));
+		service.FreeBoardlist(model);
 		
 		return "FreeBoardlist";
 	}

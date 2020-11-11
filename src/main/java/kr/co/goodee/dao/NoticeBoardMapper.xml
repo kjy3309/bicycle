@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.goodee.dao.FreeBoardDAO">
-	<select id="FreeBoardlist" resultType = "board">
-		SELECT * FROM T3_bbs WHERE category=1 ORDER BY b_idx DESC
+<mapper namespace="kr.co.goodee.dao.NoticeBoardDAO">
+
+	<select id="NoticeBoardlist" resultType = "Notice">
+		SELECT * FROM T3_bbs WHERE category=0 ORDER BY b_idx DESC
 	</select>
-	
-	<insert
-		parameterType = "board"
+   
+   	<insert
+		parameterType = "Notice"
 		useGeneratedKeys = "true"
 		keyProperty="b_idx"
 		keyColumn = "b_idx"
-		id = "FreeBoardwrite">
-		INSERT INTO T3_bbs(b_idx,id,subject,content,bHit)
-			VALUES(seq_bbs.NEXTVAL,#{id},#{subject},#{content},0)
+		id = "NoticeBoardwrite">
+		INSERT INTO T3_bbs(b_idx,id,subject,content,bHit,category)
+			VALUES(seq_bbs.NEXTVAL,#{id},#{subject},#{content},0,0)
 	</insert>
 	
-	<insert id ="FreeBoardwriteFile">
+	<insert id ="NoticeBoardwriteFile">
 		INSERT INTO	T3_photo(f_idx,id,b_idx,oriFileName,newFileName)
 			VALUES(seq_photo.NEXTVAL,#{param1},#{param2},#{param3},#{param4})
 	</insert>
 	
 	<!-- 글 상세보기 글과 파일 두개의 값을 가져와야하기때문에 쿼리문을 두개 씀-->
-	<select id="FreeBoarddetail" resultType = "board">
+	<select id="NoticeBoarddetail" resultType = "Notice">
 		SELECT * FROM T3_bbs WHERE b_idx = #{param1}
 	</select>
 	
-	<select id ="FreeBoardfileList" resultType = "files">
+	<select id ="NoticeBoardfileList" resultType = "files">
 		SELECT * FROM T3_photo WHERE f_idx = #{param1}
 	</select>
-	
-	<delete id="FreeBoarddelete">
+
+	<delete id="NoticeBoarddelete">
 		DELETE FROM T3_bbs WHERE b_idx = #{param1}
 	</delete>
 	
-	<update id = "FreeBoardbHit" parameterType = "String">
+	<update id = "NoticeBoardbHit" parameterType = "String">
 		UPDATE T3_bbs SET bHit = bHit+1 WHERE b_idx = #{b_idx}
 	</update>
 	
 	<update       
-      parameterType="board"
-      id ="FreeBoardupdate">
+      parameterType="Notice"
+      id ="NoticeBoardupdate">
       UPDATE T3_bbs
       <set>
          <if test="!subject.equals('')">subject=#{subject},</if>
@@ -49,7 +50,7 @@
       WHERE b_idx = #{b_idx}
    </update>
    
-   <delete id="FreeBoarddeleteFile">
+     <delete id="NoticeBoarddeleteFile">
       delete from T3_photo where b_idx = #{param1} and  NEWFILENAME = #{param2}
    </delete>
    

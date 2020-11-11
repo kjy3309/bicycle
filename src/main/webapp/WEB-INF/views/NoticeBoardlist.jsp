@@ -45,7 +45,7 @@
    			table-layout: fixed;
    			padding-bottom: 10px;
    			margin-right : 17%;
-   			font-size : 13px;
+   			font-size : 15px;
    		}
    		
    		#drbtn{
@@ -190,11 +190,11 @@
 	    </tr>
 	  </thead>
 		<tbody>
-			<c:forEach items = "${FreeBoardlist}" var = "bbs">
+			<c:forEach items = "${NoticeBoardlist}" var = "bbs">
 				<tr>
 					<td>${bbs.b_idx}</td>
 					<td>
-						<a href ="FreeBoarddetail?idx=${bbs.b_idx}">${bbs.subject}</a>
+						<a href ="NoticeBoarddetail?idx=${bbs.b_idx}"><b>${bbs.subject}</b></a>
 					</td>
 					<td>${bbs.id}</td>
 					<td>${bbs.reg_date}</td>
@@ -205,7 +205,7 @@
   </table>
   </div>
   <table>
-  		<button id = "drbtn" type="button" class="btn btn-dark" onclick = "location.href='FreeBoardwriteForm'">글쓰기</button>
+  		<button id = "drbtn" type="button" class="btn btn-dark" onclick = "location.href='NoticeBoardwriteForm'">글쓰기</button>
   </table>
   <!-- 테이블 끝-->
     <!-- Optional JavaScript; choose one of the two! -->
@@ -228,49 +228,49 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     -->
     <script>
-	    var swiper = new Swiper('.swiper-container-mainvisual', {
-	        
-	        pagination: {
-	            el: '.swiper-pagination',
-	            clickable: true,
-	        },
-	        navigation: {
-	            nextEl: '.vs-swiper-button-next',
-	            prevEl: '.vs-swiper-button-prev',
-	        },
-	        on: {
-	            slideChangeTransitionStart: function(){
-	            $('.stit').css({opacity:0, top:'-30px'});
-	            $('.tit').css({opacity:0, left:'-30px'});
-	            $('.gomore').css({opacity:0, marginTop:'-0px'});
-	            },
-	            slideChangeTransitionEnd: function(){
-	            $('.img-wr').delay(300).animate({opacity:1},500);
-	            $('.stit').stop()
-	            $('.tit').stop()
-	            $('.gomore').stop()
-	            $('.stit').delay(300).animate({opacity:1, top:0},500);
-	            $('.tit').delay(650).animate({opacity:1, left:0},500);
-	            $('.gomore').delay(1000).animate({opacity:1, marginTop:'-30px'},500);
-	
-	            },
-	        },
-	
-	        speed : 1500,
-	        loop: true
-	    });
-	
-	    var modal = document.getElementById('id01');
-	    var modal1 = document.getElementById('id02');
-	
-	
-	    function openModal(type){
-	        if(type === 1){
-	            modal.style.display = "block";
-	        }else {
-	            modal1.style.display = "block";
-	        }
-	    }
+		    var swiper = new Swiper('.swiper-container-mainvisual', {
+		        
+		        pagination: {
+		            el: '.swiper-pagination',
+		            clickable: true,
+		        },
+		        navigation: {
+		            nextEl: '.vs-swiper-button-next',
+		            prevEl: '.vs-swiper-button-prev',
+		        },
+		        on: {
+		            slideChangeTransitionStart: function(){
+		            $('.stit').css({opacity:0, top:'-30px'});
+		            $('.tit').css({opacity:0, left:'-30px'});
+		            $('.gomore').css({opacity:0, marginTop:'-0px'});
+		            },
+		            slideChangeTransitionEnd: function(){
+		            $('.img-wr').delay(300).animate({opacity:1},500);
+		            $('.stit').stop()
+		            $('.tit').stop()
+		            $('.gomore').stop()
+		            $('.stit').delay(300).animate({opacity:1, top:0},500);
+		            $('.tit').delay(650).animate({opacity:1, left:0},500);
+		            $('.gomore').delay(1000).animate({opacity:1, marginTop:'-30px'},500);
+		
+		            },
+		        },
+		
+		        speed : 1500,
+		        loop: true
+		    });
+		
+		    var modal = document.getElementById('id01');
+		    var modal1 = document.getElementById('id02');
+		
+		
+		    function openModal(type){
+		        if(type === 1){
+		            modal.style.display = "block";
+		        }else {
+		            modal1.style.display = "block";
+		        }
+		    }
 		</script>
     <div id="Footer">
         <ul class="Ft-list">
