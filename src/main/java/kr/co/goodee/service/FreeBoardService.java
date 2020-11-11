@@ -124,11 +124,12 @@ public class FreeBoardService {
 	public ModelAndView FreeBoardwrite(HashMap<String, String> params, HttpSession Session) {
 		ModelAndView mav = new ModelAndView();
 		String page = "redirect:/FreeBoardlist";
+		logger.info("왜 안되냐구 카테고리!"+params);
 		FreeBoardDTO been = new FreeBoardDTO(); // 빈 사용 필수
 		been.setSubject(params.get("subject"));
 		been.setContent(params.get("content"));
 		been.setId(params.get("id"));
-		
+		been.setCategory(Integer.parseInt(params.get("category")));
 		HashMap<String, Object> fileList = (HashMap<String, Object>) Session.getAttribute("FreeBoardfileList");
 		
 		if(dao.FreeBoardwrite(been) == 1) { // 글 등록 성공

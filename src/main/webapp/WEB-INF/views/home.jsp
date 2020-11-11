@@ -96,7 +96,7 @@
                 <div class="menu-wr">
                     <ul class="Mmain_menu">
                         <li class="item-has-children" style="top: 50px; opacity: 0;">
-                            <a href="FreeBoardlist?category=1">공지사항</a>
+                            <a href="FreeBoardlist?category=1&&page=1">공지사항</a>
                         </li>
                         <li class="item-has-children" style="top: 50px; opacity: 0;">
                             <a href="rts">실시간 현황</a>

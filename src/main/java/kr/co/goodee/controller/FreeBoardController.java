@@ -67,7 +67,7 @@ public class FreeBoardController {
 		//FreeBoardfileList 를 Session에 담아준다.
 		HashMap<String, String> FreeBoardfileList = new HashMap<String, String>();
 		Session.setAttribute("FreeBoardfileList", FreeBoardfileList);
-		
+		//model.addAttribute("category", category);
 		return "FreeBoardwriteForm";
 	}
 	
@@ -103,7 +103,15 @@ public class FreeBoardController {
 
 		logger.info("글쓰기 요청");
 		logger.info("params : "+params); //글쓰기 폼으로에서 haspmap 씀
-		
+		String session = (String) Session.getAttribute("userId");//세션가져와서
+		if(session.equals("admin")) {
+			
+			params.put("category", "0");
+			
+		}else {
+			
+			params.put("category", "1");
+		}
 		
 		return service.FreeBoardwrite(params,Session); //service에 그대로 전달
 	}
