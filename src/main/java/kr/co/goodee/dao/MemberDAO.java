@@ -10,6 +10,6 @@ public interface MemberDAO {
 
 	int regist(HashMap<String, String> userInfo);
 
-	String login(String loginId, String loginPw);
+	String login(String loginId);
 
 }

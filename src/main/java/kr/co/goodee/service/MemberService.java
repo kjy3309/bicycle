@@ -157,7 +157,7 @@ public class MemberService {
 
 	public HashMap<String, Object> login(String loginId, String loginPw, HttpSession session) {
 		
-		String pw = dao.login(loginId, loginPw);
+		String pw = dao.login(loginId);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

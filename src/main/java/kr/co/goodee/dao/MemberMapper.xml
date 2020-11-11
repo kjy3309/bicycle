@@ -17,7 +17,7 @@
 	</insert>
 	
 	<select id="login" resultType="String">
-		SELECT pw FROM t3_member WHERE id=#{param1} AND pw=#{param2}
+		SELECT pw FROM t3_member WHERE id=#{param1}
 	</select>
 
 </mapper>

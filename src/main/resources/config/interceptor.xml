@@ -7,5 +7,15 @@
 		http://www.springframework.org/schema/mvc 
 		http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-
+   <mvc:interceptors>
+      <!-- 개별 인터셉터 -->
+      <mvc:interceptor>
+         <!-- 가로챌 요청(list) -->
+         <mvc:mapping path="/list"/>
+         <!-- 가로챌 요청(detail로 시작되는 요청) -->
+         <mvc:mapping path="/detail*"/>
+         <!-- 이동시킬 클래스 지정 -->
+         <bean class="kr.co.goodee.service.LoginInterceptor"/>
+      </mvc:interceptor>
+   </mvc:interceptors>
 </beans>
