@@ -123,6 +123,7 @@ public class BoardService {
 		
 		return result;
 	}
+	
 	@Transactional
 	public ModelAndView FreeBoardwrite(HashMap<String, String> params, HttpSession Session) {
 		ModelAndView mav = new ModelAndView();

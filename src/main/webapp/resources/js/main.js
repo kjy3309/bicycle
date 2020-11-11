@@ -1,4 +1,3 @@
-
 $(window).load(function(){
 	$('.loading-wrap').delay(700).fadeOut(200);
 	setTimeout(function() {
@@ -58,36 +57,6 @@ $(function(){
 	if(pcmo===1){// 0 ~ 768
 		$('.latest_cover').css({display: 'none'});
 	}// 0 ~ 768
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

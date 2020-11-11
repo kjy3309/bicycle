@@ -122,7 +122,7 @@ var validateId = function (userId) {
 
 // 아이디 중복 체크
 function validateDuplicationId(userId, callback) {
-    var url = 'idCheck';
+    var url = 'login/idCheck';
     $.ajax({
         "type":"POST",
         "url":url,
@@ -351,7 +351,7 @@ $('#email').each(function() {
         var userEmailHost = sp[1];
         $.ajax({
             "type":"POST",
-            "url":"validateEmail",
+            "url":"login/validateEmail",
             "data":{"userEmail":userEmail, "userEmailHost":userEmailHost, "email": $email.val()},
             "dataType":"json"
         }).done(function(resp) {
@@ -501,7 +501,7 @@ function regist(data) {
     console.log("여기까지 오나?");
     $.ajax({
         "type":"POST",
-        "url":"regist",
+        "url":"login/regist",
         "data":data.user,
         "dataType":"json"
     }).done(function(resp) {
@@ -566,7 +566,7 @@ $('button.login_button').on('click', function() {
     
     $.ajax({
         "type":"POST",
-        "url":"login",
+        "url":"login/",
         "data":{"loginId":loginId,"loginPw":loginPw},
         "dataType":"json"
     }).done(function(resp) {

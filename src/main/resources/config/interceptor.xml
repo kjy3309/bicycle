@@ -10,11 +10,11 @@
    <mvc:interceptors>
       <!-- 개별 인터셉터 -->
       <mvc:interceptor>
-         <!-- 가로챌 요청(list) -->
-         <mvc:mapping path="/list"/>
-         <!-- 가로챌 요청(detail로 시작되는 요청) -->
-         <mvc:mapping path="/detail*"/>
-         <!-- 이동시킬 클래스 지정 -->
+      	 <!-- 모든 경로에 대해 @Auth 어노테이션이 실행되도록 한다. -->
+         <mvc:mapping path="/**" /> 
+
+		 <!--  로그인 관련은 전부 예외 -->
+         <mvc:exclude-mapping path="/login/*"/>
          <bean class="kr.co.goodee.service.LoginInterceptor"/>
       </mvc:interceptor>
    </mvc:interceptors>
