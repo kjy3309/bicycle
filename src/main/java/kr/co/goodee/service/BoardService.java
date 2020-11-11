@@ -21,34 +21,35 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.co.goodee.dao.FreeBoardDAO;
-import kr.co.goodee.dao.NoticeBoardDAO;
+import kr.co.goodee.dao.BoardDAO;
 import kr.co.goodee.dto.FileDTO;
-import kr.co.goodee.dto.FreeBoardDTO;
-import kr.co.goodee.dto.NoticeBoardDTO;
+import kr.co.goodee.dto.BoardDTO;
 
 @Service
-public class NoticeBoardService {
+public class BoardService {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@Autowired NoticeBoardDAO dao;
+	@Autowired BoardDAO dao;
 	
 	@Value("#{config['Globals.root']}") String root;
 	
 	private String fullpath = null; 
 	
-	public void NoticeBoardlist(Model model) {
-			
-			logger.info("공지게시판 리스트 서비스");
-			
-			ArrayList<NoticeBoardDTO> NoticeBoardlist= dao.NoticeBoardlist();
-			
-			model.addAttribute("NoticeBoardlist",NoticeBoardlist);
+
+	public ArrayList<BoardDTO> boardList(int category, int pages) {
+		
+		logger.info("자유게시판 리스트 서비스");
+		int pagePerCnt = 17; // 페이지 당 보여줄 게시물 수
+		int end = pages * pagePerCnt;
+		int start = (end-pagePerCnt)+1;
+		
+		return dao.boardList(category,start,end);
+
 		
 	}
 	
-	public ModelAndView NoticeFileupload(MultipartFile file, HttpSession Session) {
+	public ModelAndView Fileupload(MultipartFile file, HttpSession Session) {
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -83,12 +84,12 @@ public class NoticeBoardService {
 		return mav;
 	}
 
-	public HashMap<String,Object> NoticeFileDelete(String fileName, HttpSession Session) {
+	public HashMap<String,Object> FileDelete(String fileName, HttpSession Session) {
 		HashMap<String,Object> result = new HashMap<String,Object>();
 		int success = 0;
 		
 		//1. Session 에서 fileList 가져오기
-		HashMap<String,String> fileList = (HashMap<String, String>) Session.getAttribute("NoticeBoardfileList");
+		HashMap<String,String> fileList = (HashMap<String, String>) Session.getAttribute("FreeBoardfileList");
 		
 		//2. 진짜 파일 삭제
 		String delFileName = root +"FreeBoard/"+fileName;
@@ -123,26 +124,27 @@ public class NoticeBoardService {
 		return result;
 	}
 	@Transactional
-	public ModelAndView NoticeBoardwrite(HashMap<String, String> params, HttpSession Session) {
+	public ModelAndView FreeBoardwrite(HashMap<String, String> params, HttpSession Session) {
 		ModelAndView mav = new ModelAndView();
-		String page = "redirect:/NoticeBoardlist";
-		NoticeBoardDTO been = new NoticeBoardDTO(); // 빈 사용 필수
+		String page = "redirect:/FreeBoardlist";
+		logger.info("왜 안되냐구 카테고리!"+params);
+		BoardDTO been = new BoardDTO(); // 빈 사용 필수
 		been.setSubject(params.get("subject"));
 		been.setContent(params.get("content"));
 		been.setId(params.get("id"));
+		been.setCategory(Integer.parseInt(params.get("category")));
+		HashMap<String, Object> fileList = (HashMap<String, Object>) Session.getAttribute("FreeBoardfileList");
 		
-		HashMap<String, Object> fileList = (HashMap<String, Object>) Session.getAttribute("NoticeBoardfileList");
-		
-		if(dao.NoticeBoardwrite(been) == 1) { // 글 등록 성공
+		if(dao.FreeBoardwrite(been) == 1) { // 글 등록 성공
 			int size = fileList.size();
 			logger.info("저장할 파일 수  : "+size);
 			int b_idx = been.getB_idx();
 			if(size>0) { //업로드 한 파일이 있다면
 				logger.info(b_idx+"번 게시물에 소속된 파일 등록");
 				for(String key : fileList.keySet()) {
-					dao.NoticeBoardwriteFile(b_idx,(String)fileList.get(key),key);
+					dao.FreeBoardwriteFile(b_idx,(String)fileList.get(key),key);
 				}
-				page = "redirect:/NoticeBoarddetail?b_idx="+b_idx;
+				page = "redirect:/FreeBoarddetail?b_idx="+b_idx;
 			}
 		}else {
 			for(String fileName : fileList.keySet()) {
@@ -157,14 +159,14 @@ public class NoticeBoardService {
 		return mav;
 	}
 @Transactional(isolation = Isolation.READ_COMMITTED)
-	public ModelAndView NoticeBoarddetail(String idx) {
+	public ModelAndView FreeBoarddetail(String idx) {
 		ModelAndView mav = new ModelAndView();
 		
-		dao.NoticeBoardbHit(idx);
+		dao.FreeBoardbHit(idx);
 		
-		NoticeBoardDTO dto = dao.NoticeBoarddetail(idx);
+		BoardDTO dto = dao.FreeBoarddetail(idx);
 		//파일을 만들때 하나 더 추가
-		ArrayList<FileDTO> fileList = dao.NoticeBoardfileList(idx);
+		ArrayList<FileDTO> fileList = dao.FreeBoardfileList(idx);
 		// 파일 크기 확인
 		logger.info("첨부된 파일 : "+fileList.size());
 		
@@ -172,27 +174,27 @@ public class NoticeBoardService {
 		// view 에 뿌리는 값
 		mav.addObject("info", dto);
 		// view 이름
-		mav.setViewName("NoticeBoarddetail");
+		mav.setViewName("FreeBoarddetail");
 		
 		return mav;
 	}
 
-	public int NoticeBoarddelete(String idx) {
+	public int FreeBoarddelete(String idx) {
 		logger.info("서비스 왔나?"+ idx);
-		int success = dao.NoticeBoarddelete(idx);
+		int success = dao.FreeBoarddelete(idx);
 		logger.info("success : " + success);
 		return success;
 	}
 
-	public ModelAndView NoticeBoardupdateForm(String idx, HttpSession session) {
+	public ModelAndView FreeBoardupdateForm(String idx, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		NoticeBoardDTO dto = dao.NoticeBoarddetail(idx);
+		BoardDTO dto = dao.FreeBoarddetail(idx);
 		mav.addObject("info",dto);
-		mav.setViewName("NoticeBoardupdateForm");
+		mav.setViewName("FreeBoardupdateForm");
 		return mav;
 	}
 
-	public HashMap<String, Object> NoticeBoardupdateFileDelete(String fileName, HttpSession session) {
+	public HashMap<String, Object> FreeBoardupdateFileDelete(String fileName, HttpSession session) {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		int success = 0;
 		
@@ -228,10 +230,10 @@ public class NoticeBoardService {
 	}
  
 	@Transactional
-	public ModelAndView NoticeBoardupdate(HashMap<String, String> params, HttpSession session) {
+	public ModelAndView FreeBoardupdate(HashMap<String, String> params, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		String page = "redirect:/NoticeBoardlist";
-		NoticeBoardDTO been = new NoticeBoardDTO(); // 빈 사용 필수
+		String page = "redirect:/FreeBoardlist";
+		BoardDTO been = new BoardDTO(); // 빈 사용 필수
 		been.setSubject(params.get("subject"));
 		been.setContent(params.get("content"));
 		been.setId(params.get("id"));
@@ -239,7 +241,7 @@ public class NoticeBoardService {
 		HashMap<String, Object> fileList = (HashMap<String, Object>) session.getAttribute("fileList");
 	    HashMap<String, Object> delFileList = (HashMap<String, Object>) session.getAttribute("delFileList");
 	      
-	    if(dao.NoticeBoardupdate(been)==1) {
+	    if(dao.FreeBoardupdate(been)==1) {
 	    	int size = fileList.size();
 	    	logger.info("저장할 파일 수 : "+size);
 	    	int delSize = delFileList.size();
@@ -249,16 +251,16 @@ public class NoticeBoardService {
 	    	if(size>0) {
 	    		logger.info(b_idx+" 번 게시물");
 	    		for(String key : fileList.keySet()) {
-	    			dao.NoticeBoardwriteFile(b_idx, (String) fileList.get(key),key);
+	    			dao.FreeBoardwriteFile(b_idx, (String) fileList.get(key),key);
 	    		}
 	    	}
 	    	if(delSize>0) {
 	    		for(String delKey : delFileList.keySet()) {
-	    			dao.NoticeBoarddeleteFile(b_idx,delKey);
+	    			dao.FreeBoarddeleteFile(b_idx,delKey);
 	    			logger.info("성공 : "+delKey);
 	    		}
 	    	}
-	    	page = "redirect:/NoticeBoardlist";
+	    	page = "redirect:/FreeBoardlist";
 	    }else {
 	    	for(String fileName : fileList.keySet()) {
 	    		File file = new File(root+"FreeBoard/"+fileName);
@@ -272,5 +274,14 @@ public class NoticeBoardService {
 	
 	    return mav;
 	}
+
+	public int pcfbList() {
+		return dao.pcfbList();
+	}
+
+
+
+
+
 
 }

@@ -196,95 +196,62 @@
       
     </div>
 
-    <!-- 메인페이지 -->
-    <!-- 메인콘텐츠 시작 { -->
-        
-    
-
-                       
-
-                                <div class="swiper-slide swiper-slide-next" data-swiper-slide-index="2" style="width: 1903px;">
-                            <div class="img-wr" id="img-wr02" style="background: url(&quot;resources/image/whiteBackground.png&quot;) center center / cover no-repeat;></div>
-                            <div class="text-wr">
-                                <p class="stit" style="opacity: 1; top: 0px;"></p>
-                                <p class="tit" style="opacity: 1; left: 0px;"><br></p>
-                                <a href="relocation" class="gomore" style="opacity: 1; margin-top: -30px;">
-                                    
-                                    <span class="line"><span class="arrow"></span></span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-prev" data-swiper-slide-index="0" style="width: 1903px;">
-                            <div class="img-wr" style="background: url(&quot;/images/posco.jpg&quot;) center center / cover no-repeat; opacity: 1;"></div>
-
-                            </div>
-                        </div>
-                
-                    
-                    
-            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
         
 
 	<div class="container">
-	<div id="detailpack">
-	
-		<table id="mainContent" >
-			
-			<input type="hidden" name="b_idx" value="${info.b_idx}"/>
-			<tr>
-				<th class="a" width="10%">작성자</th><td class="b">${info.id}</td>
-				<th class="a" width="10%">조회수</th><td class="b">${info.bHit}</td>
-			</tr>
-			
-			<tr><th class="a" width="10%">제목</th><td colspan="3">${info.subject}</td></tr>
-			<tr><th class="a" width="10%">내용</th><td colspan="3">${info.content}	</td></tr>
-		</table>
+		<div id="detailpack">
 		
-		<div>
-			<a href = "FreeBoardlist" ">목록보기</a>
-			<a href="FreeBoarddelete?idx=${info.b_idx}">삭제</a>
-			<a href="FreeBoardupdateForm?idx=${info.b_idx}">수정</a>
-		</div>
-		
-		<table id="replContent" class="table table-striped table-bordered table-hover table-condensed"  >
-			<tr>
-				<td colspan="4">
-					<input type="hidden" id="id" name="id" value="test"/>
-					<!--  <input type="hidden" id="id" name="id" value="${session.getid}"/><!-- 로그인할때 세션에 저장된 아이디 가져와서 넣는다.-->
-					댓글:&nbsp;&nbsp;<input type="text" name="content" id="content" placeholder="댓글을 작성해주세요."/>
-					<input type="button" id="re_btn" value="작성"  /></td>
-				
-			</tr>
-		
-				
-				
-			
-			<tr>
-				<th>아이디</th>
-				<th class="replContent">내용</th>
-				<th>날짜</th>
-				<th colspan="2"></th>
-			</tr>
-			
-			<c:forEach var ="repl" items="${repl_list}" >
+			<table id="mainContent" >
+				<input type="hidden" name="b_idx" value="${info.b_idx}"/>
 				<tr>
-					<td>${repl.id}</td>
-					
-					<td>
-						<input type="text"  id="${repl.r_idx}" value="${repl.r_comment}" style="border:0px" readonly class="replTextArea"/> 
-						<td id="repl_Oridate">${repl.r_reg_date}</td>
-					
-						
-					<td>
-						<input type="button" id="update${repl.r_idx}" value="수정"   onclick="replyUpdate1(${repl.r_idx})"/>
-						<input type="button" id="confirm${repl.r_idx}" value="확인" style="display:none"    onclick="replyUpdate2(${repl.r_idx})" />
-						<input type="button" id="re_delete" onclick="replyDelete(${repl.r_idx})" value="삭제" />
+					<th class="a" width="10%">작성자</th><td class="b">${info.id}</td>
+					<th class="a" width="10%">조회수</th><td class="b">${info.bHit}</td>
+				</tr>
+				
+				<tr><th class="a" width="10%">제목</th><td colspan="3">${info.subject}</td></tr>
+				<tr><th class="a" width="10%">내용</th><td colspan="3">${info.content}	</td></tr>
+			</table>
+			
+			<div>
+				<a href = "FreeBoardlist" ">목록보기</a>
+				<a href="FreeBoarddelete?idx=${info.b_idx}">삭제</a>
+				<a href="FreeBoardupdateForm?idx=${info.b_idx}">수정</a>
+			</div>
+			
+			<table id="replContent" class="table table-striped table-bordered table-hover table-condensed"  >
+				<tr>
+					<td colspan="4">
+						<input type="hidden" id="id" name="id" value="test"/>
+						<!--  <input type="hidden" id="id" name="id" value="${session.getid}"/><!-- 로그인할때 세션에 저장된 아이디 가져와서 넣는다.-->
+						댓글:&nbsp;&nbsp;<input type="text" name="content" id="content" placeholder="댓글을 작성해주세요."/>
+						<input type="button" id="re_btn" value="작성"  />
 					</td>
 				</tr>
-			</c:forEach>
-		</table>
-	
+				<tr>
+					<th>아이디</th>
+					<th class="replContent">내용</th>
+					<th>날짜</th>
+					<th colspan="2"></th>
+				</tr>
+				
+				<c:forEach var ="repl" items="${repl_list}" >
+					<tr>
+						<td>${repl.id}</td>
+						
+						<td>
+							<input type="text"  id="${repl.r_idx}" value="${repl.r_comment}" style="border:0px" readonly class="replTextArea"/> 
+							<td id="repl_Oridate">${repl.r_reg_date}
+						</td>
+							
+						<td>
+							<input type="button" id="update${repl.r_idx}" value="수정"   onclick="replyUpdate1(${repl.r_idx})"/>
+							<input type="button" id="confirm${repl.r_idx}" value="확인" style="display:none"    onclick="replyUpdate2(${repl.r_idx})" />
+							<input type="button" id="re_delete" onclick="replyDelete(${repl.r_idx})" value="삭제" />
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
 	</div>
 	
 	<div id="Footer">
@@ -294,11 +261,6 @@
         </ul>
         <p>서울특별시 금천구 가산디지털2로 , 구디아카데미<br>대표이사 : 정현승&nbsp;&nbsp;&nbsp;사업자등록번호 : 111-11-11111&nbsp;&nbsp;&nbsp;개인정보보호책임자 : 유가희<br>E-mail : kjy3309@gmail.com&nbsp;&nbsp;&nbsp;Tel : 010-1111-2222<br>Copyright ⓒ 2019 따릉이. All rights reserved</p>
     </div>
-
-
-	
-	
-	
 
 </body>
 <script>
@@ -328,11 +290,6 @@
 		      });
 		})
 				
-		
-		
-		
-		
-		
 	
 		//댓글수정1
 		 function replyUpdate1(idx){

@@ -4,8 +4,8 @@ import java.sql.Date;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias("notice")
-public class NoticeBoardDTO {
+@Alias("board")
+public class BoardDTO {
 
 	private int b_idx;
 	private String id;
@@ -14,6 +14,7 @@ public class NoticeBoardDTO {
 	private Date reg_date;
 	private int bHit;
 	private int category;
+	
 	public int getB_idx() {
 		return b_idx;
 	}
@@ -56,7 +57,6 @@ public class NoticeBoardDTO {
 	public void setCategory(int category) {
 		this.category = category;
 	}
-	
 	
 	
 }

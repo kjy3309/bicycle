@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kr.co.goodee.dto.FileDTO;
-import kr.co.goodee.dto.FreeBoardDTO;
+import kr.co.goodee.dto.BoardDTO;
 import kr.co.goodee.dto.replDTO;
 
 public interface replyDAO {
@@ -24,7 +24,7 @@ public interface replyDAO {
 	
 	boolean replyUpdateSuccess(HashMap<String, Object> param);//댓글 수정 완료
 	//-------------------------------------------------------------------------
-	FreeBoardDTO FreeBoarddetail(String idx);
+	BoardDTO FreeBoarddetail(String idx);
 
 	ArrayList<FileDTO> FreeBoardfileList(String idx);
 

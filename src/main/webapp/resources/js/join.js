@@ -580,3 +580,27 @@ $('button.login_button').on('click', function() {
     });
 	
 });
+
+/* 로그인 끝! ------------------------------------------------------------------------------------------------------- */
+
+/*  회원가입 날짜 그려주기, 글자 수 체크 */
+var today = new Date();
+var toyear = parseInt(today.getFullYear ());
+var start = toyear;
+var end = toyear - 60;
+
+$('#year').append("<option selected>년도</option>");
+for (i=start;i>=end;i--) $('#year').append("<option value="+i+">"+i+"</option>");
+
+$('#month').append("<option selected>월</option>");
+for (i=1;i<=12;i++) $('#month').append("<option value="+i+">"+i+"</option>");
+
+$('#day').append("<option selected>일</option>");
+for (i=1;i<=31;i++) $('#day').append("<option value="+i+">"+i+"</option>");
+
+function maxLengthCheck(object){
+    if (object.value.length > object.maxLength){
+      //object.maxLength : 매게변수 오브젝트의 maxlength 속성 값입니다.
+      object.value = object.value.slice(0, object.maxLength);
+    }    
+}

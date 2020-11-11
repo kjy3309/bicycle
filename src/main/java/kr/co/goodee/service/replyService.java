@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.goodee.dao.replyDAO;
 import kr.co.goodee.dto.FileDTO;
-import kr.co.goodee.dto.FreeBoardDTO;
+import kr.co.goodee.dto.BoardDTO;
 import kr.co.goodee.dto.replDTO;
 
 
@@ -69,7 +69,7 @@ public class replyService {
 		
 		dao.FreeBoardbHit(idx);
 		
-		FreeBoardDTO dto = dao.FreeBoarddetail(idx);
+		BoardDTO dto = dao.FreeBoarddetail(idx);
 		//파일을 만들때 하나 더 추가
 		ArrayList<FileDTO> fileList = dao.FreeBoardfileList(idx);
 		// 파일 크기 확인

@@ -3,18 +3,18 @@ package kr.co.goodee.dao;
 import java.util.ArrayList;
 
 import kr.co.goodee.dto.FileDTO;
-import kr.co.goodee.dto.FreeBoardDTO;
+import kr.co.goodee.dto.BoardDTO;
 
-public interface FreeBoardDAO {
+public interface BoardDAO {
 
 
-	ArrayList<FreeBoardDTO> FreeBoardlist(int category, int start, int end);
+	ArrayList<BoardDTO> boardList(int category, int start, int end);
 	
-	int FreeBoardwrite(FreeBoardDTO been);
+	int FreeBoardwrite(BoardDTO been);
 
 	void FreeBoardwriteFile(int b_idx, String string, String key);
 
-	FreeBoardDTO FreeBoarddetail(String idx);
+	BoardDTO FreeBoarddetail(String idx);
 
 	ArrayList<FileDTO> FreeBoardfileList(String idx);
 
@@ -22,7 +22,7 @@ public interface FreeBoardDAO {
 
 	void FreeBoardbHit(String idx);
 
-	int FreeBoardupdate(FreeBoardDTO been);
+	int FreeBoardupdate(BoardDTO been);
 
 	void FreeBoarddeleteFile(int b_idx, String delKey);
 

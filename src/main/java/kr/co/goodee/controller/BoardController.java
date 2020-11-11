@@ -18,19 +18,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.co.goodee.service.FreeBoardService;
+import kr.co.goodee.service.BoardService;
 
 @Controller
-public class FreeBoardController {
+public class BoardController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@Autowired FreeBoardService service;
+	@Autowired BoardService service;
 	
 	
 	//리스트
-	@RequestMapping(value = "/FreeBoardlist", method = RequestMethod.GET)
-	public String FreeBoardlist(Model model, @RequestParam int category, @RequestParam String page) {
+	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
+	public String boardList(Model model, @RequestParam int category, @RequestParam String page) {
 		
 		// 페이지를 보내줬음
 		String pageParam = page; // pageParam 으로 받음
@@ -52,11 +52,12 @@ public class FreeBoardController {
         }
 		
 		logger.info("리스트 요청!! 카테고리 : "+category);
+		model.addAttribute("category", category);
 		model.addAttribute("currPage", pages);
 		model.addAttribute("endPage", totPage);
-		model.addAttribute("boardList", service.FreeBoardlist(category,pages));
+		model.addAttribute("boardList", service.boardList(category,pages));
 		
-		return "FreeBoardlist";
+		return "boardList";
 	}
 	
 	//글쓰기 페이지 이동
