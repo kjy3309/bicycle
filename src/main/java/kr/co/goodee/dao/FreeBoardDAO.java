@@ -7,6 +7,7 @@ import kr.co.goodee.dto.FreeBoardDTO;
 
 public interface FreeBoardDAO {
 
+
 	ArrayList<FreeBoardDTO> FreeBoardlist(int category, int start, int end);
 	
 	int FreeBoardwrite(FreeBoardDTO been);

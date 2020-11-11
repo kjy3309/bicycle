@@ -29,7 +29,6 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/rts", method = RequestMethod.GET)
-
 	public String rts(Model model) {
 				
 		return "rts";

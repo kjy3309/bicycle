@@ -45,7 +45,7 @@
    			table-layout: fixed;
    			padding-bottom: 10px;
    			margin-right : 17%;
-   			font-size : 13px;
+   			font-size : 15px;
    		}
    		
    		#drbtn{
@@ -81,7 +81,7 @@
    	</style>
   </head>
   <body>
-    <div id="Header" style="background-color: darkgrey; height: 90px;">
+    <div id="Header" style="background-color: rgba(1, 1, 1, 0); height: 110px;">
         <div class="logoWrap">
             <a href="./"><img src="resources/image/logo.png" alt="로고" title=""></a>
         </div>
@@ -189,12 +189,12 @@
 	      <th scope="col" style = width:10%;>조회수</th>
 	    </tr>
 	  </thead>
-		<tbody style="background: #fff;">
-			<c:forEach items = "${FreeBoardlist}" var = "bbs">
+		<tbody>
+			<c:forEach items = "${NoticeBoardlist}" var = "bbs">
 				<tr>
 					<td>${bbs.b_idx}</td>
 					<td>
-						<a href ="FreeBoarddetail?idx=${bbs.b_idx}">${bbs.subject}</a>
+						<a href ="NoticeBoarddetail?idx=${bbs.b_idx}"><b>${bbs.subject}</b></a>
 					</td>
 					<td>${bbs.id}</td>
 					<td>${bbs.reg_date}</td>
@@ -205,53 +205,21 @@
   </table>
   </div>
   <table>
-  		<button id = "drbtn" type="button" class="btn btn-dark" onclick = "location.href='FreeBoardwriteForm'">글쓰기</button>
+  		<button id = "drbtn" type="button" class="btn btn-dark" onclick = "location.href='NoticeBoardwriteForm'">글쓰기</button>
   </table>
   <!-- 테이블 끝-->
     <!-- Optional JavaScript; choose one of the two! -->
-	<!-- <nav aria-label="...">
-	  <ul class="pagination">
-	    <li class="page-item disabled">
-	      <span class="page-link">이전</span>
-	    </li>
-	    <li class="page-item"><a class="page-link" href="#">1</a></li>
-	    <li class="page-item active" aria-current="page">
-	      <span class="page-link">
-	        2
-	        <span class="sr-only">(current)</span>
-	      </span>
-	    </li>
-	    <li class="page-item"><a class="page-link" href="#">3</a></li>
-	    <li class="page-item">
-	      <a class="page-link" href="#">다음</a>
-	    </li>
-	  </ul>
-	</nav> -->
-	
-	<div class="text-center">
-                <ul class="pagination">
-                   <li class="page-item">
-                      <a class="page-link" href="./FreeBoardlist?category=1&&page=1"><span>처음</span></a>
-                      <a id="prevPage" class="page-link" href="./FreeBoardlist?category=1&&page=${currPage-1}" aria-label="Previous">
-                         <span aria-hidden="true">&laquo;</span>
-                             <span class="sr-only">Previous</span>
-                      </a>
-                   </li>
-                   <li>
-                      <a>${currPage}</a>
-                   </li>
-                   <li class="page-item">
-                      <a id="nextPage" class="page-link" href="./FreeBoardlist?category=1&&page=${currPage+1}" aria-label="Next">
-                         <span aria-hidden="true">&raquo;</span>
-                             <span class="sr-only">Next</span>
-                      </a>
-                      <a class="page-link" href="./FreeBoardlist?category=1&&page=${endPage }"><span>끝</span></a>
-                   </li>
-                </ul>
-             </div>
-	
+		<nav aria-label="Page navigation example" id = navilist>
+		  <ul class="pagination">
+		    <li class="page-item"><a class="page-link" href="#">이전</a></li>
+		    <li class="page-item"><a class="page-link" href="#">1</a></li>
+		    <li class="page-item"><a class="page-link" href="#">2</a></li>
+		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		    <li class="page-item"><a class="page-link" href="#">다음</a></li>
+		  </ul>
+		</nav>
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
     <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
@@ -260,49 +228,49 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     -->
     <script>
-	    var swiper = new Swiper('.swiper-container-mainvisual', {
-	        
-	        pagination: {
-	            el: '.swiper-pagination',
-	            clickable: true,
-	        },
-	        navigation: {
-	            nextEl: '.vs-swiper-button-next',
-	            prevEl: '.vs-swiper-button-prev',
-	        },
-	        on: {
-	            slideChangeTransitionStart: function(){
-	            $('.stit').css({opacity:0, top:'-30px'});
-	            $('.tit').css({opacity:0, left:'-30px'});
-	            $('.gomore').css({opacity:0, marginTop:'-0px'});
-	            },
-	            slideChangeTransitionEnd: function(){
-	            $('.img-wr').delay(300).animate({opacity:1},500);
-	            $('.stit').stop()
-	            $('.tit').stop()
-	            $('.gomore').stop()
-	            $('.stit').delay(300).animate({opacity:1, top:0},500);
-	            $('.tit').delay(650).animate({opacity:1, left:0},500);
-	            $('.gomore').delay(1000).animate({opacity:1, marginTop:'-30px'},500);
-	
-	            },
-	        },
-	
-	        speed : 1500,
-	        loop: true
-	    });
-	
-	    var modal = document.getElementById('id01');
-	    var modal1 = document.getElementById('id02');
-	
-	
-	    function openModal(type){
-	        if(type === 1){
-	            modal.style.display = "block";
-	        }else {
-	            modal1.style.display = "block";
-	        }
-	    }
+		    var swiper = new Swiper('.swiper-container-mainvisual', {
+		        
+		        pagination: {
+		            el: '.swiper-pagination',
+		            clickable: true,
+		        },
+		        navigation: {
+		            nextEl: '.vs-swiper-button-next',
+		            prevEl: '.vs-swiper-button-prev',
+		        },
+		        on: {
+		            slideChangeTransitionStart: function(){
+		            $('.stit').css({opacity:0, top:'-30px'});
+		            $('.tit').css({opacity:0, left:'-30px'});
+		            $('.gomore').css({opacity:0, marginTop:'-0px'});
+		            },
+		            slideChangeTransitionEnd: function(){
+		            $('.img-wr').delay(300).animate({opacity:1},500);
+		            $('.stit').stop()
+		            $('.tit').stop()
+		            $('.gomore').stop()
+		            $('.stit').delay(300).animate({opacity:1, top:0},500);
+		            $('.tit').delay(650).animate({opacity:1, left:0},500);
+		            $('.gomore').delay(1000).animate({opacity:1, marginTop:'-30px'},500);
+		
+		            },
+		        },
+		
+		        speed : 1500,
+		        loop: true
+		    });
+		
+		    var modal = document.getElementById('id01');
+		    var modal1 = document.getElementById('id02');
+		
+		
+		    function openModal(type){
+		        if(type === 1){
+		            modal.style.display = "block";
+		        }else {
+		            modal1.style.display = "block";
+		        }
+		    }
 		</script>
     <div id="Footer">
         <ul class="Ft-list">
@@ -312,20 +280,5 @@
         <p>서울특별시 금천구 가산디지털2로 , 구디아카데미<br>대표이사 : 정현승&nbsp;&nbsp;&nbsp;사업자등록번호 : 111-11-11111&nbsp;&nbsp;&nbsp;개인정보보호책임자 : 유가희<br>E-mail : kjy3309@gmail.com&nbsp;&nbsp;&nbsp;Tel : 010-1111-2222<br>Copyright ⓒ 2019 따릉이. All rights reserved</p>
     </div>
   </body>
-  <script>
-  var currPage = ${currPage};
-  var endPage = ${endPage};
-  
-  if(currPage==1){
-     document.getElementById("prevPage").style.display="none";
-  }
-  if(currPage >1 && currPage < endPage){
-     document.getElementById("prevPage").style.display="inline";
-     document.getElementById("nextPage").style.display="inline";
-  }
-  
-  if(currPage == endPage){
-     document.getElementById("nextPage").style.display="none";
-  }    
-  </script>
+
 </html>
