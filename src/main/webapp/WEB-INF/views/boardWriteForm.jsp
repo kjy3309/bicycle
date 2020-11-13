@@ -52,16 +52,16 @@
 	</style>
 </head>
 <body>
-	<form action = "FreeBoardwrite" method="post">
 	
 	
-
+	<form action = "freeBoardWrite" method="post">
 	<table class = "board"  style="text-align: center; border: 1px solid #dddddd; width:50%;" id="writeFormTable">
 		
 		<tr>
 		<!--session.get("userId") 세션에서 가져와서 작성자에 value값으로 넣어줘야하남...-->
 			<th width="150px" class="a">작성자</th>
-			<td class="b"><input type = "text" name ="id" /></td>	
+			<td class="b"><p>${loginId}</p></td>
+			<input name="id" type="hidden" value="${loginId }"/>	
 		</tr>
 		<tr>
 			<th width="150px" class="a">제목</th>
@@ -100,7 +100,7 @@
 </body>
 <script>
 	function fileUp(){ // 파일 업로드 클릭시
-		var FreeBoardWindow = window.open('FileuploadForm','파일업로드','width=500,height=150');
+		var FreeBoardWindow = window.open('fileUploadForm','파일업로드','width=500,height=150');
 	}
 
 	function save(){
@@ -109,14 +109,14 @@
 		$("form").submit();
 		
 		
-		location.href = "/FreeBoardlist?category=1&&page=1";
+		//location.href = "/FreeBoardlist?category=1&&page=1";
 	}
 	
 	function del(elem){
 		console.log(elem);
 		var fileName = elem.id.split("/")[1];
 		$.ajax({
-			url:'FreeBoardfileDelete',
+			url:'boardFileDelete',
 			type : 'get',
 			data : {'fileName' : fileName},
 			dataType : 'json',

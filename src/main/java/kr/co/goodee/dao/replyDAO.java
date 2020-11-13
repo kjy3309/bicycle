@@ -24,11 +24,11 @@ public interface replyDAO {
 	
 	boolean replyUpdateSuccess(HashMap<String, Object> param);//댓글 수정 완료
 	//-------------------------------------------------------------------------
-	BoardDTO FreeBoarddetail(String idx);
+	BoardDTO boardDetail(String idx,int category);
 
-	ArrayList<FileDTO> FreeBoardfileList(String idx);
+	ArrayList<FileDTO> boardFileList(String idx);
 
-	void FreeBoardbHit(String idx);
+	void boardbHit(String idx);
 
 	ArrayList<replDTO> replyList(String idx);
 

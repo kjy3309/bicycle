@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.goodee.dao.BoardDAO">
+
 	<select id="boardList" resultType = "board">
 		select rnum, b_idx, id, subject, content, reg_date, bHit FROM(SELECT ROW_NUMBER()OVER(ORDER BY b_idx DESC) AS rnum,
 		 b_idx, id, subject, content, reg_date, bHit FROM T3_bbs WHERE category=#{param1}) 
@@ -14,51 +15,56 @@
 		useGeneratedKeys = "true"
 		keyProperty="b_idx"
 		keyColumn = "b_idx"
-		id = "FreeBoardwrite">
+		id = "freeBoardWrite">
 		INSERT INTO T3_bbs(b_idx,id,subject,content,bHit,category)
 			VALUES(seq_bbs.NEXTVAL,'test',#{subject},#{content},0,#{category})
 	</insert>
 	
-	<insert id ="FreeBoardwriteFile">
+	<insert id ="boardWriteFile">
 		INSERT INTO	T3_photo(f_idx,id,b_idx,oriFileName,newFileName)
 			VALUES(seq_photo.NEXTVAL,#{param1},#{param2},#{param3},#{param4})
 	</insert>
 	
 	<!-- 글 상세보기 글과 파일 두개의 값을 가져와야하기때문에 쿼리문을 두개 씀-->
 	
-	<select id="FreeBoarddetail" resultType = "board">
+	<select id="boardDetail" resultType = "board">
 		SELECT * FROM T3_bbs WHERE b_idx = #{param1}
 	</select>
 	
-	<select id ="FreeBoardfileList" resultType = "files">
+	<select id ="boardFileList" resultType = "files">
 		SELECT * FROM T3_photo WHERE f_idx = #{param1}
 	</select>
 	
-	<delete id="FreeBoarddelete">
-		DELETE FROM T3_bbs WHERE b_idx = #{param1}
+	<delete id="boardDelete">
+		DELETE FROM T3_bbs WHERE b_idx = #{param1} AND category =#{param2}
 	</delete>
 	
-	<update id = "FreeBoardbHit" parameterType = "String">
+	<update id = "boardbHit" parameterType = "String">
 		UPDATE T3_bbs SET bHit = bHit+1 WHERE b_idx = #{b_idx}
 	</update>
 	
-	<update       
-      parameterType="board"
-      id ="FreeBoardupdate">
-      UPDATE T3_bbs
-      <set>
-         <if test="!subject.equals('')">subject=#{subject},</if>
-         <if test="!content.equals('')">content=#{content}</if>
-      </set>
-      WHERE b_idx = #{b_idx}
+	<update parameterType="board" id ="boardUpdate">
+      UPDATE T3_bbs SET
+      <if test="!subject.equals('')"> 
+      	subject=#{subject},
+      </if>
+      <if test="!content.equals('')">
+      	content=#{content}
+      </if> 
+      WHERE b_idx = #{b_idx} 
    </update>
    
-   <delete id="FreeBoarddeleteFile">
+   <delete id="boardDeleteFile">
       delete from T3_photo where b_idx = #{param1} and  NEWFILENAME = #{param2}
    </delete>
    
    <select resultType="int" id="pcfbList">
 		select COUNT(*) from t3_bbs where category=1
 	</select>
+   
+   <select id="packCount" resultType="int">
+   		SELECT count(*) FROM T3_bbs WHERE category=#{param1} 
+   
+   </select>
    
 </mapper>

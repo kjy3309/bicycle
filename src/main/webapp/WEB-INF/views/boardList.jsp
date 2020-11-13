@@ -199,10 +199,10 @@
 	<div class="sub_p_nav">
 		<ul class="page_nav nav_sec2">
 			<li>
-				<a href="boardList?category=0&&page=1" class="active_p_nav">뉴스 &amp; 공지</a>
+				<a href="boardList?category=0&&page=1" class="active_p_nav" id="notice">뉴스 &amp; 공지</a>
 			</li>
 			<li>
-				<a href="boardList?category=1&&page=1" >자유게시판</a>
+				<a href="boardList?category=1&&page=1" id="free">자유게시판</a>
 			</li>
 		</ul>
 	</div>
@@ -215,12 +215,12 @@
 	
 		<div class="bbs_list">
 			<div class="bbs_top">
-				<p class="total">총 16건</p>
-				<form name="formSearch" action="notice_list.asp#container">
+				<p class="total">총 :${count} 건</p>
+				
 					<div class="write_button">
-						<button style="background: #fff; padding: 16px;">글쓰기</button>
+						<button style="background: #fff; padding: 16px;" onclick = "location.href = 'boardWriteForm?category=${category}' ">글쓰기</button>
 					</div>
-				</form>
+				
 			</div>
 			<div class="list_table bd_b">
 				<table summary="공지사항 리스트">
@@ -236,7 +236,8 @@
 							<tr>
 								<td>${bbs.b_idx}</td>
 								<td class="td_left">
-									<a href ="FreeBoarddetail?idx=${bbs.b_idx}">${bbs.subject}</a>
+									<a href ="boardDetail?idx=${bbs.b_idx}&&category=${category}&&page=${currPage}">${bbs.subject}</a>
+									<!--★★★★★★★★★★★★★ ★★★★★★★★★★★★★  ★★★★★★★★★★★★★ category값을 못불러옴. ★★★★★★★★★★★★★  ★★★★★★★★★★★★★   -->
 								</td>
 								<td>${bbs.id}</td>
 								<td>${bbs.reg_date}</td>
@@ -318,7 +319,11 @@
 	  
 	  if(currPage == endPage){
 	     document.getElementById("nextPage").style.display="none";
-	  }    
+	  }   
+	  
+	 
+	  
+	  
   </script>
   <script src="resources/js/passcheck.js"></script>
   <script src="resources/js/join.js"></script>

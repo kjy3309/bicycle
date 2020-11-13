@@ -201,6 +201,7 @@
 	<div class="container">
 		<div id="detailpack">
 		
+		
 			<table id="mainContent" >
 				<input type="hidden" name="b_idx" value="${info.b_idx}"/>
 				<tr>
@@ -213,9 +214,9 @@
 			</table>
 			
 			<div>
-				<a href = "FreeBoardlist" ">목록보기</a>
-				<a href="FreeBoarddelete?idx=${info.b_idx}">삭제</a>
-				<a href="FreeBoardupdateForm?idx=${info.b_idx}">수정</a>
+				<a href = "boardList?category=${category}&&page=${page}">목록보기</a>
+				<a href="boardDelete?idx=${info.b_idx}&&category=${category}&&page=${page}">삭제</a>
+				<a href="boardUpdateForm?idx=${info.b_idx}&&category=${category}&&page=${page}">수정</a>
 			</div>
 			
 			<table id="replContent" class="table table-striped table-bordered table-hover table-condensed"  >
@@ -253,6 +254,8 @@
 			</table>
 		</div>
 	</div>
+		<input type="hidden" id="category" value="${category}" />
+		<input type="hidden" id="page" value="${page}" />
 	
 	<div id="Footer">
         <ul class="Ft-list">
@@ -279,7 +282,7 @@
 		         success:function(d){
 		        	 console.log(d);
 		        	 //alert("댓글 작성 완료");
-		        	 location.href='FreeBoarddetail?idx='+${info.b_idx};
+		        	 location.href='boardDetail?idx='+${info.b_idx}+'&&category='+${category}+'&&page='+${page};
 		        	 //listCall(); 
 		        	
 		         },
@@ -318,6 +321,8 @@
 			param.b_idx = ${info.b_idx};
 			param.r_idx = idx;
 			param.r_comment = $(upcomment).val();
+			param.category = $("#category").val();
+			param.page = $("#page").val();
 			
 			$.ajax({
 		         type:'POST',
@@ -327,7 +332,7 @@
 		         success:function(d){
 		        	 console.log(d);
 		        	 //alert("댓글 수정 완료");
-		        	 location.href='FreeBoarddetail?idx='+${info.b_idx};
+		        	 location.href='boardDetail?idx='+${info.b_idx}+'&&category='+${category}+'&&page='+${page};
 
 		         },
 		         error:function(e){
@@ -352,7 +357,7 @@
 		         success:function(d){
 		        	 console.log(d);
 		        	 alert("댓글 삭제");
-		        	 location.href='FreeBoarddetail?idx='+${info.b_idx};
+		        	 location.href='boardDetail?idx='+${info.b_idx}+'&&category='+${category}+'&&page='+${page};
 		        	 
 
 		         },
@@ -382,7 +387,7 @@
 		
 		$.ajax({
 			type:'GET',
-			url:'FreeBoarddetail',
+			url:'boardDetail',
 			data:param,
 			dataType:'JSON',
 			success:function(s){

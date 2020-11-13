@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.ParseConversionEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,12 +60,11 @@ public class replyController {
 		}
 	
 		 
-		 @RequestMapping(value = "/FreeBoarddetail", method = RequestMethod.GET)
-			public ModelAndView FreeBoarddetail(@RequestParam String idx) {
-				
-				logger.info("상세보기 요청"+idx);
-				
-				return service.FreeBoarddetail(idx);
+		 @RequestMapping(value = "/boardDetail", method = RequestMethod.GET)
+			public ModelAndView boardDetail(@RequestParam String idx,@RequestParam int category,@RequestParam String page) {
+
+				logger.info("상세보기 요청"+idx+" / "+category+"/"+page);
+				return service.boardDetail(idx,category,page);
 			}
 		 
 		//수정내용
@@ -84,7 +85,8 @@ public class replyController {
 			 public @ResponseBody boolean replyUpdate(Model model,@RequestParam HashMap<String, Object> param) {
 				 logger.info("댓글 수정완료 재료 : "+param);//OK
 				 boolean result = service.replyUpdateSuccess(param);
-				 
+				  logger.info("댓글수정시 category"+param.get("category"));
+			      logger.info("댓글수정시 page"+param.get("page"));
 				 return result;
 			}
 		 

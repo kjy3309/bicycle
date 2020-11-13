@@ -18,8 +18,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.goodee.dao.BoardDAO;
 import kr.co.goodee.dto.FileDTO;
@@ -49,7 +51,7 @@ public class BoardService {
 		
 	}
 	
-	public ModelAndView Fileupload(MultipartFile file, HttpSession Session) {
+	public ModelAndView fileUpload(MultipartFile file, HttpSession Session) {
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -79,17 +81,17 @@ public class BoardService {
 		}
 		
 		mav.addObject("path", "photo/"+Newfilename);
-		mav.setViewName("FileuploadForm");
+		mav.setViewName("fileUploadForm");
 		
 		return mav;
 	}
 
-	public HashMap<String,Object> FileDelete(String fileName, HttpSession Session) {
+	public HashMap<String,Object> fileDelete(String fileName, HttpSession Session) {
 		HashMap<String,Object> result = new HashMap<String,Object>();
 		int success = 0;
 		
 		//1. Session 에서 fileList 가져오기
-		HashMap<String,String> fileList = (HashMap<String, String>) Session.getAttribute("FreeBoardfileList");
+		HashMap<String,String> fileList = (HashMap<String, String>) Session.getAttribute("boardFileList");
 		
 		//2. 진짜 파일 삭제
 		String delFileName = root +"FreeBoard/"+fileName;
@@ -124,28 +126,30 @@ public class BoardService {
 		return result;
 	}
 	@Transactional
-	public ModelAndView FreeBoardwrite(HashMap<String, String> params, HttpSession Session) {
+	public ModelAndView freeBoardWrite(HashMap<String, String> params, HttpSession Session) {
 		ModelAndView mav = new ModelAndView();
-		String page = "redirect:/FreeBoardlist";
+		String page = "redirect:/boardList";
 		logger.info("왜 안되냐구 카테고리!"+params);
 		BoardDTO been = new BoardDTO(); // 빈 사용 필수
 		been.setSubject(params.get("subject"));
 		been.setContent(params.get("content"));
 		been.setId(params.get("id"));
 		been.setCategory(Integer.parseInt(params.get("category")));
-		HashMap<String, Object> fileList = (HashMap<String, Object>) Session.getAttribute("FreeBoardfileList");
+		HashMap<String, Object> fileList = (HashMap<String, Object>) Session.getAttribute("boardFileList");
 		
-		if(dao.FreeBoardwrite(been) == 1) { // 글 등록 성공
+		if(dao.freeBoardWrite(been) == 1) { // 글 등록 성공
+			//page = "redirect:/boardDetail?b_idx="+been.getB_idx();
+			page = "redirect:/boardList?category=1&&page=1";
 			int size = fileList.size();
 			logger.info("저장할 파일 수  : "+size);
 			int b_idx = been.getB_idx();
 			if(size>0) { //업로드 한 파일이 있다면
 				logger.info(b_idx+"번 게시물에 소속된 파일 등록");
 				for(String key : fileList.keySet()) {
-					dao.FreeBoardwriteFile(b_idx,(String)fileList.get(key),key);
+					dao.boardWriteFile(b_idx,(String)fileList.get(key),key);
 				}
-				page = "redirect:/FreeBoarddetail?b_idx="+b_idx;
 			}
+			
 		}else {
 			for(String fileName : fileList.keySet()) {
 				File file = new File(root+"FreeBoard/"+fileName);
@@ -158,15 +162,16 @@ public class BoardService {
 		
 		return mav;
 	}
+	
 @Transactional(isolation = Isolation.READ_COMMITTED)
-	public ModelAndView FreeBoarddetail(String idx) {
+	public ModelAndView boardDetail(String idx) {
 		ModelAndView mav = new ModelAndView();
 		
-		dao.FreeBoardbHit(idx);
+		dao.boardbHit(idx);
 		
-		BoardDTO dto = dao.FreeBoarddetail(idx);
+		BoardDTO dto = dao.boardDetail(idx);
 		//파일을 만들때 하나 더 추가
-		ArrayList<FileDTO> fileList = dao.FreeBoardfileList(idx);
+		ArrayList<FileDTO> fileList = dao.boardFileList(idx);
 		// 파일 크기 확인
 		logger.info("첨부된 파일 : "+fileList.size());
 		
@@ -174,27 +179,30 @@ public class BoardService {
 		// view 에 뿌리는 값
 		mav.addObject("info", dto);
 		// view 이름
-		mav.setViewName("FreeBoarddetail");
+		mav.setViewName("boardDetail");
 		
 		return mav;
 	}
 
-	public int FreeBoarddelete(String idx) {
+	public int boardDelete(String idx,int category) {
 		logger.info("서비스 왔나?"+ idx);
-		int success = dao.FreeBoarddelete(idx);
+		int success = dao.boardDelete(idx,category);
 		logger.info("success : " + success);
 		return success;
 	}
 
-	public ModelAndView FreeBoardupdateForm(String idx, HttpSession session) {
+	public ModelAndView boardUpdateForm(String idx, HttpSession session,int category,String page) {
 		ModelAndView mav = new ModelAndView();
-		BoardDTO dto = dao.FreeBoarddetail(idx);
+		BoardDTO dto = dao.boardDetail(idx);
 		mav.addObject("info",dto);
-		mav.setViewName("FreeBoardupdateForm");
+		mav.addObject("category",category);
+		mav.addObject("page",page);
+				
+		mav.setViewName("boardUpdateForm");
 		return mav;
 	}
 
-	public HashMap<String, Object> FreeBoardupdateFileDelete(String fileName, HttpSession session) {
+	public HashMap<String, Object> boardUpdateFileDelete(String fileName, HttpSession session) {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		int success = 0;
 		
@@ -230,9 +238,14 @@ public class BoardService {
 	}
  
 	@Transactional
-	public ModelAndView FreeBoardupdate(HashMap<String, String> params, HttpSession session) {
+	public ModelAndView boardUpdate(HashMap<String, String> params, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		String page = "redirect:/FreeBoardlist";
+		/*
+		 * redirect.addAttribute("category",category);
+		 * redirect.addAttribute("page",page);
+		 */
+				
+		String page = "boardUpdateForm";
 		BoardDTO been = new BoardDTO(); // 빈 사용 필수
 		been.setSubject(params.get("subject"));
 		been.setContent(params.get("content"));
@@ -241,7 +254,7 @@ public class BoardService {
 		HashMap<String, Object> fileList = (HashMap<String, Object>) session.getAttribute("fileList");
 	    HashMap<String, Object> delFileList = (HashMap<String, Object>) session.getAttribute("delFileList");
 	      
-	    if(dao.FreeBoardupdate(been)==1) {
+	    if(dao.boardUpdate(been)==1) {
 	    	int size = fileList.size();
 	    	logger.info("저장할 파일 수 : "+size);
 	    	int delSize = delFileList.size();
@@ -251,16 +264,17 @@ public class BoardService {
 	    	if(size>0) {
 	    		logger.info(b_idx+" 번 게시물");
 	    		for(String key : fileList.keySet()) {
-	    			dao.FreeBoardwriteFile(b_idx, (String) fileList.get(key),key);
+	    			dao.boardWriteFile(b_idx, (String) fileList.get(key),key);
 	    		}
 	    	}
 	    	if(delSize>0) {
 	    		for(String delKey : delFileList.keySet()) {
-	    			dao.FreeBoarddeleteFile(b_idx,delKey);
+	    			dao.boardDeleteFile(b_idx,delKey);
 	    			logger.info("성공 : "+delKey);
 	    		}
 	    	}
-	    	page = "redirect:/FreeBoardlist";
+	    	page = "boardDetail";
+	    	mav.addObject("");//★★★★★★★★★★★★
 	    }else {
 	    	for(String fileName : fileList.keySet()) {
 	    		File file = new File(root+"FreeBoard/"+fileName);
@@ -271,13 +285,22 @@ public class BoardService {
 	    session.removeAttribute("fileList");
 	    
 	    mav.setViewName(page);
-	
+	    logger.info(page);
 	    return mav;
 	}
 
 	public int pcfbList() {
 		return dao.pcfbList();
 	}
+	//게시글 수 세기
+	public int packCount(int category, int pages) {
+		
+		
+		return dao.packCount(category);
+	}
+
+
+
 
 
 

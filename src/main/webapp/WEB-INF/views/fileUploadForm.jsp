@@ -12,7 +12,7 @@
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	</head>
 <body>
-	<form id = "fileUpload" action = "Fileupload" method = "post" enctype = "multipart/form-data">
+	<form id = "fileUpload" action = "fileUpload" method = "post" enctype = "multipart/form-data">
 		<input type = "file" name = "file" onchange = "fileView(this)"/>
 	</form>
 </body>

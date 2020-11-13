@@ -50,16 +50,16 @@
   <!-- 가져온것 -->
  
  	<!-- 글 상세보기 글과 파일 두개의 값을 가져와야하기때문에 쿼리문을 두개 씀-->
-	<select id="FreeBoarddetail" resultType = "board">
-		SELECT * FROM T3_bbs WHERE b_idx = #{param1}
+	<select id="boardDetail" resultType = "board">
+		SELECT * FROM T3_bbs WHERE b_idx = #{param1} AND category=#{param2}
 	</select>
 	
-	<select id ="FreeBoardfileList" resultType = "files">
+	<select id ="boardFileList" resultType = "files">
 		SELECT * FROM T3_photo WHERE f_idx = #{param1}
 	</select>
   	
   	
-  	<update id = "FreeBoardbHit" parameterType = "String">
+  	<update id = "boardbHit" parameterType = "String">
 		UPDATE T3_bbs SET bHit = bHit+1 WHERE b_idx = #{b_idx}
 	</update>
   	

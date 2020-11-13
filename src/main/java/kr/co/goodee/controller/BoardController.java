@@ -1,5 +1,6 @@
 package kr.co.goodee.controller;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.goodee.service.BoardService;
 
@@ -56,55 +58,60 @@ public class BoardController {
 		model.addAttribute("currPage", pages);
 		model.addAttribute("endPage", totPage);
 		model.addAttribute("boardList", service.boardList(category,pages));
-		
+		int pack = service.packCount(category,pages);
+		model.addAttribute("count",pack);
 		return "boardList";
 	}
 	
 	//글쓰기 페이지 이동
-	@RequestMapping(value = "/FreeBoardwriteForm", method = RequestMethod.GET)
-	public String FreeBoardwriteForm(Model model, HttpSession Session) {
+
+	@RequestMapping(value = "/boardWriteForm", method = RequestMethod.GET)
+	public String FreeBoardwriteForm(Model model, HttpSession Session, @RequestParam int category) {
 		// 파일 업로드 때문에 session을 가져가야한다
 		
 		//FreeBoardfileList 를 Session에 담아준다.
-		HashMap<String, String> FreeBoardfileList = new HashMap<String, String>();
-		Session.setAttribute("FreeBoardfileList", FreeBoardfileList);
+		HashMap<String, String> boardFileList = new HashMap<String, String>();
+		Session.setAttribute("FreeBoardfileList", boardFileList);
+		//Session.setAttribute("userId", );
+		String loginId = (String) Session.getAttribute("loginId");
+		model.addAttribute("loginId", loginId);
 		//model.addAttribute("category", category);
-		return "FreeBoardwriteForm";
+		return "boardWriteForm";
 	}
 	
 	
 	//파일 업로드 폼
-	@RequestMapping(value = "/FileuploadForm", method = RequestMethod.GET)
-	public String FileuploadForm(Model model) {
+	@RequestMapping(value = "/fileUploadForm", method = RequestMethod.GET)
+	public String fileUploadForm(Model model) {
 
-		return "FileuploadForm";
+		return "fileUploadForm";
 	}
 	
 	//파일 업로드
-	@RequestMapping(value = "/Fileupload", method = RequestMethod.POST)
+	@RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
 	public ModelAndView Fileupload(MultipartFile file , HttpSession Session) {
 
 		logger.info("파일 업로드 요청");
 		
-		return service.Fileupload(file,Session);
+		return service.fileUpload(file,Session);
 	}
 	
 	//파일 삭제
-	@RequestMapping(value = "/FreeBoardfileDelete", method = RequestMethod.GET)
+	@RequestMapping(value = "/boardFileDelete", method = RequestMethod.GET)
 	public @ResponseBody HashMap<String,Object> FreeBoardfileDelete(String fileName , HttpSession Session) {
 
 		logger.info("무엇을 삭제할까요? : "+fileName);
 		
-		return service.FileDelete(fileName, Session);
+		return service.fileDelete(fileName, Session);
 	}
 	
 	//글쓰기
-	@RequestMapping(value = "/FreeBoardwrite", method = RequestMethod.POST)
-	public ModelAndView FreeBoardwrite(@RequestParam HashMap<String, String> params, HttpSession Session) {
+	@RequestMapping(value = "/freeBoardWrite", method = RequestMethod.POST)
+	public ModelAndView freeBoardWrite(@RequestParam HashMap<String, String> params, HttpSession Session) {
 
 		logger.info("글쓰기 요청");
 		logger.info("params : "+params); //글쓰기 폼으로에서 haspmap 씀
-		String session = (String) Session.getAttribute("userId");//세션가져와서
+		String session = (String) Session.getAttribute("loginId");//세션가져와서
 		if(session.equals("admin")) {
 			
 			params.put("category", "0");
@@ -114,51 +121,55 @@ public class BoardController {
 			params.put("category", "1");
 		}
 		
-		return service.FreeBoardwrite(params,Session); //service에 그대로 전달
+		return service.freeBoardWrite(params,Session); //service에 그대로 전달
 	}
 	
-	// 여기 코드 수정 충돌 방지 위해 value 값 임의로 바꿈 나중에 다시 수정
+	// 여기 코드 수정 충돌 방지 위해 value 값 임의로 바꿈 나중에 다시 수정  boardDetail로
 	@RequestMapping(value = "/0123", method = RequestMethod.GET)
-	public ModelAndView FreeBoarddetail(@RequestParam String idx) {
+	public ModelAndView boardDetail(@RequestParam String idx) {
 		
 		logger.info("상세보기 요청"+idx);
 		
-		return service.FreeBoarddetail(idx);
+		return service.boardDetail(idx);
 	}
 	
-	@RequestMapping(value = "/FreeBoarddelete", method = RequestMethod.GET)
-	public String FreeBoarddelete(@RequestParam String idx) {
+	@RequestMapping(value = "/boardDelete", method = RequestMethod.GET)
+	public String boardDelete(@RequestParam String idx,@RequestParam int category,RedirectAttributes redirect,@RequestParam String page) {
 		
 		logger.info("삭제 요청 : "+idx);
-		String page ="redirect:/FreeBoarddetail";
-		int success = service.FreeBoarddelete(idx);
+		String pages ="redirect:/boardDetail";
+		int success = service.boardDelete(idx,category);
 		if(success>0) {
-			page="redirect:/FreeBoardlist";
+			redirect.addAttribute("category",category);
+			redirect.addAttribute("page",page);
+			pages="redirect:/boardList";
 		}
-		return page;
+		return pages;
 	}
 	
-	@RequestMapping(value = "/FreeBoardupdateForm", method = RequestMethod.GET)
-	public ModelAndView FreeBoardupdateForm(@RequestParam String idx, HttpSession Session) {
+	@RequestMapping(value = "/boardUpdateForm", method = RequestMethod.GET)
+	public ModelAndView boardUpdateForm(@RequestParam String idx, HttpSession Session,@RequestParam int category,@RequestParam String page) {
 		logger.info("수정 할 idx : "+idx);
 		HashMap<String, String> fileList = new HashMap<String,String>();
 		HashMap<String, String> delFileList = new HashMap<String,String>();
 		Session.setAttribute("fileList", fileList);
 		Session.setAttribute("delFileList", delFileList);
-		return service.FreeBoardupdateForm(idx,Session);
+		logger.info("쓰고싶다 제발"+category+"page??"+page);
+		return service.boardUpdateForm(idx,Session,category,page);
 	}
 	
-	@RequestMapping(value = "/FreeBoardupdateFileDelete", method = RequestMethod.GET)
-	 public @ResponseBody HashMap<String, Object> updateFileDelete(@RequestParam String fileName , HttpSession session) {
+	@RequestMapping(value = "/boardUpdateFileDelete", method = RequestMethod.GET)
+	 public @ResponseBody HashMap<String, Object> boardUpdateFileDelete(@RequestParam String fileName , HttpSession session) {
 	      logger.info("업데이트 파일삭제  요청"+fileName);   
-	      return service.FreeBoardupdateFileDelete(fileName,session);
+	      return service.boardUpdateFileDelete(fileName,session);
 	}
 	
-	@RequestMapping(value = "/FreeBoardupdate", method = RequestMethod.POST)
-	 public ModelAndView FreeBoardupdate(@RequestParam HashMap<String, String> params, HttpSession Session) {
+	@RequestMapping(value = "/boardUpdate", method = RequestMethod.POST)
+	 public ModelAndView boardUpdate(@RequestParam HashMap<String, String> params, HttpSession Session) {
 	      logger.info("수정 글 번호는? "+params.get("b_idx"));
 	      logger.info("params : "+params);
-	      return service.FreeBoardupdate(params,Session);
+	    
+	      return service.boardUpdate(params,Session);
 	}
 	
 	

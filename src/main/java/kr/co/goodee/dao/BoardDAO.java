@@ -1,6 +1,7 @@
 package kr.co.goodee.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import kr.co.goodee.dto.FileDTO;
 import kr.co.goodee.dto.BoardDTO;
@@ -10,23 +11,25 @@ public interface BoardDAO {
 
 	ArrayList<BoardDTO> boardList(int category, int start, int end);
 	
-	int FreeBoardwrite(BoardDTO been);
+	int freeBoardWrite(BoardDTO been);
 
-	void FreeBoardwriteFile(int b_idx, String string, String key);
+	void boardWriteFile(int b_idx, String string, String key);
 
-	BoardDTO FreeBoarddetail(String idx);
+	BoardDTO boardDetail(String idx);
 
-	ArrayList<FileDTO> FreeBoardfileList(String idx);
+	ArrayList<FileDTO> boardFileList(String idx);
 
-	int FreeBoarddelete(String idx);
+	int boardDelete(String idx,int category);
 
-	void FreeBoardbHit(String idx);
+	void boardbHit(String idx);
 
-	int FreeBoardupdate(BoardDTO been);
+	int boardUpdate(BoardDTO been);
 
-	void FreeBoarddeleteFile(int b_idx, String delKey);
+	void boardDeleteFile(int b_idx, String delKey);
 
 	int pcfbList();
+
+	int packCount(int category);
 
 	
 

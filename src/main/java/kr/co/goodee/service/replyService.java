@@ -64,14 +64,14 @@ public class replyService {
 
 
 	@Transactional(isolation = Isolation.READ_COMMITTED)
-	public ModelAndView FreeBoarddetail(String idx) {
+	public ModelAndView boardDetail(String idx,int category,String page) {
 		ModelAndView mav = new ModelAndView();
 		
-		dao.FreeBoardbHit(idx);
+		dao.boardbHit(idx);
 		
-		BoardDTO dto = dao.FreeBoarddetail(idx);
+		BoardDTO dto = dao.boardDetail(idx,category);
 		//파일을 만들때 하나 더 추가
-		ArrayList<FileDTO> fileList = dao.FreeBoardfileList(idx);
+		ArrayList<FileDTO> fileList = dao.boardFileList(idx);
 		// 파일 크기 확인
 		logger.info("첨부된 파일 : "+fileList.size());
 		
@@ -84,7 +84,9 @@ public class replyService {
 		mav.addObject("repl_list", dto2);
 		
 		// view 이름
-		mav.setViewName("FreeBoarddetail");
+		mav.setViewName("boardDetail");
+		mav.addObject("category",category);
+		mav.addObject("page",page);
 		
 		return mav;
 	}
@@ -102,6 +104,8 @@ public class replyService {
 			
 		}
 
+
+		
 
 
 	

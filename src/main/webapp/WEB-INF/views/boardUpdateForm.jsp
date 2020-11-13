@@ -38,10 +38,13 @@
 	</style>
 </head>
 <body>
-	<form action = "FreeBoardupdate" method="post">
-	<table class = "board">
 	
+	<form action = "boardUpdate" method="post">
+	<table class = "board">
+		
 		<input type="hidden" name="b_idx" value="${info.b_idx}"/>
+		
+		
 		
 		<tr>
 			<th>작성자</th>
@@ -49,13 +52,13 @@
 		</tr>
 		<tr>
 			<th>제목</th>
-			<td><input type = "text" name ="subject" placeholder="${info.subject}"/></td>	
+			<td><input type = "text" name ="subject" id = "subject" value="${info.subject}"/></td>	
 		</tr>
 		<tr>
 			<th>내용</th>
 			<td>
 				<div id = "editable" contenteditable="true">${info.content}</div>
-				<input id = "content" type = "hidden" name = "content" value = ""/>
+				<input id = "content" type = "hidden" name = "content" value = "${info.content}"/>
 			</td>	
 		</tr>
 		<tr>
@@ -65,12 +68,16 @@
 				<div id = "files"></div>
 			</td>
 		</tr>
+		
 		<tr>
-			<td colspan="2"><input type = "submit"  onclick="save()" value = "저장"/></td>	
-		</tr>		
+			<td colspan="2"><button onclick="save()" />저장</button>
+			</td>	
+		</tr>																		
+		<input type="hidden" id="category" name="category" value="${category} "/>
+		<input type="hidden" id="page" name="page" value="${page}"/>
+		<!--얘네 값 다 온단말이쥐 .. 잠깐 화장실갔다와야겠다.  -->
 	</table>
 	</form>
-	
 </body>
 <script>
 
@@ -81,15 +88,30 @@
 	      $(item).after("<input id='${path}' type='button' value='삭제' onclick='del(this)'><br/>");
 	   });
 	});
-	function fileUp(){ // 파일 업로드 클릭시
-		var FreeBoardWindow = window.open('FileuploadForm','파일업로드','width=500,height=150');
+	
+	function fileUp(){ // 파일 업로드 클릭시 ★★ㅁ8★★ㅁ8ㅁ8★ㅁ8ㅁ8ㅁ이건 도대체 왜 연결이 안되는거야?
+		var FreeBoardWindow = window.open('fileUploadForm','파일업로드','width=500,height=150');
+												
 	}
 
 	function save(){
+		
+		var category = $("#category").val();
+		var page = $("#page").val();
+		var y = $('#subject').val();
+		var t = $('#editable').html();
+		$('#content').val(t);
+		var z = $('#content').val();
+	
+		//값 전달되니까 내일은 그거 넣어서 form다시 살리고 죽였던거 다시 살려서 시도해보자
 		$("#editable input[type = 'button']").remove(); // 삭제버튼 제거
-		$("#content").val($("#editable").html()); // 
+		$("#content").val($("#editable").html());
 		$("form").submit();
-		location.href = "/FreeBoardlist";
+		
+		location.href='boardList?category='+category+'&&page='+page;//이게 도대체 왜 안갈까?
+		//location.href = 'boardList?category="${category}+"&page="+${page};
+		//location.href='boardDetail?idx='+${info.b_idx}+'&&category='+${category}+'&&page='+${page};
+   	
 	}
 	
     //파일 삭제 버튼 
@@ -100,7 +122,7 @@
        var fileName = name.substring(name.indexOf('"'),name);
        console.log(fileName);
         $.ajax({
-          url:'FreeBoardupdateFileDelete',
+          url:'boardUpdateFileDelete',
           type:'get',
           data:{'fileName':fileName}, 
           dataType:'json',
