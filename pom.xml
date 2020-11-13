@@ -144,6 +144,24 @@
 		    <version>1.4.7</version>
 		</dependency>
 		
+		  <!-- Rengine -->
+	      <!-- Spring 에서 R 한테 명령을 내릴 수 있는 것 -->
+	      <!-- https://mvnrepository.com/artifact/org.rosuda.REngine/REngine -->
+	      <dependency>
+	          <groupId>org.rosuda.REngine</groupId>
+	          <artifactId>REngine</artifactId>
+	          <version>2.1.0</version>
+	      </dependency>
+	      
+	      <!-- Rserve -->
+	      <!-- 현재 R 과 Spring 에 연결시켜주는 것 -->
+	      <!-- https://mvnrepository.com/artifact/org.rosuda.REngine/Rserve -->
+	      <dependency>
+	          <groupId>org.rosuda.REngine</groupId>
+	          <artifactId>Rserve</artifactId>
+	          <version>1.8.1</version>
+	      </dependency>
+		
 				
 		<!-- AspectJ -->
 		<dependency>

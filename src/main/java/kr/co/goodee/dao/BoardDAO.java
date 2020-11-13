@@ -13,7 +13,7 @@ public interface BoardDAO {
 	
 	int freeBoardWrite(BoardDTO been);
 
-	void boardWriteFile(int b_idx, String string, String key);
+	void boardWriteFile(String id,int b_idx, String key, String key2);
 
 	BoardDTO boardDetail(String idx);
 

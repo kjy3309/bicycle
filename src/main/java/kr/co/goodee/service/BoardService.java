@@ -74,7 +74,7 @@ public class BoardService {
 			HashMap<String, String> fileList = new HashMap<String, String>();
 			fileList.put(Newfilename, fileName);
 			logger.info("업로드 한 파일의 개수 :"+fileList.size());
-			Session.setAttribute("filelist", fileList);
+			Session.setAttribute("fileList", fileList);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -91,7 +91,7 @@ public class BoardService {
 		int success = 0;
 		
 		//1. Session 에서 fileList 가져오기
-		HashMap<String,String> fileList = (HashMap<String, String>) Session.getAttribute("boardFileList");
+		HashMap<String,String> fileList = (HashMap<String, String>) Session.getAttribute("fileList");
 		
 		//2. 진짜 파일 삭제
 		String delFileName = root +"FreeBoard/"+fileName;
@@ -136,7 +136,7 @@ public class BoardService {
 		been.setContent(params.get("content"));
 		been.setId(params.get("id"));
 		been.setCategory(Integer.parseInt(params.get("category")));
-		HashMap<String, Object> fileList = (HashMap<String, Object>) Session.getAttribute("boardFileList");
+		HashMap<String, Object> fileList = (HashMap<String, Object>) Session.getAttribute("fileList");
 		
 		if(dao.freeBoardWrite(been) == 1) { // 글 등록 성공
 			//page = "redirect:/boardDetail?b_idx="+been.getB_idx();
@@ -147,7 +147,7 @@ public class BoardService {
 			if(size>0) { //업로드 한 파일이 있다면
 				logger.info(b_idx+"번 게시물에 소속된 파일 등록");
 				for(String key : fileList.keySet()) {
-					dao.boardWriteFile(b_idx,(String)fileList.get(key),key);
+					dao.boardWriteFile(been.getId(),b_idx,(String)fileList.get(key),key);
 				}
 			}
 			
@@ -265,7 +265,7 @@ public class BoardService {
 	    	if(size>0) {
 	    		logger.info(b_idx+" 번 게시물");
 	    		for(String key : fileList.keySet()) {
-	    			dao.boardWriteFile(b_idx, (String) fileList.get(key),key);
+	    			dao.boardWriteFile(been.getId(), b_idx, (String) fileList.get(key),key);
 	    		}
 	    	}
 	    	if(delSize>0) {

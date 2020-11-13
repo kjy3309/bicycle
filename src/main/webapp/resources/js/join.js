@@ -440,7 +440,7 @@ function validDuplicateEmail(value, callback) {
     var sp = value.split('@');
     var userEmail = sp[0];
     var userEmailHost = sp[1];
-    var url = "emailCheck"
+    var url = "login/emailCheck"
     $.ajax({
         "type":"POST",
         "url":url,
