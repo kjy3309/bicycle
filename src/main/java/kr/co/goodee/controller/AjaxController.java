@@ -23,13 +23,13 @@ public class AjaxController {
 	@Autowired BicycleRealTimeDAO dao;
 	@Autowired HttpConnUtil httpConn;
 	
-	@RequestMapping(value = "/bicycleRental", method = RequestMethod.GET)
+	@RequestMapping(value = "/rts/bicycleRental", method = RequestMethod.GET)
 	public ArrayList<BicycleRentDTO> bicycleRental() {
 		
 		return dao.bicycleRental();
 	}
 	
-	@RequestMapping(value = "/realTimeBicycleStatus", method = RequestMethod.GET)
+	@RequestMapping(value = "/rts/realTimeBicycleStatus", method = RequestMethod.GET)
 	public HashMap<String, Object> realTimeBicycleStatus(@RequestParam int id) {
 		
 		return httpConn.findRTBS(id);

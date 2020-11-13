@@ -19,6 +19,7 @@ import kr.co.goodee.dto.BicycleRentDTO;
 import kr.co.goodee.service.MemberService;
 
 @Controller 
+@RequestMapping(value ="/login")
 public class MemberController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -48,7 +49,7 @@ public class MemberController {
 		return service.regist(userInfo, session);
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public @ResponseBody HashMap<String, Object> login(@RequestParam String loginId, String loginPw, HttpSession session) {
 		
 		return service.login(loginId, loginPw, session);

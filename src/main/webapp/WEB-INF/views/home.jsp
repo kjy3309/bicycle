@@ -254,6 +254,13 @@
     </div>
 	
     <script>
+	    var msg = '${msg}';
+	
+	    if(msg != ''){
+	    	alert(msg);
+	    	location.href="http://localhost:8080/goodee/";
+	    }
+    	
         var swiper = new Swiper('.swiper-container-mainvisual', {
             
             pagination: {

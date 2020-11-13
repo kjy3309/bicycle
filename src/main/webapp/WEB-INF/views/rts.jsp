@@ -318,7 +318,7 @@
 		
 		function realTimeBicycleStatus(id) {
 			$.ajax({
-				url:'realTimeBicycleStatus',
+				url:'rts/realTimeBicycleStatus',
 				type:'GET',
 				dataType:'JSON',
 				data:{"id":id},
@@ -342,7 +342,7 @@
 		
 		function bicycleRental(){
 			$.ajax({
-				url:'bicycleRental'
+				url:'rts/bicycleRental'
 				,type:'GET'
 				,dataType:'JSON'
 				,success:function(rentalData){

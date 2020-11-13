@@ -125,6 +125,7 @@ public class BoardService {
 		
 		return result;
 	}
+	
 	@Transactional
 	public ModelAndView freeBoardWrite(HashMap<String, String> params, HttpSession Session) {
 		ModelAndView mav = new ModelAndView();

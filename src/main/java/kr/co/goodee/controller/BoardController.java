@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.co.goodee.service.Auth;
 import kr.co.goodee.service.BoardService;
 
 @Controller
@@ -64,9 +65,15 @@ public class BoardController {
 	}
 	
 	//글쓰기 페이지 이동
+<<<<<<< HEAD
 
 	@RequestMapping(value = "/boardWriteForm", method = RequestMethod.GET)
 	public String FreeBoardwriteForm(Model model, HttpSession Session, @RequestParam int category) {
+=======
+	@Auth
+	@RequestMapping(value = "/FreeBoardwriteForm", method = RequestMethod.GET)
+	public String FreeBoardwriteForm(Model model, HttpSession Session) {
+>>>>>>> 315fe19d0e144fc89aa164d84bdd9a563ef1bfae
 		// 파일 업로드 때문에 session을 가져가야한다
 		
 		//FreeBoardfileList 를 Session에 담아준다.
