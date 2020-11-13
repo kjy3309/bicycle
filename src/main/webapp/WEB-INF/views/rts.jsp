@@ -83,6 +83,10 @@
 		    appearance: none;
 		}
 		
+		/* iframe display */
+		#real_iframe{
+			display: none;
+		}
     </style>
     
     <!-- 웹 폰트 -->
@@ -218,10 +222,10 @@
 							</p>
 							<div class="form-group col-xs-12" style="text-align: center; margin-top: 100px;">
 								<select id="hour" name="hour" class="ui_select2">
-									<option value="6">오전 6시</option>
-									<option value="7">오전 7시</option>
-									<option value="8">오전 8시</option>
-									<option value="9">오전 9시</option>
+									<option value="06">오전 6시</option>
+									<option value="07">오전 7시</option>
+									<option value="08">오전 8시</option>
+									<option value="09">오전 9시</option>
 									<option value="10">오전 10시</option>
 									<option value="11">오전 11시</option>
 									<option value="12">오전 12시</option>
@@ -237,7 +241,7 @@
 								</select>
 
 								<select id="min" name="min" class="ui_select2">
-									<option value="0">0분</option>
+									<option value="00">0분</option>
 									<option value="10">10분</option>
 									<option value="20">20분</option>
 									<option value="30">30분</option>
@@ -249,13 +253,16 @@
 								
 							<div class="sendBtn" style="text-align:center;">
 								<div class="form-group col-xs-12">
-									<button type="submit" class="btn btn-success btn-lg btn-lg-custom">검색하기</button>
+									<button type="button" class="btn btn-success btn-lg btn-lg-custom" onclick="rdataSearch()">검색하기</button>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+				 
+   				<iframe id="real_iframe" src="" width="50%" height="300px" ></iframe>
+   				<button type="button" class="btn btn-success btn-lg btn-lg-custom" onclick="rGraph()">테스트버튼</button>
 		</div>
 	</div>
 
@@ -307,10 +314,13 @@
 		    };
 		}
 		
+		/* 현승 추가 코드*/
+		var br_idx;
 		// 대여소정보를 그리는 함수....
 		function makeRentalBikeStatus() {
 		 	return function() {
 		 		var id = this.id; // 대여소 idx 값 변수에 저장
+		 		br_idx = this.id;
 		 		realTimeBicycleStatus(id); // 대여소 명, 실시간 자전거 개수를 표시해주는 함수..
 		 		
 		    };
@@ -330,6 +340,7 @@
 			        $("html,body").animate({ scrollTop:offset },1000,"easeInOutExpo");
 					$('.br_name').html(d.br_name);
 					$('.parkingBikeTotCnt').html(d.parkingBikeTotCnt);
+					console.log(d);
 				},
 				error:function(e){
 					console.log(e);
@@ -388,10 +399,65 @@
             }
 		}
 		
-
+		/*
 		$('.btn').click(function(){
 			$('.search1').fadeOut(500); // search1 결
 		});
+		*/
+		
+		function rdataSearch(){
+			//var $br_name = $(".br_name").html();
+			//console.log($br_name);
+			var params = {};
+			var hour = $("#hour").val();
+			var min = $("#min").val();
+			//console.log(min);
+			var time = hour + ":"+min;
+			if(min=="00"){
+				hour = hour-1;
+				himin ="59";
+				if(hour<10){
+					hour = "0"+hour;
+				}
+			}else{
+				var himin = min-1;
+				if(himin<10){
+					himin ="0"+himin;
+				}
+			}
+			var hidden = hour +":"+himin;
+			//console.log(hour);
+			//console.log(himin);
+			params.time = time;
+			params.br_idx = br_idx;
+			params.hidden = hidden;
+			//console.log(br_idx);
+			//console.log(time);
+			
+			$.ajax({
+                type:"get",
+                url:"rdata",
+                data:params,
+                dataType:"JSON",
+                success:function(d){
+                   console.log(d);
+                   real_iframe.style.display="block";
+                   $('#real_iframe').attr("src","/rlnk/real_remain.html")
+                   
+                },error:function(e){
+                    console.log(e);
+                }
+            });
+			
+		}
+		
+		
+		function rGraph(){
+			var hour = $("#hour").val();
+			
+			location.href="rGraph?br_idx="+br_idx+"&&hour="+hour;
+		}
+		
     </script>
 </body>
 

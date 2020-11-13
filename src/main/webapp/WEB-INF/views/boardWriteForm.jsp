@@ -101,7 +101,7 @@
 <script>
 	function fileUp(){ // 파일 업로드 클릭시
 		//var FreeBoardWindow = window.open('fileUploadForm','파일업로드','width=500 ,height=150');
-		window.open('rts','파일업로드','width=500, height=150');
+		window.open('fileUploadForm','파일업로드','width=500, height=150');
 	}
 
 	function save(){

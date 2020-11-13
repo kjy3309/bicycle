@@ -59,7 +59,7 @@
         
         <c:if test="${not empty sessionScope.loginId }">
         	<div class="login">
-           		<button onclick="">${sessionScope.loginId} 님</button>
+           		<a style="font-size: 18px; color:orange;" href="profile?id=${sessionScope.loginId}">${sessionScope.loginId} 님</a>
 	        </div>
         </c:if>
         

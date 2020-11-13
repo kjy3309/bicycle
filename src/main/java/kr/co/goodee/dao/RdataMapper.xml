@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.goodee.dao.RdataDAO">
+
+	<select id="rdata" parameterType="hashmap" resultType="real_remain">
+		SELECT TO_CHAR(remain_reg_date, 'd') as num, ROUND(AVG(remain)) as avg FROM bicycle_remain 
+		WHERE br_idx=#{br_idx} AND remain_time IN (#{hidden},#{time})
+		GROUP BY TO_CHAR(remain_reg_date, 'd') ORDER BY num
+	</select>
+	
+</mapper>

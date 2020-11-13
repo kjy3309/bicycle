@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatgis.org./dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="kr.co.goodee.dao.ProBoardDAO">
+	
+	<select id = "list" resultType="kr.co.goodee.dto.ProBoardDTO">
+		SELECT * FROM bbs ORDER BY idx DESC
+	</select>
+	
+	<select id = "profile" resultType="kr.co.goodee.dto.ProMemberDTO">
+		SELECT * FROM T3_MEMBER WHERE ID = #{id}
+	</select>
+	
+	<insert id = "write" parameterType = "hashmap">
+		INSERT INTO bbs(idx,user_name,subject,content,bHit) 
+			VALUES(bbs_seq.NEXTVAL, #{user_name}, #{subject}, #{content}, 0)
+	</insert>
+	
+	<insert id = "Adwrite" parameterType = "hashmap">
+		INSERT INTO answers(idx,user_name,admin_name,subject,content,bHit)
+			VALUES(bbs_seq.NEXTVAL, #{user_name, jdbcType=VARCHAR}, 'administor', #{subject, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR}, 0)
+	</insert>
+	
+	<select id = "detail" resultType="kr.co.goodee.dto.ProBoardDTO">
+		SELECT * FROM bbs WHERE user_name = #{name} ORDER BY reg_date DESC
+	</select>
+	
+	<select id = "updetail" resultType="kr.co.goodee.dto.ProMemberDTO">
+		SELECT * FROM T3_MEMBER WHERE name = #{name}
+	</select>
+	
+	<select id = "ans" resultType="kr.co.goodee.dto.ProBoardDTO">
+		SELECT * FROM answers WHERE user_name = #{name} ORDER BY reg_date DESC
+	</select>
+	
+	<select id = "detailView" resultType="kr.co.goodee.dto.ProBoardDTO">
+		SELECT * FROM bbs WHERE idx = #{param1}
+	</select>
+	
+	
+	<delete id = "del">
+		DELETE FROM bbs WHERE idx = #{param1}
+	</delete>
+	
+	<update id = "update" parameterType = "hashmap">
+		UPDATE T3_MEMBER SET name=#{user_name, jdbcType=VARCHAR}, birth=#{age, jdbcType=INTEGER}, status=#{gender, jdbcType=VARCHAR}, email=#{email, jdbcType=VARCHAR} WHERE id=#{id}
+	</update>
+	
+	<insert id = "info">
+		INSERT INTO T3_BICYCLE_RENT(br_idx, br_name, letitude, longitude)
+			VALUES(#{param1}, #{param2}, #{param3}, #{param4})
+	</insert>
+</mapper>
