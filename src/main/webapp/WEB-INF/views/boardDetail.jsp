@@ -222,7 +222,7 @@
 			<table id="replContent" class="table table-striped table-bordered table-hover table-condensed"  >
 				<tr>
 					<td colspan="4">
-						<input type="hidden" id="id" name="id" value="test"/>
+						<input type="hidden" id="id" name="id" value="${session.loginId}"/><!-- sessionScope해가지고? 아니면 session값 가져와서..★★★바로고치기 -->
 						<!--  <input type="hidden" id="id" name="id" value="${session.getid}"/><!-- 로그인할때 세션에 저장된 아이디 가져와서 넣는다.-->
 						댓글:&nbsp;&nbsp;<input type="text" name="content" id="content" placeholder="댓글을 작성해주세요."/>
 						<input type="button" id="re_btn" value="작성"  />

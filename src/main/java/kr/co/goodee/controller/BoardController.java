@@ -1,9 +1,12 @@
 package kr.co.goodee.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.ProcessBuilder.Redirect;
 import java.util.HashMap;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -20,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sun.mail.iap.Response;
+
 import kr.co.goodee.service.Auth;
 import kr.co.goodee.service.BoardService;
 
@@ -33,7 +38,7 @@ public class BoardController {
 	
 	//리스트
 	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
-	public String boardList(Model model, @RequestParam int category, @RequestParam String page) {
+	public String boardList(Model model, @RequestParam int category, @RequestParam String page,HttpSession session) {
 		int pages = 0;
 		// 페이지를 보내줬음
 		if(page == null) {
@@ -58,19 +63,22 @@ public class BoardController {
         }
 		
 		logger.info("리스트 요청!! 카테고리 : "+category);
+		logger.info("세션가져와졌나요???"+session);
 		model.addAttribute("category", category);
 		model.addAttribute("currPage", pages);
 		model.addAttribute("endPage", totPage);
 		model.addAttribute("boardList", service.boardList(category,pages));
 		int pack = service.packCount(category,pages);
 		model.addAttribute("count",pack);
+		String Session = (String) session.getAttribute("loginId");
+		model.addAttribute("session",Session);
 		return "boardList";
 	}
 	
 	//글쓰기 페이지 이동
 	@Auth
 	@RequestMapping(value = "/boardWriteForm", method = RequestMethod.GET)
-	public String FreeBoardwriteForm(Model model, HttpSession Session, @RequestParam int category) {
+	public String FreeBoardwriteForm(Model model, HttpSession Session, @RequestParam int category,HttpServletResponse response) {
 		// 파일 업로드 때문에 session을 가져가야한다
 		//FreeBoardfileList 를 Session에 담아준다.
 		HashMap<String, String> boardFileList = new HashMap<String, String>();
@@ -79,6 +87,15 @@ public class BoardController {
 		String loginId = (String) Session.getAttribute("loginId");
 		model.addAttribute("loginId", loginId);
 		//model.addAttribute("category", category);
+		/*
+		 * String page = "fds"; if(loginId==null) {
+		 * response.setContentType("text/html; charset=UTF-8"); PrintWriter out; try {
+		 * out = response.getWriter();
+		 * out.println("<script>alert('로그인이 필요한 서비스입니다.'); location.href='"+page+
+		 * "';</script>"); out.flush(); } catch (IOException e) { e.printStackTrace(); }
+		 * 
+		 * }
+		 */
 		return "boardWriteForm";
 	}
 	

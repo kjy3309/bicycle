@@ -213,13 +213,31 @@
 			<dd>따릉이를 부탁해의 새로운 소식과 공지사항을 확인해주세요.</dd>
 		</dl>
 	
+		<input type="hidden" id="session" value="${sessionScope.loginId}" />
+		<input type="hidden" id="category" value="${category}" />
+	
 		<div class="bbs_list">
 			<div class="bbs_top">
 				<p class="total">총 :${count} 건</p>
 				
-					<div class="write_button">
-						<button style="background: #fff; padding: 16px;" onclick = "location.href = 'boardWriteForm?category=${category}' ">글쓰기</button>
-					</div>
+        			 
+		           		<div class="write_button">
+							<button style="background: #fff; padding: 16px;" id="written" onclick ="boardWrite(${category}) ">글쓰기</button>
+						</div>
+			         
+        					<!--  category가 1일때는 항상 보인다.-->
+        			 <c:if test=" ${category==1}"><!-- category가 0일경우 id가 admin일때 보이고...  -->
+		           		<div class="write_button">
+							<button style="background: #fff; padding: 16px;" id="written" onclick ="boardWrite(${category}) ">글쓰기</button>
+						</div>
+			        </c:if> 
+        
+        
+			        <c:if test=" ${category==0&&sessionScope.loginId == 'admin'}"><!-- category가 0일경우 id가 admin일때 보이고...  -->
+		           		<div class="write_button">
+							<button style="background: #fff; padding: 16px;" id="written" onclick ="boardWrite(${category}) ">글쓰기</button>
+						</div>
+			        </c:if> 
 				
 			</div>
 			<div class="list_table bd_b">
@@ -263,6 +281,8 @@
 		</div>
 	</div>
 
+	
+	
     <div id="Footer">
         <ul class="Ft-list">
             <li><a href="#">Notice</a><span style="margin-left:20px; cursor:default;">·</span></li>
@@ -273,6 +293,30 @@
   </body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
   <script>
+  
+  	function boardWrite(category){
+  		var session = '${sessionScope.loginId}';
+  		if(session != ''){
+  			//category가 0일때 아이디가 admin이 아니라면 -> alert("관리자만 작성 가능합니다."); -> location.href="boardList";로 보내기
+  			//category가 1일땐 로그인만 하면 작성가능 
+  			location.href="boardWriteForm?category="+category;
+  		} else{
+  			if(confirm("커뮤니티 활동을 위해서는 로그인이 필요합니다.") == true){
+  	  			openModal(1);
+  	  			}else{
+  	  				return;
+  	  			}
+  	  		}
+  		}
+  	
+  
+  	/* var session = $("#session").val();
+  	var category = $("#category").val();
+  	if(category==0&&session!='admin'){
+  		$("#written").hide();
+  	}
+  	 */
+  
 	  var modal = document.getElementById('id01');
 	  var modal1 = document.getElementById('id02');
 	
