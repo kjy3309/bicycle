@@ -566,7 +566,7 @@ $('button.login_button').on('click', function() {
     
     $.ajax({
         "type":"POST",
-        "url":"login/",
+        "url":"login",
         "data":{"loginId":loginId,"loginPw":loginPw},
         "dataType":"json"
     }).done(function(resp) {

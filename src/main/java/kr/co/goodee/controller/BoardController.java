@@ -34,10 +34,13 @@ public class BoardController {
 	//리스트
 	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
 	public String boardList(Model model, @RequestParam int category, @RequestParam String page) {
-		
+		int pages = 0;
 		// 페이지를 보내줬음
+		if(page == null) {
+			pages = 1;
+		}
 		String pageParam = page; // pageParam 으로 받음
-        int pages =1;
+        
 		if(pageParam != null) {
            pages = Integer.parseInt(pageParam);
         }
@@ -65,17 +68,10 @@ public class BoardController {
 	}
 	
 	//글쓰기 페이지 이동
-<<<<<<< HEAD
-
+	@Auth
 	@RequestMapping(value = "/boardWriteForm", method = RequestMethod.GET)
 	public String FreeBoardwriteForm(Model model, HttpSession Session, @RequestParam int category) {
-=======
-	@Auth
-	@RequestMapping(value = "/FreeBoardwriteForm", method = RequestMethod.GET)
-	public String FreeBoardwriteForm(Model model, HttpSession Session) {
->>>>>>> 315fe19d0e144fc89aa164d84bdd9a563ef1bfae
 		// 파일 업로드 때문에 session을 가져가야한다
-		
 		//FreeBoardfileList 를 Session에 담아준다.
 		HashMap<String, String> boardFileList = new HashMap<String, String>();
 		Session.setAttribute("FreeBoardfileList", boardFileList);

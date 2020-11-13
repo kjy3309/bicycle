@@ -49,7 +49,7 @@ public class MemberController {
 		return service.regist(userInfo, session);
 	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public @ResponseBody HashMap<String, Object> login(@RequestParam String loginId, String loginPw, HttpSession session) {
 		
 		return service.login(loginId, loginPw, session);

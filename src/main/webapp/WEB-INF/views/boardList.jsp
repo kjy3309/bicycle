@@ -192,7 +192,7 @@
     <div class="sub_visual" style="background-image:url(resources/image/sv_notice.png);">
 		<dl>
 			<dt>Event &amp; News</dt>
-			<dd><img src="../images/home_icon.png" alt="" /><span>/</span>Event &amp; News<span>/</span>뉴스 &amp; 공지</dd>
+			<dd><img src="" alt="" /><span>/</span>Event &amp; News<span>/</span>뉴스 &amp; 공지</dd>
 		</dl>
 	</div>
 
