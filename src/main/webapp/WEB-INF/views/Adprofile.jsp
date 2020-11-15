@@ -31,7 +31,7 @@
 <body>
 
     <div id="out">
-        <a style="color: white; margin-left: 20px; margin-top: 20px;" >내가 시발 관리자다 ㅇㅇ ${sessionScope.loginId } 님.</a>  <button onclick="location.href='logout'" style="margin-left: 92%; color: white; background-color:rgb(14, 13, 13); border:rgb(14, 13, 13);">로그아웃</button>
+        <a style="color: white; margin-left: 20px; margin-top: 20px;" > ${sessionScope.loginId } 님.</a>  <button onclick="location.href='logout'" style="margin-left: 92%; color: white; background-color:rgb(14, 13, 13); border:rgb(14, 13, 13);">로그아웃</button>
         <hr color="orange" width="97%">
 		<table id="inform" style=" margin-top: 10px;">
 			

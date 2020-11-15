@@ -60,7 +60,7 @@
                     </td>
                 </tr>
                 <tr>
-                	<td> <a style="color: darkorange;" href="/">메인으로</a>
+                	<td> <a style="color: darkorange;" href="./">메인으로</a>
                 </tr>
                    
                

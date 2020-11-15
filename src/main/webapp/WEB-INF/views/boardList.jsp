@@ -291,6 +291,8 @@
     </div>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  
+  
   <script>
   
   	function boardWrite(category){
@@ -365,7 +367,17 @@
 	  }   
 	  
 	 
+	  //상단 클릭시 색 변경 -> 이거 안먹힘 css파일 자체도 건드렸찌만...흑
+	  $("#notice").onclick(function(){
+		  $('#notice').css('background-color', 'white');
+		  $('#free').css('background-color', '#5a7044');
+	  });
 	  
+	   $("#free").onclick(function(){
+		  $('#free').css('background-color', 'white');
+		  $('#notice').css('background-color', '#5a7044');
+		  
+	  });
 	  
   </script>
   <script src="resources/js/passcheck.js"></script>

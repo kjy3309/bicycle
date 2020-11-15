@@ -557,7 +557,7 @@ textarea {
 .sub_p_nav .page_nav:after {content:""; display:block; clear:both;}
 .sub_p_nav .page_nav li {float:left; height:54px; text-align:center;}
 .sub_p_nav .page_nav li a {display:block; height:54px; line-height:54px; font-size:16px; letter-spacing:-0.025em; color:#fff;}
-.sub_p_nav .page_nav li a.active_p_nav {background:#fff; color:#67804e; font-weight:500;}
+.sub_p_nav .page_nav li a.active_p_nav { color:#fffㄴ; font-weight:500;}
 .sub_p_nav .page_nav.nav_sec2 li {width:50%;}
 .sub_p_nav .page_nav.nav_sec3 li {width:33.3%;}
 .sub_p_nav .page_nav.nav_sec9 li {width:11.11%;}

@@ -164,7 +164,7 @@
                 <div class="menu-wr">
                     <ul class="Mmain_menu">
                         <li class="item-has-children" style="top: 50px; opacity: 0;">
-                            <a href="boardList?category=0&&page=1">공지사항</a>
+                            <a href="boardList?category=0&&page=1">공지사항/게시판</a>
                         </li>
                         <li class="item-has-children" style="top: 50px; opacity: 0;">
                             <a href="rts">실시간 현황</a>
