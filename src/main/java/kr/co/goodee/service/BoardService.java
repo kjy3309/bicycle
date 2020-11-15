@@ -127,20 +127,23 @@ public class BoardService {
 	}
 	
 	@Transactional
-	public ModelAndView freeBoardWrite(HashMap<String, String> params, HttpSession Session) {
+	public ModelAndView freeBoardWrite(HashMap<String, String> params, HttpSession Session,RedirectAttributes redirect) {
 		ModelAndView mav = new ModelAndView();
 		String page = "redirect:/boardList";
 		logger.info("왜 안되냐구 카테고리!"+params);
 		BoardDTO been = new BoardDTO(); // 빈 사용 필수
 		been.setSubject(params.get("subject"));
 		been.setContent(params.get("content"));
-		been.setId(params.get("id"));
+		//String session = (String) Session.getAttribute("loginId");
+		been.setId((String) Session.getAttribute("loginId"));
 		been.setCategory(Integer.parseInt(params.get("category")));
-		HashMap<String, Object> fileList = (HashMap<String, Object>) Session.getAttribute("fileList");
-		
+		HashMap<String, Object> fileList = (HashMap<String, Object>) Session.getAttribute("FreeBoardfileList");
 		if(dao.freeBoardWrite(been) == 1) { // 글 등록 성공
 			//page = "redirect:/boardDetail?b_idx="+been.getB_idx();
-			page = "redirect:/boardList?category=1&&page=1";
+			redirect.addAttribute("category",params.get("category"));
+			redirect.addAttribute("page", 1);
+			page = "redirect:/boardList";
+			//  page = "redirect:/boardList?category=1&&page=1";
 			int size = fileList.size();
 			logger.info("저장할 파일 수  : "+size);
 			int b_idx = been.getB_idx();

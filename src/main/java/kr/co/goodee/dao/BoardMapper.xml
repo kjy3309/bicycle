@@ -17,7 +17,7 @@
 		keyColumn = "b_idx"
 		id = "freeBoardWrite">
 		INSERT INTO T3_bbs(b_idx,id,subject,content,bHit,category)
-			VALUES(seq_bbs.NEXTVAL,'test',#{subject},#{content},0,#{category})
+			VALUES(seq_bbs.NEXTVAL,#{id},#{subject},#{content},0,#{category})
 	</insert>
 	
 	<insert id ="boardWriteFile">

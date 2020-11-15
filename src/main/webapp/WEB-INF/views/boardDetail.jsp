@@ -99,6 +99,7 @@
 		</style>
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	</head>
+
 <body>
 	
 	 <div id="Header" style="background-color: rgba(1, 1, 1, 0); height: 110px;">
@@ -205,25 +206,30 @@
 			<table id="mainContent" >
 				<input type="hidden" name="b_idx" value="${info.b_idx}"/>
 				<tr>
-					<th class="a" width="10%">작성자</th><td class="b">${info.id}</td>
+					<th class="a" width="10%">작성자</th><td class="b" id="writtenId">${info.id}</td>
 					<th class="a" width="10%">조회수</th><td class="b">${info.bHit}</td>
 				</tr>
 				
 				<tr><th class="a" width="10%">제목</th><td colspan="3">${info.subject}</td></tr>
 				<tr><th class="a" width="10%">내용</th><td colspan="3">${info.content}	</td></tr>
 			</table>
-			
+				
 			<div>
 				<a href = "boardList?category=${category}&&page=${page}">목록보기</a>
-				<a href="boardDelete?idx=${info.b_idx}&&category=${category}&&page=${page}">삭제</a>
-				<a href="boardUpdateForm?idx=${info.b_idx}&&category=${category}&&page=${page}">수정</a>
+							<c:set var="session" value="${sessionScope.loginId}" />
+							<c:set var="writtenId" value="${info.id}" />
+							<c:choose>
+							    <c:when test="${session eq writtenId}">
+							        <a href="boardDelete?idx=${info.b_idx}&&category=${category}&&page=${page}" class="writtenHide">삭제</a>
+									<a href="boardUpdateForm?idx=${info.b_idx}&&category=${category}&&page=${page}" class="writtenHide">수정</a>
+							    </c:when>
+							</c:choose>
 			</div>
 			
 			<table id="replContent" class="table table-striped table-bordered table-hover table-condensed"  >
 				<tr>
 					<td colspan="4">
-						<input type="hidden" id="id" name="id" value="${session.loginId}"/><!-- sessionScope해가지고? 아니면 session값 가져와서..★★★바로고치기 -->
-						<!--  <input type="hidden" id="id" name="id" value="${session.getid}"/><!-- 로그인할때 세션에 저장된 아이디 가져와서 넣는다.-->
+						<input type="hidden" id="id" name="id" value="${sessionScope.loginId}"/><!-- sessionScope해가지고? 아니면 session값 가져와서..★★★바로고치기 -->
 						댓글:&nbsp;&nbsp;<input type="text" name="content" id="content" placeholder="댓글을 작성해주세요."/>
 						<input type="button" id="re_btn" value="작성"  />
 					</td>
@@ -237,7 +243,7 @@
 				
 				<c:forEach var ="repl" items="${repl_list}" >
 					<tr>
-						<td>${repl.id}</td>
+						<td id="repl_Id">${repl.id}</td>
 						
 						<td>
 							<input type="text"  id="${repl.r_idx}" value="${repl.r_comment}" style="border:0px" readonly class="replTextArea"/> 
@@ -245,9 +251,21 @@
 						</td>
 							
 						<td>
-							<input type="button" id="update${repl.r_idx}" value="수정"   onclick="replyUpdate1(${repl.r_idx})"/>
-							<input type="button" id="confirm${repl.r_idx}" value="확인" style="display:none"    onclick="replyUpdate2(${repl.r_idx})" />
-							<input type="button" id="re_delete" onclick="replyDelete(${repl.r_idx})" value="삭제" />
+							<c:set var="session" value="${sessionScope.loginId}" />
+							<c:set var="replId" value="${repl.id}" />
+							<c:choose>
+							    <c:when test="${session eq replId}">
+							        <input type="button" class="repl_btn" id="update${repl.r_idx}" value="수정"   onclick="replyUpdate1(${repl.r_idx})"/>
+									<input type="button" class="repl_btn" id="confirm${repl.r_idx}" value="확인" style="display:none"    onclick="replyUpdate2(${repl.r_idx})" />
+									<input type="button" class="repl_btn" id="re_delete" onclick="replyDelete(${repl.r_idx})" value="삭제" />
+							    </c:when>
+							</c:choose>
+
+							<%-- <c:if test="${sessionScope.loginId} eq ${repl.id}"> 
+								<input type="button" class="repl_btn" id="update${repl.r_idx}" value="수정"   onclick="replyUpdate1(${repl.r_idx})"/>
+								<input type="button" class="repl_btn" id="confirm${repl.r_idx}" value="확인" style="display:none"    onclick="replyUpdate2(${repl.r_idx})" />
+								<input type="button" class="repl_btn" id="re_delete" onclick="replyDelete(${repl.r_idx})" value="삭제" />
+							 </c:if>  --%>
 						</td>
 					</tr>
 				</c:forEach>
@@ -267,7 +285,45 @@
 
 </body>
 <script>
+
+		/*detail에 진입했을 때   */
+		/*session이랑 글쓴사람들 id랑 다르면 버튼 숨기기  */
+		
+	/* 	 $(document).ready(function(){
+			var session = $("#id").val();//이게 로그인시 가져온 세션 값
+			var writtenId= $("#writtenId").text();//td값은 가져오려면 text로 뽑아와야된다구합니다.
+			//var writtenId = $("#writtenId").val();
+			var replId = $("#repl_Id").text();
+			console.log("지금 세션에 들어있는 로그인 아이디:"+session);
+			console.log("글 작성자 아이디? 이게 뜨나?"+writtenId);
+			console.log("리플작성자 아이디"+replId);
+			 if(session!=replId){//왜 세션에 담긴 값이랑... replId랑 같다고나올까..?
+				 $(".repl_btn").hide();
+				 $(".writtenHide").hide();
+				}
+			}
+			)  */
+
+
+
 	
+			/* $(document).ready(function(){
+						//내 생각에... 로드되는게 먼저고 그 다음에 값들이 불러와지는거니까... 왠지 저값들이 로드되는 상황에선 안불러와지는게 맞는것같다.. 
+				var session = $("#id").val();//이게 로그인시 가져온 세션 값
+				var writtenId = $("#writtenId").val();
+				var replId = $("#repl_Id").val();
+				console.log("지금 세션에 들어있는 로그인 아이디:"+session);
+				console.log("글 작성자 아이디? 이게 뜨나?"+writtenId);//값을 못가져오네 그러니까 당연히 다르다는 조건이 성립되서 다 숨겨지지... 
+				console.log("리플작성자 아이디"+replId);//값을 못가져오네 그러니까 당연히 다르다는 조건이 성립되서 다 숨겨지지... 
+					if(session != replId &&session !=writtenId){
+						
+						$(".repl_btn").hide();//조건에 상관없이 값이 그냥 다사라지네..
+						$(".writtenHide").hide();//조건에 상관없이 값이 그냥 다사라지네..
+					}
+						}
+			)  */
+		
+		
 		$("#re_btn").click(function(){
 			var param ={};
 			param.b_idx = ${info.b_idx};//이게되나?

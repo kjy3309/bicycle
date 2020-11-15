@@ -18,7 +18,7 @@
 			table,th,td{
 				border: 1px solid black;
 				border-collapse:collapse;
-				padding:5px 10px;
+				
 			}
 			
 			td{
@@ -43,11 +43,12 @@
 			left:23%;
 			}
 			.a{
-			background-color: rgb(17, 124, 167);
+			
 			}
 			.b{
-			background-color: rgb(220, 242, 250);
+			height:15px;
 			}
+			
 			
 	</style>
 </head>
@@ -55,10 +56,11 @@
 	
 	
 	<form action = "freeBoardWrite" method="post">
+	<table class="table table-striped">
 	<table class = "board"  style="text-align: center; border: 1px solid #dddddd; width:50%;" id="writeFormTable">
 		
 		<tr>
-		<!--session.get("userId") 세션에서 가져와서 작성자에 value값으로 넣어줘야하남...-->
+		
 			<th width="150px" class="a">작성자</th>
 			<td class="b"><p>${loginId}</p></td>
 			<input name="id" type="hidden" value="${loginId }"/>	
@@ -91,12 +93,12 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
-    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS-->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-    -->
-	
+   
+	 
 </body>
 <script>
 	function fileUp(){ // 파일 업로드 클릭시

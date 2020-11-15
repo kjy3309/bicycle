@@ -127,7 +127,7 @@ public class BoardController {
 	
 	//글쓰기
 	@RequestMapping(value = "/freeBoardWrite", method = RequestMethod.POST)
-	public ModelAndView freeBoardWrite(@RequestParam HashMap<String, String> params, HttpSession Session) {
+	public ModelAndView freeBoardWrite(@RequestParam HashMap<String, String> params, HttpSession Session,RedirectAttributes redirect) {
 
 		logger.info("글쓰기 요청");
 		logger.info("params : "+params); //글쓰기 폼으로에서 haspmap 씀
@@ -141,7 +141,7 @@ public class BoardController {
 			params.put("category", "1");
 		}
 		
-		return service.freeBoardWrite(params,Session); //service에 그대로 전달
+		return service.freeBoardWrite(params,Session,redirect); //service에 그대로 전달
 	}
 	
 	// 여기 코드 수정 충돌 방지 위해 value 값 임의로 바꿈 나중에 다시 수정  boardDetail로

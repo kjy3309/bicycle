@@ -220,24 +220,23 @@
 			<div class="bbs_top">
 				<p class="total">총 :${count} 건</p>
 				
-        			 
-		           		<div class="write_button">
-							<button style="background: #fff; padding: 16px;" id="written" onclick ="boardWrite(${category}) ">글쓰기</button>
-						</div>
-			         
-        					<!--  category가 1일때는 항상 보인다.-->
-        			 <c:if test=" ${category==1}"><!-- category가 0일경우 id가 admin일때 보이고...  -->
-		           		<div class="write_button">
-							<button style="background: #fff; padding: 16px;" id="written" onclick ="boardWrite(${category}) ">글쓰기</button>
-						</div>
-			        </c:if> 
-        
-        
-			        <c:if test=" ${category==0&&sessionScope.loginId == 'admin'}"><!-- category가 0일경우 id가 admin일때 보이고...  -->
-		           		<div class="write_button">
-							<button style="background: #fff; padding: 16px;" id="written" onclick ="boardWrite(${category}) ">글쓰기</button>
-						</div>
-			        </c:if> 
+			        
+			        		<c:set var="session" value="${sessionScope.loginId}" />
+							<c:set var="admin" value="admin" />
+							<c:choose>
+							    <c:when test="${session eq replId &&category==0 }">
+							       <div class="write_button">
+										<button style="background: #fff; padding: 16px;" id="written" onclick ="boardWrite(${category}) ">글쓰기</button>
+									</div>
+							    </c:when>
+							    
+							    <c:when test="${category==1}">
+        							<div class="write_button">
+										<button style="background: #fff; padding: 16px;" id="written" onclick ="boardWrite(${category}) ">글쓰기</button>
+									</div>
+    							</c:when>
+
+							</c:choose>
 				
 			</div>
 			<div class="list_table bd_b">
