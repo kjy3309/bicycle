@@ -56,7 +56,7 @@ public class BoardService {
 		ModelAndView mav = new ModelAndView();
 		
 		//경로 설정
-		fullpath = root+"FreeBoard/";
+		fullpath = root+"upload/";
 		
 		//파일명을 추출
 		String fileName = file.getOriginalFilename();
@@ -137,7 +137,7 @@ public class BoardService {
 		//String session = (String) Session.getAttribute("loginId");
 		been.setId((String) Session.getAttribute("loginId"));
 		been.setCategory(Integer.parseInt(params.get("category")));
-		HashMap<String, Object> fileList = (HashMap<String, Object>) Session.getAttribute("FreeBoardfileList");
+		HashMap<String, Object> fileList = (HashMap<String, Object>) Session.getAttribute("fileList");
 		if(dao.freeBoardWrite(been) == 1) { // 글 등록 성공
 			//page = "redirect:/boardDetail?b_idx="+been.getB_idx();
 			redirect.addAttribute("category",params.get("category"));
@@ -257,12 +257,16 @@ public class BoardService {
 		been.setB_idx(Integer.parseInt(params.get("b_idx")));
 		HashMap<String, Object> fileList = (HashMap<String, Object>) session.getAttribute("fileList");
 	    HashMap<String, Object> delFileList = (HashMap<String, Object>) session.getAttribute("delFileList");
-	      
+	    
 	    if(dao.boardUpdate(been)==1) {
-	    	int size = fileList.size();
-	    	logger.info("저장할 파일 수 : "+size);
-	    	int delSize = delFileList.size();
-	    	logger.info("삭제할 파일 수 : "+delSize);
+	    	int size = 0;
+	    	if(fileList != null) {
+		    	size = fileList.size();
+	    	}
+	    	int delSize = 0;
+	    	 if(delFileList != null) {
+	 	    	delSize = delFileList.size();
+	 	    }
 	    	int b_idx = been.getB_idx();
 	    	logger.info("게시글 번호 : "+b_idx);
 	    	if(size>0) {
@@ -277,13 +281,12 @@ public class BoardService {
 	    			logger.info("성공 : "+delKey);
 	    		}
 	    	}
-	    	page = "boardDetail";
-	    	mav.addObject("");//★★★★★★★★★★★★
-	    }else {
-	    	for(String fileName : fileList.keySet()) {
-	    		File file = new File(root+"FreeBoard/"+fileName);
-	    		boolean success = file.delete();
-	    		logger.info(fileName+"삭제 결과"+success);
+	    	page = "redirect:/boardList?category=1&&page=1";
+	    	}else {
+		    	for(String fileName : fileList.keySet()) {
+		    		File file = new File(root+"FreeBoard/"+fileName);
+		    		boolean success = file.delete();
+		    		logger.info(fileName+"삭제 결과"+success);
 	    	}
 	    }
 	    session.removeAttribute("fileList");

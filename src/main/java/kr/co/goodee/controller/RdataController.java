@@ -34,15 +34,19 @@ public class RdataController {
 	
 	
 	@RequestMapping(value = "/rGraph", method = RequestMethod.GET)
-	public String rGraph(Model model, @RequestParam String hour, @RequestParam String br_idx) throws Exception {
-		
-		logger.info("br_idx : " + br_idx);
-		logger.info("hour : " + hour);
-		
-		service.rGraph(br_idx,hour);
-		
-		return null;
-	}
+	   public @ResponseBody HashMap<String, Object> rGraph(Model model, @RequestParam String hour, @RequestParam String br_idx) throws Exception {
+	      
+	      logger.info("br_idx : " + br_idx);
+	      logger.info("hour : " + hour);
+	      
+	      HashMap<String, Object> map = new HashMap<String, Object>();
+	      if(br_idx != null && hour != null) {
+	         service.rGraph(br_idx,hour);
+	         map.put("graphName","real_graph.html");
+	      }
+	      
+	      return map;
+	   }
 	
 	
 	

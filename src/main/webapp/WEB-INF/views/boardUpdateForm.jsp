@@ -58,7 +58,7 @@
 			<th>내용</th>
 			<td>
 				<div id = "editable" contenteditable="true">${info.content}</div>
-				<input id = "content" type = "hidden" name = "content" value = "${info.content}"/>
+				<input id = "content" type="hidden" name = "content" value = ""/>
 			</td>	
 		</tr>
 		<tr>
@@ -70,7 +70,7 @@
 		</tr>
 		
 		<tr>
-			<td colspan="2"><button onclick="save()" />저장</button>
+			<td colspan="2"><input type ="button" onclick="save()"  value="저장"/>
 			</td>	
 		</tr>																		
 		<input type="hidden" id="category" name="category" value="${category} "/>
@@ -108,7 +108,7 @@
 		$("#content").val($("#editable").html());
 		$("form").submit();
 		
-		location.href='boardList?category='+category+'&&page='+page;//이게 도대체 왜 안갈까?
+		/* location.href='boardList?category='+category+'&&page='+page; *///이게 도대체 왜 안갈까?
 		//location.href = 'boardList?category="${category}+"&page="+${page};
 		//location.href='boardDetail?idx='+${info.b_idx}+'&&category='+${category}+'&&page='+${page};
    	
@@ -122,7 +122,7 @@
        var fileName = name.substring(name.indexOf('"'),name);
        console.log(fileName);
         $.ajax({
-          url:'boardUpdateFileDelete',
+          url:'boardFileDelete',
           type:'get',
           data:{'fileName':fileName}, 
           dataType:'json',
@@ -130,7 +130,6 @@
              console.log(data);
              if(data.success == 1){
             	 console.log("???");
-                alert("파일 삭제");
                 $(elem).prev().remove(); 
                 $(elem).remove(); 
              }

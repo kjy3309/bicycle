@@ -56,7 +56,7 @@
                         
                      <a style="color: darkorange; margin-left: 670px;" href="writeForm?name=${bbs.name}">문의 하기</a> </td>
                      <td> <a style="color: darkorange; margin-left: 15px;" href="question?name=${bbs.id}">문의 내역</a> </td>
-                     <td> <a style="color: darkorange; margin-left: 15px;" href="answer?name=${bbs.name}">답변 내역</a>
+                     <td> <a style="color: darkorange; margin-left: 15px;" href="answer?name=${bbs.id}">답변 내역</a>
                     </td>
                 </tr>
                 <tr>

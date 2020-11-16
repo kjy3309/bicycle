@@ -142,7 +142,30 @@
 			</div>
 			
 			<div class="cen1400">
-			
+				<div class="new_bottom">
+						<div class="search1">
+							<p id="contents-stit" style="font-size:35px; text-align:center; margin-bottom: 100px;">
+								따릉이 이용이 제일 활발한 시간
+							</p>
+								<iframe id="" src="/rlnk/time.html" width="60%" height="300px" ></iframe>
+							
+							
+							<p id="contents-stit" style="font-size:35px; text-align:center; margin-bottom: 100px;">
+								대여 건수가 많은 20개의 대여소
+								<iframe id="" src="/rlnk/18rent.html" width="50%" height="300px" ></iframe>
+							</p>
+							
+							<p id="contents-stit" style="font-size:35px; text-align:center; margin-bottom: 100px;">
+								대여>반납 TOP 10
+								<iframe id="" src="/rlnk/Bigrent10.html" width="50%" height="300px" ></iframe>
+							</p>
+							
+							<img src="resources/image/replace1.PNG" width="50%" height="300px">
+							<img src="resources/image/replace2.PNG" width="50%" height="300px">
+							<img src="resources/image/replace3.PNG" width="50%" height="300px">							
+										
+						</div>
+					</div>
 			</div>
 			
 		</div>

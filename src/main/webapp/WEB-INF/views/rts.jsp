@@ -85,8 +85,19 @@
 		
 		/* iframe display */
 		#real_iframe{
-			display: none;
-		}
+         display: none;
+         margin-left: 25%;
+      	}
+      #graph_iframe{
+         display:none;
+         top:2000px;
+         margin-left: 25%;
+      	}
+      #button10{
+         margin-left: 41%;
+         display:none;
+     	}
+
     </style>
     
     <!-- 웹 폰트 -->
@@ -259,10 +270,11 @@
 						</div>
 					</div>
 				</div>
+				<iframe id="real_iframe" src="" width="50%" height="300px" ></iframe>
+				<br/><br/>
+   				<button id= "button10" type="button" class="btn btn-success btn-lg btn-lg-custom" onclick="rGraph()">10분 단위로 보기</button>
 			</div>
-				 
-   				<iframe id="real_iframe" src="" width="50%" height="300px" ></iframe>
-   				<button type="button" class="btn btn-success btn-lg btn-lg-custom" onclick="rGraph()">테스트버튼</button>
+				 <iframe id="graph_iframe" src="" width="50%" height="500px" ></iframe>
 		</div>
 	</div>
 
@@ -443,7 +455,7 @@
                    console.log(d);
                    real_iframe.style.display="block";
                    $('#real_iframe').attr("src","/rlnk/real_remain.html")
-                   
+                   button10.style.display="block";
                 },error:function(e){
                     console.log(e);
                 }
@@ -453,10 +465,29 @@
 		
 		
 		function rGraph(){
-			var hour = $("#hour").val();
-			
-			location.href="rGraph?br_idx="+br_idx+"&&hour="+hour;
-		}
+	         var hour = $("#hour").val();
+	         
+	         $.ajax({
+	                type:"get",
+	                url:"rGraph",
+	                data:{
+	                   "br_idx":br_idx,
+	                   "hour":hour
+	                },
+	                dataType:"JSON",
+	                success:function(d){
+	                   console.log(d);
+	                   graph_iframe.style.display="block";
+	                   $('#graph_iframe').attr("src","/rlnk/real_graph.html")
+	                   
+	                },error:function(e){
+	                    console.log(e);
+	                }
+	            });
+	         
+	         //location.href="rGraph?br_idx="+br_idx+"&&hour="+hour;
+	      }
+
 		
     </script>
 </body>
